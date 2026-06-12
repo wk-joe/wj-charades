@@ -484,12 +484,15 @@ const PACKS = {
 // ═══════════════════════════════════════════════
 //  CONSTANTS  ← easy to change
 // ═══════════════════════════════════════════════
-const ROUND_TIME     = 60;   // seconds
-const TILT_CORRECT   = 25;   // beta < this → correct  (phone nose tilts down)
-const TILT_PASS      = 155;  // beta > this → pass     (phone nose tilts up)
-const NEUTRAL_LO     = 40;   // }
-const NEUTRAL_HI     = 140;  // } device must return here before next tilt fires
-const FLASH_MS       = 380;  // flash overlay duration
+const ROUND_TIME          = 60;   // seconds
+const TILT_CORRECT        = 25;   // portrait beta < this → correct
+const TILT_PASS           = 155;  // portrait beta > this → pass
+const NEUTRAL_LO          = 40;   // portrait neutral zone low
+const NEUTRAL_HI          = 140;  // portrait neutral zone high
+const TILT_GAMMA_CORRECT  = 40;   // landscape: noseDown > this → correct
+const TILT_GAMMA_PASS     = 40;   // landscape: noseDown < -this → pass
+const NEUTRAL_GAMMA       = 20;   // landscape: |gamma| must drop below this to re-arm
+const FLASH_MS            = 380;  // flash overlay duration
 
 // ═══════════════════════════════════════════════
 //  STATE
@@ -602,18 +605,36 @@ function checkOrientation() {
 // ═══════════════════════════════════════════════
 function onOrientation(e) {
   if (!gameActive) return;
-  const beta = e.beta;
-  if (beta === null) return;
 
-  if (needNeutral) {
-    if (beta >= NEUTRAL_LO && beta <= NEUTRAL_HI) needNeutral = false;
-    return;
-  }
+  if (window.innerWidth > window.innerHeight) {
+    // Landscape mode: nose-up/nose-down tilts change gamma, not beta.
+    // screen.orientation.angle 90  = device rotated CCW → physical-top on LEFT → nose-down is negative gamma
+    // screen.orientation.angle 270 = device rotated CW  → physical-top on RIGHT → nose-down is positive gamma
+    const gamma = e.gamma;
+    if (gamma === null) return;
 
-  if (beta < TILT_CORRECT) {
-    doCorrect(); needNeutral = true;
-  } else if (beta > TILT_PASS || beta < -(180 - TILT_PASS)) {
-    doPass(); needNeutral = true;
+    const angle = screen.orientation
+      ? screen.orientation.angle
+      : (window.orientation === -90 ? 270 : 90);
+    const noseDown = angle === 270 ? gamma : -gamma;
+
+    if (needNeutral) {
+      if (Math.abs(gamma) <= NEUTRAL_GAMMA) needNeutral = false;
+      return;
+    }
+    if (noseDown > TILT_GAMMA_CORRECT)  { doCorrect(); needNeutral = true; }
+    else if (noseDown < -TILT_GAMMA_PASS) { doPass();    needNeutral = true; }
+
+  } else {
+    const beta = e.beta;
+    if (beta === null) return;
+
+    if (needNeutral) {
+      if (beta >= NEUTRAL_LO && beta <= NEUTRAL_HI) needNeutral = false;
+      return;
+    }
+    if (beta < TILT_CORRECT) { doCorrect(); needNeutral = true; }
+    else if (beta > TILT_PASS || beta < -(180 - TILT_PASS)) { doPass(); needNeutral = true; }
   }
 }
 
