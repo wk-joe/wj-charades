@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Charades!">
+<meta name="theme-color" content="#1a1a2e">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>Charades!</title>
+<style>
+:root {
+  --bg:      #1a1a2e;
+  --card:    #16213e;
+  --accent:  #e94560;
+  --green:   #00c851;
+  --red:     #ff4444;
+  --yellow:  #f39c12;
+  --sub:     rgba(255,255,255,0.6);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, env(safe-area-inset-top))
+           max(16px, env(safe-area-inset-right))
+           max(16px, env(safe-area-inset-bottom))
+           max(16px, env(safe-area-inset-left));
+}
+.screen.active { display: flex; }
+
+/* ── HOME ── */
+#home-screen { gap: 20px; }
+
+.logo {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo span { color: var(--accent); }
+
+.sub { color: var(--sub); font-size: 0.82rem; text-align: center; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.tile {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 22px 14px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .12s;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+.tile:active { transform: scale(.93); }
+.tile .em   { font-size: 2.2rem; }
+.tile .nm   { font-weight: 700; font-size: .95rem; }
+.tile .ct   { font-size: .72rem; color: var(--sub); }
+.tile[data-cat=mainstream] { border-color: #9b59b6; }
+.tile[data-cat=everyday]   { border-color: #2ecc71; }
+.tile[data-cat=fiji]       { border-color: #f39c12; }
+.tile[data-cat=party]      { border-color: #e74c3c; }
+
+/* ── GET READY ── */
+#ready-screen { gap: 18px; background: #0f3460; text-align: center; }
+
+.rcat  { font-size: 1.1rem; color: var(--sub); font-weight: 600; }
+.rtitle { font-size: 2.8rem; font-weight: 900; }
+
+.howto {
+  background: rgba(255,255,255,.1);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: .83rem;
+  line-height: 1.7;
+  max-width: 300px;
+}
+.howto b { display: block; margin-bottom: 2px; font-size: .9rem; }
+
+.motion-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 28px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition: opacity .2s;
+}
+.motion-btn:active  { opacity: .8; }
+.motion-btn:disabled { opacity: .45; cursor: default; }
+
+.countdown {
+  font-size: 7rem;
+  font-weight: 900;
+  display: none;
+  line-height: 1;
+}
+
+.back {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  left: max(14px, env(safe-area-inset-left));
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: .88rem;
+}
+
+/* ── PLAY ── */
+#play-screen { padding: 0; }
+
+.play-wrap {
+  position: relative;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-track {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 7px;
+  background: rgba(255,255,255,.12);
+}
+.timer-fill {
+  height: 100%;
+  background: var(--green);
+  transition: width 1s linear, background .5s;
+  will-change: width;
+}
+
+.timer-num {
+  position: absolute;
+  top: 14px; right: 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--sub);
+}
+
+.score-num {
+  position: absolute;
+  top: 14px; left: 18px;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.word {
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.1;
+  padding: 0 20px;
+  max-width: 92%;
+  word-break: break-word;
+}
+@media (orientation: landscape) {
+  .word { font-size: clamp(3rem, 7vh, 6rem); }
+}
+
+.tilt-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px max(10px, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+.th { font-size: .78rem; color: var(--sub); display: flex; align-items: center; gap: 5px; }
+
+/* tap zones (invisible) */
+.tap-pass, .tap-correct {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 45%;
+  cursor: pointer;
+}
+.tap-pass    { left: 0; }
+.tap-correct { right: 0; }
+
+.flash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .08s;
+}
+
+/* ── PORTRAIT OVERLAY ── */
+#portrait-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 32px;
+}
+#portrait-overlay.show { display: flex; }
+.rot-icon { font-size: 4.5rem; animation: rock 1.8s ease-in-out infinite; }
+@keyframes rock { 0%,100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+
+/* ── RESULTS ── */
+#results-screen {
+  gap: 18px;
+  overflow-y: auto;
+  justify-content: flex-start;
+  padding-top: max(24px, env(safe-area-inset-top));
+}
+
+.big-score { font-size: 5.5rem; font-weight: 900; color: var(--green); line-height: 1; }
+.score-lbl { color: var(--sub); font-size: .9rem; margin-top: 2px; }
+
+.res-lists {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  flex-shrink: 0;
+}
+.res-col {
+  flex: 1;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px;
+  min-height: 80px;
+  max-height: 38vh;
+  overflow-y: auto;
+}
+.res-col h3 { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+.res-col.good h3 { color: var(--green); }
+.res-col.bad  h3 { color: #888; }
+.res-col ul { list-style: none; }
+.res-col ul li { font-size: .82rem; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+
+.btns { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; flex-shrink: 0; }
+.btn-p {
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 14px; padding: 15px; font-size: 1rem; font-weight: 700;
+  cursor: pointer; width: 100%;
+}
+.btn-s {
+  background: rgba(255,255,255,.12); color: #fff; border: none;
+  border-radius: 14px; padding: 13px; font-size: .95rem; font-weight: 600;
+  cursor: pointer; width: 100%;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="home-screen" class="screen active">
+  <div class="logo">🎭 Char<span>ades</span>!</div>
+  <p class="sub">Hold landscape · tilt down = correct · tilt up = skip</p>
+  <div class="grid">
+    <div class="tile" data-cat="mainstream">
+      <div class="em">🎬</div>
+      <div class="nm">Mainstream</div>
+      <div class="ct" id="c-mainstream"></div>
+    </div>
+    <div class="tile" data-cat="everyday">
+      <div class="em">🐘</div>
+      <div class="nm">Everyday</div>
+      <div class="ct" id="c-everyday"></div>
+    </div>
+    <div class="tile" data-cat="fiji">
+      <div class="em">🌺</div>
+      <div class="nm">Fiji</div>
+      <div class="ct" id="c-fiji"></div>
+    </div>
+    <div class="tile" data-cat="party">
+      <div class="em">🎉</div>
+      <div class="nm">Party</div>
+      <div class="ct" id="c-party"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ GET READY ══════════ -->
+<div id="ready-screen" class="screen">
+  <button class="back" id="back-btn">← Back</button>
+  <div class="rcat" id="rcat"></div>
+  <div class="rtitle">Get Ready!</div>
+  <div class="howto">
+    <b>How to play</b>
+    Hold phone <strong>landscape</strong> at forehead level.<br>
+    Tilt top <strong>DOWN ↓</strong> = Correct ✅<br>
+    Tilt top <strong>UP ↑</strong> = Skip ⏭<br>
+    You have <strong>60 seconds</strong> — go!
+  </div>
+  <button class="motion-btn" id="motion-btn">📱 Enable Motion &amp; Start</button>
+  <div class="countdown" id="countdown">3</div>
+</div>
+
+<!-- ══════════ PLAY ══════════ -->
+<div id="play-screen" class="screen">
+  <div class="play-wrap">
+    <div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
+    <div class="timer-num" id="timer-num">60</div>
+    <div class="score-num" id="score-num">0</div>
+    <div class="word" id="word">—</div>
+    <div class="tilt-bar">
+      <div class="th">⬆️ Skip</div>
+      <div class="th">Correct ⬇️</div>
+    </div>
+    <!-- tap fallback zones -->
+    <div class="tap-pass"    id="tap-pass"></div>
+    <div class="tap-correct" id="tap-correct"></div>
+    <!-- colour flash -->
+    <div class="flash" id="flash"></div>
+  </div>
+</div>
+
+<!-- ══════════ PORTRAIT OVERLAY ══════════ -->
+<div id="portrait-overlay">
+  <div class="rot-icon">📱</div>
+  <h2>Rotate to Landscape</h2>
+  <p style="color:var(--sub)">Turn your phone sideways to play</p>
+</div>
+
+<!-- ══════════ RESULTS ══════════ -->
+<div id="results-screen" class="screen">
+  <div style="text-align:center">
+    <div class="big-score" id="final-score">0</div>
+    <div class="score-lbl">correct</div>
+  </div>
+  <div class="res-lists">
+    <div class="res-col good">
+      <h3>✅ Correct</h3>
+      <ul id="correct-list"></ul>
+    </div>
+    <div class="res-col bad">
+      <h3>⏭ Passed</h3>
+      <ul id="passed-list"></ul>
+    </div>
+  </div>
+  <div class="btns">
+    <button class="btn-p" id="again-btn">Play Again (same category)</button>
+    <button class="btn-s" id="home-btn">Choose Category</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  WORD PACKS  ← edit these freely
+// ═══════════════════════════════════════════════
+const PACKS = {
+
+  mainstream: [
+    // Movies
+    'Titanic','Avengers','Frozen','Jurassic Park','Harry Potter','Star Wars',
+    'The Lion King','Spider-Man','Batman','Toy Story','Moana','Black Panther',
+    'Fast and Furious','Mission Impossible','The Godfather','Shrek','Finding Nemo',
+    'Inception','The Matrix','Home Alone','Forrest Gump','Gladiator','Mulan',
+    'The Incredibles','Coco','Encanto','Top Gun','Interstellar','Avatar','Oppenheimer',
+    // TV
+    'Friends','Stranger Things','Game of Thrones','The Office','Breaking Bad',
+    'Grey\'s Anatomy','Squid Game','Money Heist','Seinfeld','Big Bang Theory',
+    'Survivor','The Bachelor','RuPaul\'s Drag Race','Bridgerton','Emily in Paris',
+    'Wednesday','Ozark','The Crown','Peaky Blinders','White Lotus',
+    // Music & celebs
+    'Michael Jackson','Beyoncé','Taylor Swift','Drake','Rihanna','Ed Sheeran',
+    'Adele','Justin Bieber','Lady Gaga','Bruno Mars','Eminem','Nicki Minaj',
+    'BTS','Coldplay','The Weeknd','Billie Eilish','Dua Lipa','Lizzo',
+    'Oprah Winfrey','Elon Musk','Will Smith','Dwayne Johnson','Kim Kardashian',
+    'Cristiano Ronaldo','Lionel Messi','Serena Williams','LeBron James',
+    'Jennifer Lopez','Ariana Grande','Post Malone','Cardi B','Bad Bunny',
+  ],
+
+  everyday: [
+    // Animals
+    'Elephant','Giraffe','Penguin','Dolphin','Tiger','Gorilla','Kangaroo',
+    'Flamingo','Ostrich','Crocodile','Panda','Koala','Cheetah','Hippopotamus',
+    'Chameleon','Jellyfish','Octopus','Parrot','Peacock','Polar Bear',
+    'Sloth','Meerkat','Platypus','Narwhal','Axolotl','Hummingbird','Mantis Shrimp',
+    // Food
+    'Pizza','Sushi','Hamburger','Ice Cream','Chocolate','Banana','Watermelon',
+    'Pineapple','Popcorn','Sandwich','Taco','Donut','Cupcake','Pancakes',
+    'Spaghetti','Fried Chicken','Mango','Avocado','Pumpkin','Corn on the Cob',
+    'Croissant','Dumplings','Burrito','Cheesecake','Ramen',
+    // Jobs
+    'Doctor','Teacher','Firefighter','Police Officer','Chef','Pilot','Dentist',
+    'Astronaut','Farmer','Mechanic','Nurse','Lawyer','Architect','Photographer',
+    'Lifeguard','Librarian','Vet','Plumber','Electrician','Tour Guide','DJ',
+    // Objects
+    'Umbrella','Telescope','Skateboard','Microwave','Headphones','Backpack',
+    'Bicycle','Calculator','Hammer','Suitcase','Trampoline','Magnifying Glass',
+    'Compass','Binoculars','Parachute','Yo-yo','Boomerang','Kaleidoscope',
+    'Lawnmower','Typewriter',
+  ],
+
+  fiji: [
+    // Towns & islands
+    'Suva','Nadi','Lautoka','Sigatoka','Savusavu','Levuka','Labasa',
+    'Rakiraki','Ba','Tavua','Korovou','Navua','Pacific Harbour',
+    'Yasawa Islands','Mamanuca Islands','Beqa Island','Kadavu','Taveuni',
+    // Food & drink
+    'kokoda','lovo','palusami','tavioka','rourou','vakalolo','nama',
+    'vudi','kavika','ika','cassava cake','duruka','dalo','chilli water',
+    'kava','yaqona','koko Fiji',
+    // Culture & tradition
+    'sevusevu','meke','kerekere','tabua','magiti','soli','veiqaravi',
+    'loloma','bula','vinaka','moce','tovolea','sega na leqa',
+    'vale ni lotu','mataqali','tokatoka','tikina','turaga ni koro',
+    // Landmarks & icons
+    'Fiji Airways','Thurston Gardens','Suva Market','Saraswati Temple',
+    'Albert Park','USP','FNU','Fiji Museum','Ratu Sukuna Park',
+    'Garden of the Sleeping Giant','Navua River','Bouma Falls',
+    'Sigatoka Sand Dunes','Colo-i-Suva','Natadola Beach',
+    // Everyday Fiji life
+    'bilibili','carrier','minibus','rugby sevens','grog session',
+    'flower garland','pandanus mat','sulu','seawall','Sunday market',
+  ],
+
+  party: [
+    // Actions / mimes
+    'Moonwalking','Proposing marriage','Sneezing in public','Taking a selfie',
+    'Eating too much','Dancing alone at a party','Falling asleep in a meeting',
+    'Trying to parallel park','Eating spicy food','Winning the lottery',
+    'Being chased by a bee','Riding a rollercoaster','Giving a speech',
+    'Blowing out birthday candles','Opening presents','Sneaking into a fridge at night',
+    'Walking in high heels','Playing air guitar','Crying at a movie',
+    'Waking up late for work','Texting while walking','Dropping phone in toilet',
+    'Putting on sunscreen','Killing a spider','Trying not to laugh',
+    // Characters / impressions
+    'British Queen','American Cowboy','Italian Chef','Russian Spy',
+    'Valley Girl','Surfer Dude','News Anchor','Sports Commentator',
+    'Robot','Zombie','Vampire','Pirate','Superhero','Villain',
+    'Gym Bro','Instagram Influencer','Helicopter Parent','Uber Driver',
+    'Annoying Tourist','Strict Teacher','Nervous Bride','Overexcited Fan',
+    'Karate Master','Old Person Texting',
+    // Party scenarios
+    'Spin the Bottle','Limbo','Karaoke','Musical Chairs','Conga Line',
+    'Truth or Dare','Never Have I Ever','Tug of War',
+    'Marco Polo','Three-legged Race','Bobbing for Apples',
+  ],
+};
+
+// ═══════════════════════════════════════════════
+//  CONSTANTS  ← easy to change
+// ═══════════════════════════════════════════════
+const ROUND_TIME     = 60;   // seconds
+const TILT_CORRECT   = 25;   // beta < this → correct  (phone nose tilts down)
+const TILT_PASS      = 155;  // beta > this → pass     (phone nose tilts up)
+const NEUTRAL_LO     = 40;   // }
+const NEUTRAL_HI     = 140;  // } device must return here before next tilt fires
+const FLASH_MS       = 380;  // flash overlay duration
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let currentCat  = null;
+let deck        = [];
+let deckIdx     = 0;
+let score       = 0;
+let correct     = [];
+let passed      = [];
+let timeLeft    = ROUND_TIME;
+let ticker      = null;
+let wakeLock    = null;
+let motionOn    = false;
+let needNeutral = false;
+let gameActive  = false;
+let audioCtx    = null;
+
+// ═══════════════════════════════════════════════
+//  SCREENS
+// ═══════════════════════════════════════════════
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════
+//  AUDIO  (Web Audio — no haptics, works on iOS)
+// ═══════════════════════════════════════════════
+function ac() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function tone(freq, dur, type = 'sine', vol = 0.38) {
+  try {
+    const ctx = ac(), o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.start(); o.stop(ctx.currentTime + dur);
+  } catch (_) {}
+}
+
+const sfx = {
+  correct() { tone(880,.14,'sine',.5); setTimeout(()=>tone(1108,.26,'sine',.5),75); },
+  pass()    { tone(330,.11,'sawtooth',.28); setTimeout(()=>tone(220,.24,'sawtooth',.28),55); },
+  tick()    { tone(440,.18,'sine',.25); },
+  go()      { tone(880,.1,'sine',.5); setTimeout(()=>tone(1320,.35,'sine',.5),70); },
+  end()     { tone(660,.2,'sine',.4); setTimeout(()=>tone(550,.2,'sine',.4),200); setTimeout(()=>tone(440,.5,'sine',.4),400); },
+};
+
+// ═══════════════════════════════════════════════
+//  FLASH OVERLAY
+// ═══════════════════════════════════════════════
+function flash(colour) {
+  const el = document.getElementById('flash');
+  el.style.background = colour;
+  el.style.opacity    = '0.72';
+  setTimeout(() => { el.style.opacity = '0'; }, FLASH_MS);
+}
+
+// ═══════════════════════════════════════════════
+//  SHUFFLE
+// ═══════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = (Math.random() * (i + 1)) | 0;
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ═══════════════════════════════════════════════
+//  WAKE LOCK
+// ═══════════════════════════════════════════════
+async function grabWake() {
+  if ('wakeLock' in navigator) {
+    try { wakeLock = await navigator.wakeLock.request('screen'); } catch (_) {}
+  }
+}
+function dropWake() { if (wakeLock) { wakeLock.release(); wakeLock = null; } }
+
+// ═══════════════════════════════════════════════
+//  ORIENTATION GUARD  (landscape-only during play)
+// ═══════════════════════════════════════════════
+function checkOrientation() {
+  const playing = document.getElementById('play-screen').classList.contains('active');
+  const overlay = document.getElementById('portrait-overlay');
+  const landscape = window.innerWidth > window.innerHeight;
+
+  if (playing && !landscape) {
+    overlay.classList.add('show');
+    if (ticker) { clearInterval(ticker); ticker = null; }
+    gameActive = false;
+  } else if (playing && landscape && overlay.classList.contains('show')) {
+    overlay.classList.remove('show');
+    if (!ticker && timeLeft > 0) {
+      gameActive = true;
+      ticker = setInterval(tickTimer, 1000);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  TILT HANDLER
+// ═══════════════════════════════════════════════
+function onOrientation(e) {
+  if (!gameActive) return;
+  const beta = e.beta;
+  if (beta === null) return;
+
+  if (needNeutral) {
+    if (beta >= NEUTRAL_LO && beta <= NEUTRAL_HI) needNeutral = false;
+    return;
+  }
+
+  if (beta < TILT_CORRECT) {
+    doCorrect(); needNeutral = true;
+  } else if (beta > TILT_PASS || beta < -(180 - TILT_PASS)) {
+    doPass(); needNeutral = true;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  GAME ACTIONS
+// ═══════════════════════════════════════════════
+function doCorrect() {
+  if (!gameActive) return;
+  correct.push(deck[deckIdx]);
+  score++;
+  document.getElementById('score-num').textContent = score;
+  sfx.correct();
+  flash('#00c851');
+  nextCard();
+}
+
+function doPass() {
+  if (!gameActive) return;
+  passed.push(deck[deckIdx]);
+  sfx.pass();
+  flash('#ff4444');
+  nextCard();
+}
+
+function nextCard() {
+  deckIdx++;
+  if (deckIdx >= deck.length) {
+    deck = shuffle(PACKS[currentCat]);
+    deckIdx = 0;
+  }
+  document.getElementById('word').textContent = deck[deckIdx];
+}
+
+// ═══════════════════════════════════════════════
+//  TIMER
+// ═══════════════════════════════════════════════
+function tickTimer() {
+  timeLeft--;
+  const pct = (timeLeft / ROUND_TIME) * 100;
+  const fill = document.getElementById('timer-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct > 50 ? 'var(--green)' : pct > 20 ? 'var(--yellow)' : 'var(--red)';
+  document.getElementById('timer-num').textContent = timeLeft;
+  if (timeLeft <= 0) endGame();
+}
+
+// ═══════════════════════════════════════════════
+//  START GAME
+// ═══════════════════════════════════════════════
+function startGame(cat) {
+  currentCat = cat;
+  deck = shuffle(PACKS[cat]);
+  deckIdx = 0; score = 0; correct = []; passed = [];
+  timeLeft = ROUND_TIME; needNeutral = false;
+
+  document.getElementById('word').textContent = deck[0];
+  document.getElementById('score-num').textContent = '0';
+  document.getElementById('timer-num').textContent = ROUND_TIME;
+  document.getElementById('timer-fill').style.width = '100%';
+  document.getElementById('timer-fill').style.background = 'var(--green)';
+
+  show('play-screen');
+  checkOrientation();
+
+  gameActive = window.innerWidth > window.innerHeight;
+  if (gameActive) ticker = setInterval(tickTimer, 1000);
+
+  grabWake();
+}
+
+// ═══════════════════════════════════════════════
+//  END GAME
+// ═══════════════════════════════════════════════
+function endGame() {
+  gameActive = false;
+  clearInterval(ticker); ticker = null;
+  dropWake();
+  sfx.end();
+
+  document.getElementById('final-score').textContent = score;
+  document.getElementById('correct-list').innerHTML = correct.map(w => `<li>${w}</li>`).join('');
+  document.getElementById('passed-list').innerHTML  = passed.map(w => `<li>${w}</li>`).join('');
+
+  show('results-screen');
+  document.getElementById('portrait-overlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════
+//  MOTION PERMISSION + COUNTDOWN
+// ═══════════════════════════════════════════════
+async function enableMotion(cat) {
+  if (!motionOn) {
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const p = await DeviceOrientationEvent.requestPermission();
+        if (p === 'granted') motionOn = true;
+      } catch (_) {}
+    } else {
+      motionOn = true; // Android / desktop — no permission needed
+    }
+    if (motionOn) window.addEventListener('deviceorientation', onOrientation, true);
+  }
+  countdown(cat);
+}
+
+function countdown(cat) {
+  const btn = document.getElementById('motion-btn');
+  const cd  = document.getElementById('countdown');
+  btn.style.display = 'none';
+  cd.style.display  = 'block';
+
+  let n = 3;
+  cd.textContent = n;
+  sfx.tick();
+
+  const iv = setInterval(() => {
+    n--;
+    if (n > 0) { cd.textContent = n; sfx.tick(); }
+    else {
+      clearInterval(iv);
+      cd.textContent = 'GO!';
+      sfx.go();
+      setTimeout(() => startGame(cat), 550);
+    }
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+
+// Word counts on home tiles
+Object.keys(PACKS).forEach(cat => {
+  const el = document.getElementById('c-' + cat);
+  if (el) el.textContent = PACKS[cat].length + ' words';
+});
+
+// Detect iOS for button label
+const needsPermission = typeof DeviceOrientationEvent !== 'undefined' &&
+                        typeof DeviceOrientationEvent.requestPermission === 'function';
+if (!needsPermission) {
+  document.getElementById('motion-btn').textContent = '▶ Start Game';
+}
+
+// Category tiles
+document.querySelectorAll('.tile').forEach(tile => {
+  tile.addEventListener('click', () => {
+    currentCat = tile.dataset.cat;
+    document.getElementById('rcat').textContent = tile.querySelector('.nm').textContent;
+    document.getElementById('motion-btn').style.display = '';
+    document.getElementById('motion-btn').disabled = false;
+    document.getElementById('countdown').style.display = 'none';
+    show('ready-screen');
+  });
+});
+
+// Motion / start button
+document.getElementById('motion-btn').addEventListener('click', () => {
+  document.getElementById('motion-btn').disabled = true;
+  enableMotion(currentCat);
+});
+
+// Back button
+document.getElementById('back-btn').addEventListener('click', () => show('home-screen'));
+
+// Tap zones (fallback for no-motion / desktop)
+document.getElementById('tap-correct').addEventListener('click', doCorrect);
+document.getElementById('tap-pass').addEventListener('click', doPass);
+
+// Results buttons
+document.getElementById('again-btn').addEventListener('click', () => {
+  const tile = document.querySelector(`.tile[data-cat="${currentCat}"]`);
+  document.getElementById('rcat').textContent = tile.querySelector('.nm').textContent;
+  document.getElementById('motion-btn').style.display = '';
+  document.getElementById('motion-btn').disabled = false;
+  document.getElementById('countdown').style.display = 'none';
+  show('ready-screen');
+});
+document.getElementById('home-btn').addEventListener('click', () => show('home-screen'));
+
+// Orientation / resize
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
+// Re-acquire wake lock when tab comes back into view
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && gameActive) grabWake();
+});
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
+// Keyboard fallback (desktop / testing)
+document.addEventListener('keydown', e => {
+  if (!gameActive) return;
+  if (e.key === 'ArrowDown' || e.key === 'Enter') doCorrect();
+  if (e.key === 'ArrowUp'   || e.key === ' ')     doPass();
+});
+</script>
+
+<!--
+════════════════════════════════════════════════════════
+  DEPLOY IN 4 STEPS
+════════════════════════════════════════════════════════
+  1. Push these 3 files (index.html, manifest.json, sw.js) to a
+     GitHub repo (root of main branch, or a /docs folder).
+
+  2a. Cloudflare Pages:
+      → dash.cloudflare.com › Pages › Create › Connect to Git
+      → Select your repo › Framework: None › Deploy
+      HTTPS is automatic.
+
+  2b. GitHub Pages (alternative):
+      → Repo › Settings › Pages › Source: Deploy from branch
+      → Branch: main / root (or /docs)  → Save
+      HTTPS is automatic; your URL will be
+      https://<user>.github.io/<repo>/
+
+  3. On iPhone: open the URL in Safari (must be HTTPS).
+     Tap the Share icon ⬆ → "Add to Home Screen" → Add.
+
+  4. Tap the icon on your Home Screen.
+     On first play, tap "Enable Motion" and choose "Allow" when
+     iOS asks for motion-sensor permission. That's it — you're live!
+════════════════════════════════════════════════════════
+-->
+</body>
+</html>
