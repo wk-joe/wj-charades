@@ -622,8 +622,8 @@ function onOrientation(e) {
       if (Math.abs(gamma) <= NEUTRAL_GAMMA) needNeutral = false;
       return;
     }
-    if (noseDown > TILT_GAMMA_CORRECT)  { doCorrect(); needNeutral = true; }
-    else if (noseDown < -TILT_GAMMA_PASS) { doPass();    needNeutral = true; }
+    if (noseDown > TILT_GAMMA_CORRECT)  { doPass();    needNeutral = true; }
+    else if (noseDown < -TILT_GAMMA_PASS) { doCorrect(); needNeutral = true; }
 
   } else {
     const beta = e.beta;
