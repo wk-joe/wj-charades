@@ -93,6 +93,9 @@ html, body {
 .tile[data-cat=everyday]   { border-color: #2ecc71; }
 .tile[data-cat=fiji]       { border-color: #f39c12; }
 .tile[data-cat=party]      { border-color: #e74c3c; }
+.tile[data-cat=sports]     { border-color: #3498db; }
+.tile[data-cat=nature]     { border-color: #1abc9c; }
+.tile[data-cat=history]    { border-color: #e67e22; }
 
 /* ── GET READY ── */
 #ready-screen { gap: 18px; background: #0f3460; text-align: center; }
@@ -296,7 +299,7 @@ html, body {
 <!-- ══════════ HOME ══════════ -->
 <div id="home-screen" class="screen active">
   <div class="logo">🎭 Char<span>ades</span>!</div>
-  <p class="sub">Hold landscape · tilt down = correct · tilt up = skip</p>
+  <p class="sub">Hold landscape · tilt up = correct · tilt down = skip</p>
   <div class="grid">
     <div class="tile" data-cat="mainstream">
       <div class="em">🎬</div>
@@ -318,6 +321,21 @@ html, body {
       <div class="nm">Party</div>
       <div class="ct" id="c-party"></div>
     </div>
+    <div class="tile" data-cat="sports">
+      <div class="em">🏆</div>
+      <div class="nm">Sports</div>
+      <div class="ct" id="c-sports"></div>
+    </div>
+    <div class="tile" data-cat="nature">
+      <div class="em">🌍</div>
+      <div class="nm">Nature</div>
+      <div class="ct" id="c-nature"></div>
+    </div>
+    <div class="tile" data-cat="history">
+      <div class="em">👑</div>
+      <div class="nm">History</div>
+      <div class="ct" id="c-history"></div>
+    </div>
   </div>
 </div>
 
@@ -329,8 +347,8 @@ html, body {
   <div class="howto">
     <b>How to play</b>
     Hold phone <strong>landscape</strong> at forehead level.<br>
-    Tilt top <strong>DOWN ↓</strong> = Correct ✅<br>
-    Tilt top <strong>UP ↑</strong> = Skip ⏭<br>
+    Tilt top <strong>UP ↑</strong> = Correct ✅<br>
+    Tilt top <strong>DOWN ↓</strong> = Skip ⏭<br>
     You have <strong>60 seconds</strong> — go!
   </div>
   <button class="motion-btn" id="motion-btn">📱 Enable Motion &amp; Start</button>
@@ -345,8 +363,8 @@ html, body {
     <div class="score-num" id="score-num">0</div>
     <div class="word" id="word">—</div>
     <div class="tilt-bar">
-      <div class="th">⬆️ Skip</div>
-      <div class="th">Correct ⬇️</div>
+      <div class="th">⬆️ Correct</div>
+      <div class="th">Skip ⬇️</div>
     </div>
     <!-- tap fallback zones -->
     <div class="tap-pass"    id="tap-pass"></div>
@@ -455,6 +473,66 @@ const PACKS = {
     // Everyday Fiji life
     'bilibili','carrier','minibus','rugby sevens','grog session',
     'flower garland','pandanus mat','sulu','seawall','Sunday market',
+  ],
+
+  sports: [
+    // Sports & games
+    'Football','Basketball','Tennis','Swimming','Boxing','Cricket','Rugby','Golf',
+    'Volleyball','Baseball','Gymnastics','Skateboarding','Surfing','Wrestling',
+    'Cycling','Horse Racing','Table Tennis','Badminton','Archery','Weightlifting',
+    'Pole Vault','High Jump','Relay Race','Triathlon','Water Polo','Rowing',
+    'Ice Skating','Snowboarding','Skiing','Darts',
+    // Athletes
+    'Usain Bolt','Michael Jordan','Serena Williams','Muhammad Ali','Tiger Woods',
+    'Lionel Messi','Cristiano Ronaldo','LeBron James','Roger Federer','Simone Biles',
+    'Michael Phelps','Naomi Osaka','Lewis Hamilton','Pelé','Mike Tyson',
+    'Kobe Bryant','Wayne Gretzky','Tom Brady','Novak Djokovic','Neymar',
+    'Ronda Rousey','Stephen Curry','Rafael Nadal','Lance Armstrong','Carl Lewis',
+    // Actions & moments
+    'Free Kick','Slam Dunk','Home Run','Knockout','Penalty Shootout',
+    'Hat Trick','Photo Finish','Disqualification','Gold Medal','Lap of Honour',
+    'Referee','Cheerleader','Olympic Torch','Victory Lap','Warm Up',
+  ],
+
+  nature: [
+    // Weather & sky
+    'Thunderstorm','Rainbow','Blizzard','Tornado','Tsunami','Earthquake',
+    'Volcano','Eclipse','Aurora Borealis','Hailstorm','Drought','Flood',
+    'Heatwave','Fog','Hurricane','Avalanche','Lightning','Meteor Shower',
+    // Landscapes & geography
+    'Waterfall','Desert','Glacier','Coral Reef','Rainforest','Swamp',
+    'Canyon','Cave','Cliff','Sand Dune','Hot Spring','Lagoon','Fjord',
+    'Savanna','Tundra','Mangrove','Atoll','Geyser','Quicksand',
+    // Plants & trees
+    'Sunflower','Cactus','Bamboo','Coconut Palm','Mushroom','Seaweed',
+    'Venus Flytrap','Baobab Tree','Mangrove Tree','Cherry Blossom',
+    'Tumbleweed','Lily Pad','Fern','Moss','Dandelion',
+    // Creatures
+    'Shark','Blue Whale','Eagle','Chameleon','Firefly','Piranha',
+    'Giant Squid','Komodo Dragon','Snow Leopard','Pangolin','Manta Ray',
+    'Electric Eel','Bald Eagle','Sea Turtle','Dragonfly','Tarantula',
+    'Praying Mantis','Flying Fish','Puffer Fish','Leafy Sea Dragon',
+  ],
+
+  history: [
+    // World figures
+    'Cleopatra','Napoleon','Julius Caesar','Joan of Arc','Genghis Khan',
+    'Alexander the Great','Abraham Lincoln','Nelson Mandela','Mahatma Gandhi',
+    'Martin Luther King','Winston Churchill','Adolf Hitler','Joseph Stalin',
+    'Queen Victoria','Marie Antoinette','Marco Polo','Christopher Columbus',
+    'Leonardo da Vinci','Michelangelo','Isaac Newton','Albert Einstein',
+    'Charles Darwin','Nikola Tesla','Marie Curie','Galileo Galilei',
+    'William Shakespeare','Mozart','Beethoven','Sigmund Freud',
+    // Events & eras
+    'French Revolution','World War One','World War Two','Moon Landing',
+    'Black Plague','Great Wall of China','Titanic Sinking','Cold War',
+    'American Revolution','Fall of Rome','Industrial Revolution',
+    'Boston Tea Party','D-Day','Hiroshima','Berlin Wall','9/11',
+    'Space Race','Gold Rush','Abolition of Slavery','Women\'s Suffrage',
+    // Inventions & symbols
+    'Printing Press','Steam Engine','Telephone','Light Bulb','Aeroplane',
+    'Internet','Compass','Gunpowder','Wheel','Pyramids','Colosseum',
+    'Stonehenge','Eiffel Tower','Statue of Liberty','Great Barrier Reef',
   ],
 
   party: [
