@@ -232,6 +232,14 @@
       background: #39DB74;
     }
 
+    .tile[data-cat=food] {
+      background: #FF5E3A;
+    }
+
+    .tile[data-cat=places] {
+      background: #14B8A6;
+    }
+
     .tile[data-cat=history] {
       background: #D4A0FF;
       grid-column: 1 / -1;
@@ -883,6 +891,18 @@
         <div class="tile-sub">WORLD AROUND YOU &middot; <span id="c-nature"></span></div>
       </div>
 
+      <div class="tile" data-cat="food">
+        <i class="ph-fill ph-fork-knife tile-glyph"></i>
+        <div class="tile-name">FOOD &amp;<br>DRINK</div>
+        <div class="tile-sub">DISHES, DRINKS &amp; MORE &middot; <span id="c-food"></span></div>
+      </div>
+
+      <div class="tile" data-cat="places">
+        <i class="ph-fill ph-map-pin tile-glyph"></i>
+        <div class="tile-name">PLACES</div>
+        <div class="tile-sub">CITIES &amp; LANDMARKS &middot; <span id="c-places"></span></div>
+      </div>
+
       <div class="tile" data-cat="history">
         <i class="ph-fill ph-crown tile-glyph"></i>
         <div class="tile-name">HISTORY</div>
@@ -992,11 +1012,15 @@
         'Fast and Furious', 'Mission Impossible', 'The Godfather', 'Shrek', 'Finding Nemo',
         'Inception', 'The Matrix', 'Home Alone', 'Forrest Gump', 'Gladiator', 'Mulan',
         'The Incredibles', 'Coco', 'Encanto', 'Top Gun', 'Interstellar', 'Avatar', 'Oppenheimer',
+        'Barbie', 'Dune', 'Parasite', 'The Dark Knight', 'John Wick', 'Deadpool',
+        'Guardians of the Galaxy', 'Get Out', 'Knives Out', 'Everything Everywhere All at Once',
         // TV
         'Friends', 'Stranger Things', 'Game of Thrones', 'The Office', 'Breaking Bad',
         'Grey\'s Anatomy', 'Squid Game', 'Money Heist', 'Seinfeld', 'Big Bang Theory',
         'Survivor', 'The Bachelor', 'RuPaul\'s Drag Race', 'Bridgerton', 'Emily in Paris',
         'Wednesday', 'Ozark', 'The Crown', 'Peaky Blinders', 'White Lotus',
+        'Succession', 'Ted Lasso', 'Euphoria', 'The Bear', 'Only Murders in the Building',
+        'Yellowstone', 'House of the Dragon', 'The Last of Us',
         // Music & celebs
         'Michael Jackson', 'Beyoncé', 'Taylor Swift', 'Drake', 'Rihanna', 'Ed Sheeran',
         'Adele', 'Justin Bieber', 'Lady Gaga', 'Bruno Mars', 'Eminem', 'Nicki Minaj',
@@ -1004,6 +1028,7 @@
         'Oprah Winfrey', 'Elon Musk', 'Will Smith', 'Dwayne Johnson', 'Kim Kardashian',
         'Cristiano Ronaldo', 'Lionel Messi', 'Serena Williams', 'LeBron James',
         'Jennifer Lopez', 'Ariana Grande', 'Post Malone', 'Cardi B', 'Bad Bunny',
+        'Selena Gomez', 'Zendaya', 'Harry Styles', 'Sabrina Carpenter', 'Timothée Chalamet',
       ],
 
       everyday: [
@@ -1026,6 +1051,14 @@
         'Bicycle', 'Calculator', 'Hammer', 'Suitcase', 'Trampoline', 'Magnifying Glass',
         'Compass', 'Binoculars', 'Parachute', 'Yo-yo', 'Boomerang', 'Kaleidoscope',
         'Lawnmower', 'Typewriter',
+        // More animals
+        'Lion', 'Zebra', 'Camel', 'Otter', 'Red Panda', 'Toucan', 'Stingray',
+        'Wombat', 'Capybara', 'Reindeer', 'Bison',
+        // More jobs
+        'Surgeon', 'Security Guard', 'Social Worker', 'Graphic Designer',
+        // More objects
+        'Alarm Clock', 'Fridge', 'Blender', 'Electric Scooter', 'Drone',
+        'Smartwatch', 'Vending Machine', 'Piggy Bank',
       ],
 
       fiji: [
@@ -1049,6 +1082,12 @@
         // Everyday Fiji life
         'bilibili', 'carrier', 'minibus', 'rugby sevens', 'grog session',
         'flower garland', 'pandanus mat', 'sulu', 'seawall', 'Sunday market',
+        // More islands & places
+        'Koro Island', 'Rotuma', 'Ovalau', 'Vuda Point', 'Coral Coast', 'Naihehe Cave',
+        'Natovi', 'Nabukelevu', 'Monasavu Dam', 'Nausori',
+        // Community & culture
+        'Indo-Fijian', 'iTaukei', 'Diwali', 'Holi', 'sugarcane', 'copra',
+        'Fiji pine', 'kaikoso', 'lumi', 'vale levu',
       ],
 
       sports: [
@@ -1068,6 +1107,12 @@
         'Free Kick', 'Slam Dunk', 'Home Run', 'Knockout', 'Penalty Shootout',
         'Hat Trick', 'Photo Finish', 'Disqualification', 'Gold Medal', 'Lap of Honour',
         'Referee', 'Cheerleader', 'Olympic Torch', 'Victory Lap', 'Warm Up',
+        'Own Goal', 'Red Card', 'World Record', 'Grand Slam', 'Clean Sheet',
+        // More sports
+        'Mixed Martial Arts', 'CrossFit', 'Pickleball', 'Rock Climbing', 'Parkour',
+        'E-sports', 'Bull Riding', 'Sumo Wrestling', 'Fencing', 'Handball', 'Lacrosse',
+        // Fiji legends
+        'Waisale Serevi', 'Osea Kolinisau', 'Jerry Tuwai', 'Sitiveni Rabaka',
       ],
 
       nature: [
@@ -1088,6 +1133,15 @@
         'Giant Squid', 'Komodo Dragon', 'Snow Leopard', 'Pangolin', 'Manta Ray',
         'Electric Eel', 'Bald Eagle', 'Sea Turtle', 'Dragonfly', 'Tarantula',
         'Praying Mantis', 'Flying Fish', 'Puffer Fish', 'Leafy Sea Dragon',
+        // More weather & phenomena
+        'Blood Moon', 'Sandstorm', 'Wildfire', 'Mudslide', 'Bioluminescence',
+        // More landscapes
+        'Sea Cave', 'Tide Pool', 'Cenote', 'Geothermal Vent',
+        // More plants
+        'Pitcher Plant', 'Giant Kelp', 'Ghost Orchid', 'Corpse Flower',
+        // More creatures
+        'Whale Shark', 'Great White Shark', 'Poison Dart Frog', 'Blue-Ringed Octopus',
+        'Glass Frog', 'Peacock Spider', 'Mimic Octopus',
       ],
 
       history: [
@@ -1109,6 +1163,14 @@
         'Printing Press', 'Steam Engine', 'Telephone', 'Light Bulb', 'Aeroplane',
         'Internet', 'Compass', 'Gunpowder', 'Wheel', 'Pyramids', 'Colosseum',
         'Stonehenge', 'Eiffel Tower', 'Statue of Liberty', 'Great Barrier Reef',
+        // More figures
+        'Harriet Tubman', 'Frederick Douglass', 'Simón Bolívar', 'Mao Zedong',
+        'Ho Chi Minh', 'Che Guevara', 'Attila the Hun', 'Catherine the Great',
+        'Peter the Great', 'Ramesses II', 'Tutankhamun', 'Hannibal', 'Spartacus',
+        'Florence Nightingale', 'Rosa Parks', 'Emmeline Pankhurst', 'Anne Frank',
+        // More events & eras
+        'The Crusades', 'The Renaissance', 'The Reformation', 'Aztec Empire',
+        'Viking Age', 'Silk Road', 'Magna Carta', 'Treaty of Versailles', 'Rosetta Stone',
       ],
 
       party: [
@@ -1132,6 +1194,50 @@
         'Spin the Bottle', 'Limbo', 'Karaoke', 'Musical Chairs', 'Conga Line',
         'Truth or Dare', 'Never Have I Ever', 'Tug of War',
         'Marco Polo', 'Three-legged Race', 'Bobbing for Apples',
+        'Escape Room', 'Silent Disco', 'Flash Mob', 'Scavenger Hunt',
+        // More actions
+        'Doing the floss', 'Pulling an all-nighter', 'Getting stage fright',
+        'Road trip sing-along', 'Ugly crying', 'Taking the last piece of food',
+        'Falling off a chair', 'Running in slow motion', 'Sneaking out at night',
+        // More characters
+        'Karen', 'Foodie blogger', 'Life coach', 'Stand-up comedian', 'Diva',
+        'Best Man', 'Nervous groom', 'Party crasher', 'DJ at a wedding',
+      ],
+
+      food: [
+        // Global dishes
+        'Pasta', 'Steak', 'Paella', 'Pad Thai', 'Fish and Chips', 'Jerk Chicken',
+        'Pho', 'Bibimbap', 'Falafel', 'Gyros', 'Shawarma', 'Schnitzel', 'Dim Sum',
+        'Peking Duck', 'Enchiladas', 'Biryani', 'Laksa', 'Rendang', 'Churros',
+        'Crepes', 'Empanadas', 'Baklava', 'Tiramisu', 'Gelato', 'Mochi',
+        'Jollof Rice', 'Borscht', 'Pierogi', 'Moussaka', 'Tagine', 'Fondue',
+        'Lobster', 'Oysters', 'Wagyu Beef', 'Truffle', 'Caviar', 'Lasagne',
+        // Drinks
+        'Cocktail', 'Smoothie', 'Espresso', 'Bubble Tea', 'Margarita',
+        'Mojito', 'Champagne', 'Milkshake', 'Kombucha', 'Green Tea', 'Lemonade',
+        'Cold Brew', 'Matcha Latte',
+        // Food experiences
+        'Food Truck', 'Buffet', 'Potluck', 'Barbecue', 'Picnic', 'Farmers Market',
+        'Sushi Train', 'Tasting Menu', 'Midnight Snack', 'Drive-Through', 'Brunch',
+        // Chains & shows
+        'McDonald\'s', 'KFC', 'MasterChef', 'The Great British Bake Off', 'Hell\'s Kitchen',
+      ],
+
+      places: [
+        // Cities
+        'Paris', 'New York', 'Tokyo', 'London', 'Dubai', 'Sydney', 'Rome',
+        'Barcelona', 'Bangkok', 'Bali', 'Singapore', 'Istanbul', 'Cairo',
+        'Rio de Janeiro', 'Las Vegas', 'Mumbai', 'Amsterdam', 'Venice', 'Prague',
+        'Los Angeles', 'Toronto', 'Mexico City', 'Seoul', 'Nairobi', 'Cape Town',
+        // Countries
+        'Brazil', 'Japan', 'Italy', 'Australia', 'Mexico', 'India',
+        'Egypt', 'Morocco', 'Thailand', 'Greece', 'Spain', 'Kenya', 'Iceland',
+        // Landmarks
+        'Burj Khalifa', 'Sydney Opera House', 'Machu Picchu', 'Taj Mahal',
+        'Angkor Wat', 'Sagrada Familia', 'Niagara Falls', 'Mount Fuji',
+        'Amazon Rainforest', 'Sahara Desert', 'Mount Everest', 'Antarctica',
+        'Maldives', 'Santorini', 'Grand Canyon', 'Golden Gate Bridge',
+        'Louvre Museum', 'Vatican City', 'Times Square', 'Hollywood Sign',
       ],
     };
 
@@ -1146,6 +1252,8 @@
       sports:     { color: '#00C8FF', name: 'SPORTS',     icon: 'ph-trophy' },
       nature:     { color: '#39DB74', name: 'NATURE',     icon: 'ph-leaf' },
       history:    { color: '#D4A0FF', name: 'HISTORY',    icon: 'ph-crown' },
+      food:       { color: '#FF5E3A', name: 'FOOD & DRINK', icon: 'ph-fork-knife' },
+      places:     { color: '#14B8A6', name: 'PLACES',     icon: 'ph-map-pin' },
     };
 
 
