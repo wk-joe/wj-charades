@@ -1200,23 +1200,35 @@
       const el = document.getElementById('word');
       el.textContent = word;
 
-      // Binary-search the largest font size where no token wraps mid-word.
-      // Available width = screen short dimension minus horizontal padding (64px each side).
-      const availW = Math.max(window.innerWidth, window.innerHeight) - 128;
+      const screenW = Math.max(window.innerWidth, window.innerHeight);
+      const screenH = Math.min(window.innerWidth, window.innerHeight);
+      const availW = screenW - 128; // 64px padding each side
+      const availH = screenH - 120; // reserve for timer bar top + hints bottom
       const tokens = word.split(' ');
 
-      // Use a hidden canvas for fast text measurement
-      if (!showWord._canvas) {
-        showWord._canvas = document.createElement('canvas');
-      }
+      if (!showWord._canvas) showWord._canvas = document.createElement('canvas');
       const ctx = showWord._canvas.getContext('2d');
+
+      // Count how many lines the text wraps into at a given font size
+      function linesAt(size) {
+        ctx.font = `${size}px 'Archivo Black', sans-serif`;
+        const spW = ctx.measureText(' ').width;
+        let count = 1, w = 0;
+        for (const t of tokens) {
+          const tw = ctx.measureText(t).width;
+          if (w > 0 && w + spW + tw > availW) { count++; w = tw; }
+          else { w += (w > 0 ? spW : 0) + tw; }
+        }
+        return count;
+      }
 
       let lo = 40, hi = 160, best = lo;
       while (lo <= hi) {
         const mid = (lo + hi) >> 1;
         ctx.font = `${mid}px 'Archivo Black', sans-serif`;
-        const maxW = Math.max(...tokens.map(t => ctx.measureText(t).width));
-        if (maxW <= availW) { best = mid; lo = mid + 1; }
+        const maxTokW = Math.max(...tokens.map(t => ctx.measureText(t).width));
+        const textH = mid * 0.88 * linesAt(mid);
+        if (maxTokW <= availW && textH <= availH) { best = mid; lo = mid + 1; }
         else { hi = mid - 1; }
       }
       el.style.fontSize = best + 'px';
