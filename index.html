@@ -1,1113 +1,1409 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Tilt!">
-<meta name="theme-color" content="#6322d6">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700;800;900&display=swap" rel="stylesheet">
-<title>Tilt!</title>
-<style>
-:root {
-  --ink:         #141414;
-  --purple:      #6322d6;
-  --cream:       #F6F1E7;
-  --cream-shade: #E4DCC8;
-  --correct:     #18C964;
-  --pass:        #FF3A30;
-  --correct-dk:  #18A34A;
-  --cat-color:   #FFD400;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tilt!">
+  <meta name="theme-color" content="#6322d6">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="/app-icon.png">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700;800;900&display=swap"
+    rel="stylesheet">
+  <title>Tilt!</title>
+  <style>
+    :root {
+      --ink: #141414;
+      --purple: #6322d6;
+      --cream: #F6F1E7;
+      --cream-shade: #E4DCC8;
+      --correct: #18C964;
+      --pass: #FF3A30;
+      --correct-dk: #18A34A;
+      --cat-color: #FFD400;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-html, body {
-  width: 100%; height: 100%;
-  background: var(--ink);
-  color: var(--ink);
-  font-family: 'Archivo', sans-serif;
-  overflow: hidden;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: none;
-}
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: var(--ink);
+      color: var(--ink);
+      font-family: 'Archivo', sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none;
+    }
 
-/* ── SCREENS ── */
-.screen { display: none; position: absolute; inset: 0; flex-direction: column; }
-.screen.active { display: flex; }
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      position: absolute;
+      inset: 0;
+      flex-direction: column;
+    }
 
-/* ── ANIMATIONS ── */
-@keyframes countPop {
-  0%   { transform: scale(1.5); }
-  60%  { transform: scale(1); }
-  100% { transform: scale(1); }
-}
-@keyframes tiltIn {
-  0%   { transform: rotate(-4deg) translateY(-20px); opacity: 0; }
-  100% { transform: rotate(-4deg); opacity: 1; }
-}
+    .screen.active {
+      display: flex;
+    }
 
-/* ══════════════════════════════════════
+    /* ── ANIMATIONS ── */
+    @keyframes countPop {
+      0% {
+        transform: scale(1.5);
+      }
+
+      60% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes tiltIn {
+      0% {
+        transform: rotate(-4deg) translateY(-20px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: rotate(-4deg);
+        opacity: 1;
+      }
+    }
+
+    /* ══════════════════════════════════════
    HOME
 ══════════════════════════════════════ */
-#home-screen {
-  background: var(--purple);
-  padding: max(30px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
+    #home-screen {
+      background: var(--purple);
+      padding: max(30px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
-.wordmark-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 26px;
-}
-.wordmark-box {
-  background: #FFD400;
-  border: 6px solid var(--ink);
-  padding: 6px 30px 14px;
-  box-shadow: 12px 12px 0 var(--ink);
-  animation: tiltIn .45s cubic-bezier(.2,.85,.25,1) both;
-}
-.wordmark-text {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: clamp(64px, 20vw, 104px);
-  line-height: .92;
-  letter-spacing: -3px;
-}
-.wordmark-chip {
-  margin-top: 22px;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 900;
-  font-size: 13px;
-  letter-spacing: 3px;
-  padding: 7px 14px;
-}
+    .wordmark-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 26px;
+    }
 
-.deck-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.deck-divider-line { flex: 1; height: 4px; background: #fff; opacity: .55; }
-.deck-divider-lbl  { font-weight: 900; font-size: 15px; letter-spacing: 3px; color: #fff; white-space: nowrap; }
+    .wordmark-box {
+      background: #FFD400;
+      border: 6px solid var(--ink);
+      padding: 6px 30px 14px;
+      box-shadow: 12px 12px 0 var(--ink);
+      animation: tiltIn .45s cubic-bezier(.2, .85, .25, 1) both;
+    }
 
-.deck-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding-bottom: 4px;
-}
+    .wordmark-text {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(64px, 20vw, 104px);
+      line-height: .92;
+      letter-spacing: -3px;
+    }
 
-.tile {
-  position: relative;
-  overflow: hidden;
-  border: 5px solid var(--ink);
-  box-shadow: 8px 8px 0 var(--ink);
-  padding: 18px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  min-height: 115px;
-  transition: none;
-}
-.tile:active { transform: translate(4px,4px); box-shadow: 2px 2px 0 var(--ink); }
+    .wordmark-chip {
+      margin-top: 22px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 3px;
+      padding: 7px 14px;
+    }
 
-.tile-glyph {
-  position: absolute;
-  right: -30px; bottom: -34px;
-  background: var(--ink);
-  opacity: .17;
-  pointer-events: none;
-}
-.tile-name {
-  position: relative; z-index: 1;
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 28px; line-height: .95;
-}
-.tile-sub {
-  position: relative; z-index: 1;
-  font-weight: 800; font-size: 11px;
-  letter-spacing: 1px; opacity: .7;
-}
+    .deck-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
 
-.tile[data-cat=mainstream] { background: #FFD400; }
-.tile[data-cat=everyday]   { background: #22A7FF; }
-.tile[data-cat=fiji]       { background: #FF7A1A; }
-.tile[data-cat=party]      { background: #FF4D9D; }
-.tile[data-cat=sports]     { background: #00C8FF; }
-.tile[data-cat=nature]     { background: #39DB74; }
-.tile[data-cat=history]    { background: #D4A0FF; grid-column: 1 / -1; }
+    .deck-divider-line {
+      flex: 1;
+      height: 4px;
+      background: #fff;
+      opacity: .55;
+    }
 
-/* ══════════════════════════════════════
+    .deck-divider-lbl {
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 3px;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .deck-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding-bottom: 4px;
+    }
+
+    .tile {
+      position: relative;
+      overflow: hidden;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      min-height: 115px;
+      transition: none;
+    }
+
+    .tile:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .tile-glyph {
+      position: absolute;
+      right: -14px;
+      bottom: -14px;
+      font-size: 150px;
+      line-height: 1;
+      color: var(--ink);
+      opacity: .17;
+      pointer-events: none;
+    }
+
+    .tile-name {
+      position: relative;
+      z-index: 1;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 28px;
+      line-height: .95;
+    }
+
+    .tile-sub {
+      position: relative;
+      z-index: 1;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 1px;
+      opacity: .7;
+    }
+
+    .tile[data-cat=mainstream] {
+      background: #FFD400;
+    }
+
+    .tile[data-cat=everyday] {
+      background: #22A7FF;
+    }
+
+    .tile[data-cat=fiji] {
+      background: #FF7A1A;
+    }
+
+    .tile[data-cat=party] {
+      background: #FF4D9D;
+    }
+
+    .tile[data-cat=sports] {
+      background: #00C8FF;
+    }
+
+    .tile[data-cat=nature] {
+      background: #39DB74;
+    }
+
+    .tile[data-cat=history] {
+      background: #D4A0FF;
+      grid-column: 1 / -1;
+    }
+
+    /* ══════════════════════════════════════
    GET READY
 ══════════════════════════════════════ */
-#ready-screen {
-  background: var(--cat-color);
-  align-items: stretch;
-}
+    #ready-screen {
+      background: var(--cat-color);
+      align-items: stretch;
+    }
 
-.ready-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: max(36px, env(safe-area-inset-top)) 28px 0;
-}
-.back-btn {
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  font-weight: 900;
-  font-size: 13px;
-  letter-spacing: 1px;
-  padding: 8px 14px;
-  cursor: pointer;
-}
-.back-btn:active { opacity: .7; }
+    .ready-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: max(36px, env(safe-area-inset-top)) 28px 0;
+    }
 
-.deck-badge {
-  font-weight: 900;
-  font-size: 14px;
-  letter-spacing: 3px;
-  color: var(--ink);
-  background: #fff;
-  border: 4px solid var(--ink);
-  padding: 7px 16px;
-  white-space: nowrap;
-}
+    .back-btn {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
 
-.ready-center {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 34px;
-  padding: 0 28px;
-}
+    .back-btn:active {
+      opacity: .7;
+    }
 
-.forehead-glyph { position: relative; width: 190px; height: 150px; flex-shrink: 0; }
-.forehead-face {
-  position: absolute; left: 36px; top: 34px;
-  width: 96px; height: 96px;
-  border-radius: 50%; background: #fff; border: 6px solid var(--ink);
-}
-.forehead-phone {
-  position: absolute; left: 18px; top: -6px;
-  width: 150px; height: 46px;
-  background: var(--ink); border-radius: 10px;
-  transform: rotate(-9deg);
-  display: flex; align-items: center; justify-content: center;
-}
-.forehead-screen { width: 120px; height: 20px; background: #fff; border-radius: 3px; }
+    .deck-badge {
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: var(--ink);
+      background: #fff;
+      border: 4px solid var(--ink);
+      padding: 7px 16px;
+      white-space: nowrap;
+    }
 
-.ready-heading {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: clamp(30px, 9vw, 46px);
-  line-height: .95; color: var(--ink);
-  text-align: center;
-}
+    .ready-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+      padding: 0 28px;
+    }
 
-.motion-btn {
-  background: var(--ink); color: #fff;
-  font-family: 'Archivo Black', sans-serif;
-  font-size: clamp(20px, 5.5vw, 30px);
-  letter-spacing: 1px;
-  padding: 22px 40px;
-  border: 5px solid var(--ink);
-  box-shadow: 8px 8px 0 #fff;
-  cursor: pointer; width: 100%; max-width: 380px;
-  transition: none;
-}
-.motion-btn:active { transform: translate(4px,4px); box-shadow: 2px 2px 0 #fff; }
-.motion-btn:disabled { opacity: .4; cursor: default; pointer-events: none; }
+    .forehead-glyph {
+      position: relative;
+      width: 190px;
+      height: 150px;
+      flex-shrink: 0;
+    }
 
-.sideways-chip {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--ink);
-  padding: max(14px, env(safe-area-inset-bottom)) 18px max(14px, env(safe-area-inset-bottom));
-  flex-shrink: 0;
-}
-.sideways-icon {
-  width: 26px; height: 40px;
-  border: 4px solid #fff; border-radius: 5px;
-  transform: rotate(90deg); flex-shrink: 0;
-}
-.sideways-lbl { font-weight: 900; font-size: 15px; letter-spacing: 2px; color: #fff; }
+    .forehead-face {
+      position: absolute;
+      left: 36px;
+      top: 34px;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #fff;
+      border: 6px solid var(--ink);
+    }
 
-/* ══════════════════════════════════════
+    .forehead-phone {
+      position: absolute;
+      left: 18px;
+      top: -6px;
+      width: 150px;
+      height: 46px;
+      background: var(--ink);
+      border-radius: 10px;
+      transform: rotate(-9deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .forehead-screen {
+      width: 120px;
+      height: 20px;
+      background: #fff;
+      border-radius: 3px;
+    }
+
+    .ready-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(30px, 9vw, 46px);
+      line-height: .95;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .motion-btn {
+      background: var(--ink);
+      color: #fff;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(20px, 5.5vw, 30px);
+      letter-spacing: 1px;
+      padding: 22px 40px;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 #fff;
+      cursor: pointer;
+      width: 100%;
+      max-width: 380px;
+      transition: none;
+    }
+
+    .motion-btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 #fff;
+    }
+
+    .motion-btn:disabled {
+      opacity: .4;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .sideways-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--ink);
+      padding: max(14px, env(safe-area-inset-bottom)) 18px max(14px, env(safe-area-inset-bottom));
+      flex-shrink: 0;
+    }
+
+    .sideways-icon {
+      width: 26px;
+      height: 40px;
+      border: 4px solid #fff;
+      border-radius: 5px;
+      transform: rotate(90deg);
+      flex-shrink: 0;
+    }
+
+    .sideways-lbl {
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════
    COUNTDOWN
 ══════════════════════════════════════ */
-#countdown-screen {
-  background: var(--cat-color);
-  align-items: center;
-  justify-content: center;
-}
+    #countdown-screen {
+      background: var(--cat-color);
+      align-items: center;
+      justify-content: center;
+    }
 
-.countdown-num {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: clamp(140px, 38vw, 310px);
-  line-height: 1; color: #fff;
-  -webkit-text-stroke: clamp(5px, 1.4vw, 10px) var(--ink);
-  animation: countPop .5s cubic-bezier(.2,.85,.25,1) both;
-}
+    .countdown-num {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(140px, 38vw, 310px);
+      line-height: 1;
+      color: #fff;
+      -webkit-text-stroke: clamp(5px, 1.4vw, 10px) var(--ink);
+      animation: countPop .5s cubic-bezier(.2, .85, .25, 1) both;
+    }
 
-/* ══════════════════════════════════════
+    /* ══════════════════════════════════════
    PLAY
 ══════════════════════════════════════ */
-#play-screen { background: var(--cream); padding: 0; }
+    #play-screen {
+      background: var(--cream);
+      padding: 0;
+    }
 
-.timer-bar {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 16px; background: var(--cream-shade);
-  border-bottom: 4px solid var(--ink); z-index: 5;
-}
-.timer-fill {
-  height: 100%; background: var(--ink);
-  transition: width 1s linear; will-change: width;
-}
-.timer-num {
-  position: absolute; top: 22px; right: 24px;
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 24px; color: var(--ink); z-index: 5;
-}
+    .timer-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 16px;
+      background: var(--cream-shade);
+      border-bottom: 4px solid var(--ink);
+      z-index: 5;
+    }
 
-.play-wrap {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.word {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 100px;
-  line-height: .88; color: var(--ink);
-  text-align: center; letter-spacing: -1px;
-  padding: 16px 64px 28px;
-  max-width: 100%; word-break: break-word;
-}
+    .timer-fill {
+      height: 100%;
+      background: var(--ink);
+      transition: width 1s linear;
+      will-change: width;
+    }
 
-.hint-pass {
-  position: absolute;
-  bottom: max(18px, env(safe-area-inset-bottom)); left: 24px;
-  font-weight: 900; font-size: 18px; letter-spacing: 1px;
-  color: var(--pass); z-index: 11; opacity: .85;
-}
-.hint-correct {
-  position: absolute;
-  bottom: max(18px, env(safe-area-inset-bottom)); right: 24px;
-  font-weight: 900; font-size: 18px; letter-spacing: 1px;
-  color: var(--correct-dk); z-index: 11; opacity: .85;
-}
+    .timer-num {
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 24px;
+      color: var(--ink);
+      z-index: 5;
+    }
 
-.tap-pass, .tap-correct {
-  position: absolute; top: 20px; bottom: 0; width: 50%; z-index: 10; cursor: pointer;
-}
-.tap-pass { left: 0; } .tap-correct { right: 0; }
+    .play-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.flash {
-  position: absolute; inset: 0; z-index: 40;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity .06s;
-}
-.flash-label {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: clamp(70px, 16vw, 130px);
-  color: #fff; -webkit-text-stroke: 8px var(--ink);
-  letter-spacing: -2px; text-align: center;
-}
+    .word {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 100px;
+      line-height: .88;
+      color: var(--ink);
+      text-align: center;
+      letter-spacing: -1px;
+      padding: 16px 64px 28px;
+      max-width: 100%;
+      word-break: break-word;
+    }
 
-/* ══════════════════════════════════════
+    .hint-pass {
+      position: absolute;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 24px;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--pass);
+      z-index: 11;
+      opacity: .85;
+    }
+
+    .hint-correct {
+      position: absolute;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      right: 24px;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: var(--correct-dk);
+      z-index: 11;
+      opacity: .85;
+    }
+
+    .tap-pass,
+    .tap-correct {
+      position: absolute;
+      top: 20px;
+      bottom: 0;
+      width: 50%;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .tap-pass {
+      left: 0;
+    }
+
+    .tap-correct {
+      right: 0;
+    }
+
+    .flash {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .06s;
+    }
+
+    .flash-label {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(70px, 16vw, 130px);
+      color: #fff;
+      -webkit-text-stroke: 8px var(--ink);
+      letter-spacing: -2px;
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════
    PORTRAIT OVERLAY
 ══════════════════════════════════════ */
-#portrait-overlay {
-  display: none; position: fixed; inset: 0;
-  background: var(--ink); z-index: 200;
-  flex-direction: column; align-items: center; justify-content: center;
-  gap: 20px; text-align: center; padding: 32px;
-}
-#portrait-overlay.show { display: flex; }
+    #portrait-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 200;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      text-align: center;
+      padding: 32px;
+    }
 
-.rot-phone {
-  width: 58px; height: 88px;
-  border: 6px solid #fff; border-radius: 8px;
-  animation: rock 1.8s ease-in-out infinite;
-}
-@keyframes rock { 0%,100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
+    #portrait-overlay.show {
+      display: flex;
+    }
 
-.rot-heading {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 32px; color: #fff; letter-spacing: -1px;
-}
-.rot-sub { font-weight: 700; font-size: 15px; letter-spacing: 1px; color: rgba(255,255,255,.55); }
+    .rot-phone {
+      width: 58px;
+      height: 88px;
+      border: 6px solid #fff;
+      border-radius: 8px;
+      animation: rock 1.8s ease-in-out infinite;
+    }
 
-/* ══════════════════════════════════════
+    @keyframes rock {
+
+      0%,
+      100% {
+        transform: rotate(-20deg);
+      }
+
+      50% {
+        transform: rotate(20deg);
+      }
+    }
+
+    .rot-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 32px;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .rot-sub {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, .55);
+    }
+
+    /* ══════════════════════════════════════
    RESULTS
 ══════════════════════════════════════ */
-#results-screen {
-  background: var(--purple);
-  padding: max(28px, env(safe-area-inset-top)) 24px max(20px, env(safe-area-inset-bottom));
-  overflow-y: auto;
-}
+    #results-screen {
+      background: var(--purple);
+      padding: max(28px, env(safe-area-inset-top)) 24px max(20px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+    }
 
-.score-banner {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  background: var(--correct);
-  border: 5px solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
-  padding: 16px 22px; margin-bottom: 20px; flex-shrink: 0;
-}
-.score-you-got {
-  font-weight: 900; font-size: 14px; letter-spacing: 3px;
-  color: var(--ink); margin-bottom: 10px;
-}
-.score-number {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 94px; line-height: .78; color: var(--ink);
-}
-.score-right {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 28px; color: var(--ink); padding-bottom: 8px;
-}
+    .score-banner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      background: var(--correct);
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
 
-.res-cols { display: flex; gap: 12px; flex: 1; min-height: 0; margin-bottom: 18px; }
-.res-col  { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.res-col-lbl {
-  font-weight: 900; font-size: 13px; letter-spacing: 2px;
-  color: #fff; margin-bottom: 8px; flex-shrink: 0;
-}
-.res-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .score-you-got {
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
 
-.chip-correct {
-  background: var(--correct); border: 3px solid var(--ink);
-  padding: 8px 10px; font-weight: 900; font-size: 13px;
-  color: var(--ink); letter-spacing: .5px;
-}
-.chip-pass {
-  background: var(--pass); border: 3px solid var(--ink);
-  padding: 8px 10px; font-weight: 900; font-size: 13px;
-  color: #fff; letter-spacing: .5px;
-}
+    .score-number {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 94px;
+      line-height: .78;
+      color: var(--ink);
+    }
 
-.results-btns { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .score-right {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 28px;
+      color: var(--ink);
+      padding-bottom: 8px;
+    }
 
-.btn-play-again {
-  background: #FFD400; color: var(--ink);
-  font-family: 'Archivo Black', sans-serif; font-size: 32px;
-  text-align: center; padding: 20px;
-  border: 5px solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
-  cursor: pointer; transition: none;
-}
-.btn-play-again:active { transform: translate(4px,4px); box-shadow: 2px 2px 0 var(--ink); }
+    .res-cols {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+      margin-bottom: 18px;
+    }
 
-.btn-secondary {
-  background: rgba(255,255,255,.12); color: #fff;
-  font-family: 'Archivo Black', sans-serif; font-size: 20px;
-  text-align: center; padding: 16px;
-  border: 3px solid rgba(255,255,255,.3);
-  cursor: pointer; transition: none;
-}
-.btn-secondary:active { opacity: .65; }
-</style>
+    .res-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .res-col-lbl {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .res-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .chip-correct {
+      background: var(--correct);
+      border: 3px solid var(--ink);
+      padding: 8px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--ink);
+      letter-spacing: .5px;
+    }
+
+    .chip-pass {
+      background: var(--pass);
+      border: 3px solid var(--ink);
+      padding: 8px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      color: #fff;
+      letter-spacing: .5px;
+    }
+
+    .results-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .btn-play-again {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 32px;
+      text-align: center;
+      padding: 20px;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      cursor: pointer;
+      transition: none;
+    }
+
+    .btn-play-again:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      text-align: center;
+      padding: 16px;
+      border: 3px solid rgba(255, 255, 255, .3);
+      cursor: pointer;
+      transition: none;
+    }
+
+    .btn-secondary:active {
+      opacity: .65;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ══════════ HOME ══════════ -->
-<div id="home-screen" class="screen active">
-  <div class="wordmark-wrap">
-    <div class="wordmark-box">
-      <div class="wordmark-text">Tilt!</div>
-    </div>
-    <div class="wordmark-chip">PHONE-TO-FOREHEAD CHARADES</div>
-  </div>
-
-  <div class="deck-divider">
-    <div class="deck-divider-line"></div>
-    <div class="deck-divider-lbl">PICK A DECK</div>
-    <div class="deck-divider-line"></div>
-  </div>
-
-  <div class="deck-grid">
-
-    <div class="tile" data-cat="mainstream">
-      <!-- star -->
-      <div class="tile-glyph" style="width:158px;height:158px;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);"></div>
-      <div class="tile-name">MAIN<br>STREAM</div>
-      <div class="tile-sub">FILMS, FAME &amp; ICONS &middot; <span id="c-mainstream"></span></div>
+  <!-- ══════════ HOME ══════════ -->
+  <div id="home-screen" class="screen active">
+    <div class="wordmark-wrap">
+      <div class="wordmark-box">
+        <div class="wordmark-text">Tilt!</div>
+      </div>
+      <div class="wordmark-chip">CHARADES FOR THE GANG!</div>
     </div>
 
-    <div class="tile" data-cat="everyday">
-      <!-- circle -->
-      <div class="tile-glyph" style="width:160px;height:160px;border-radius:50%;right:-34px;bottom:-38px;"></div>
-      <div class="tile-name">EVERY<br>DAY</div>
-      <div class="tile-sub">STUFF AROUND YOU &middot; <span id="c-everyday"></span></div>
+    <div class="deck-divider">
+      <div class="deck-divider-line"></div>
+      <div class="deck-divider-lbl">PICK A DECK</div>
+      <div class="deck-divider-line"></div>
     </div>
 
-    <div class="tile" data-cat="fiji">
-      <!-- triangle -->
-      <div class="tile-glyph" style="width:158px;height:152px;clip-path:polygon(50% 4%,100% 100%,0 100%);right:-28px;bottom:-30px;"></div>
-      <div class="tile-name">FIJI /<br>LOCAL</div>
-      <div class="tile-sub">ISLAND THINGS &middot; <span id="c-fiji"></span></div>
-    </div>
+    <div class="deck-grid">
 
-    <div class="tile" data-cat="party">
-      <!-- diamond -->
-      <div class="tile-glyph" style="width:122px;height:122px;transform:rotate(45deg);right:-22px;bottom:-26px;"></div>
-      <div class="tile-name">PARTY</div>
-      <div class="tile-sub">GET LOUD &middot; <span id="c-party"></span></div>
-    </div>
+      <div class="tile" data-cat="mainstream">
+        <i class="ph-fill ph-film-slate tile-glyph"></i>
+        <div class="tile-name">MAIN<br>STREAM</div>
+        <div class="tile-sub">FILMS, FAME &amp; ICONS &middot; <span id="c-mainstream"></span></div>
+      </div>
 
-    <div class="tile" data-cat="sports">
-      <!-- hexagon -->
-      <div class="tile-glyph" style="width:150px;height:150px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);right:-28px;bottom:-32px;"></div>
-      <div class="tile-name">SPORTS</div>
-      <div class="tile-sub">ATHLETES &amp; GAMES &middot; <span id="c-sports"></span></div>
-    </div>
+      <div class="tile" data-cat="everyday">
+        <i class="ph-fill ph-storefront tile-glyph"></i>
+        <div class="tile-name">EVERY<br>DAY</div>
+        <div class="tile-sub">STUFF AROUND YOU &middot; <span id="c-everyday"></span></div>
+      </div>
 
-    <div class="tile" data-cat="nature">
-      <!-- ellipse -->
-      <div class="tile-glyph" style="width:160px;height:110px;border-radius:50%;right:-34px;bottom:-28px;"></div>
-      <div class="tile-name">NATURE</div>
-      <div class="tile-sub">WORLD AROUND YOU &middot; <span id="c-nature"></span></div>
-    </div>
+      <div class="tile" data-cat="fiji">
+        <i class="ph-fill ph-island tile-glyph"></i>
+        <div class="tile-name">FIJI /<br>LOCAL</div>
+        <div class="tile-sub">ISLAND THINGS &middot; <span id="c-fiji"></span></div>
+      </div>
 
-    <div class="tile" data-cat="history">
-      <!-- scroll corner -->
-      <div class="tile-glyph" style="width:110px;height:140px;clip-path:polygon(20% 0%,80% 0%,100% 20%,100% 100%,0% 100%,0% 20%);right:-18px;bottom:-28px;"></div>
-      <div class="tile-name">HISTORY</div>
-      <div class="tile-sub">LEGENDS &amp; EVENTS &middot; <span id="c-history"></span></div>
-    </div>
+      <div class="tile" data-cat="party">
+        <i class="ph-fill ph-confetti tile-glyph"></i>
+        <div class="tile-name">PARTY</div>
+        <div class="tile-sub">GET LOUD &middot; <span id="c-party"></span></div>
+      </div>
 
-  </div>
-</div>
+      <div class="tile" data-cat="sports">
+        <i class="ph-fill ph-trophy tile-glyph"></i>
+        <div class="tile-name">SPORTS</div>
+        <div class="tile-sub">ATHLETES &amp; GAMES &middot; <span id="c-sports"></span></div>
+      </div>
 
-<!-- ══════════ GET READY ══════════ -->
-<div id="ready-screen" class="screen">
-  <div class="ready-top">
-    <button class="back-btn" id="back-btn">&#8592; BACK</button>
-    <div class="deck-badge" id="rcat"></div>
-  </div>
+      <div class="tile" data-cat="nature">
+        <i class="ph-fill ph-leaf tile-glyph"></i>
+        <div class="tile-name">NATURE</div>
+        <div class="tile-sub">WORLD AROUND YOU &middot; <span id="c-nature"></span></div>
+      </div>
 
-  <div class="ready-center">
-    <div class="forehead-glyph">
-      <div class="forehead-face"></div>
-      <div class="forehead-phone"><div class="forehead-screen"></div></div>
-    </div>
-    <div class="ready-heading">HOLD IT TO YOUR FOREHEAD</div>
-    <button class="motion-btn" id="motion-btn">ENABLE MOTION</button>
-  </div>
+      <div class="tile" data-cat="history">
+        <i class="ph-fill ph-crown tile-glyph"></i>
+        <div class="tile-name">HISTORY</div>
+        <div class="tile-sub">LEGENDS &amp; EVENTS &middot; <span id="c-history"></span></div>
+      </div>
 
-  <div class="sideways-chip">
-    <div class="sideways-icon"></div>
-    <div class="sideways-lbl">TURN PHONE SIDEWAYS &middot; TILT UP = GOT IT</div>
-  </div>
-</div>
-
-<!-- ══════════ COUNTDOWN ══════════ -->
-<div id="countdown-screen" class="screen">
-  <div class="countdown-num" id="countdown-num">3</div>
-</div>
-
-<!-- ══════════ PLAY ══════════ -->
-<div id="play-screen" class="screen">
-  <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
-  <div class="timer-num" id="timer-num">60</div>
-  <div class="play-wrap">
-    <div class="word" id="word">—</div>
-  </div>
-  <div class="hint-pass">&#x2193; PASS</div>
-  <div class="hint-correct">GOT IT &#x2191;</div>
-  <div class="tap-pass"    id="tap-pass"></div>
-  <div class="tap-correct" id="tap-correct"></div>
-  <div class="flash" id="flash"><div class="flash-label" id="flash-label"></div></div>
-</div>
-
-<!-- ══════════ PORTRAIT OVERLAY ══════════ -->
-<div id="portrait-overlay">
-  <div class="rot-phone"></div>
-  <div class="rot-heading">TURN SIDEWAYS</div>
-  <div class="rot-sub">ROTATE TO LANDSCAPE TO PLAY</div>
-</div>
-
-<!-- ══════════ RESULTS ══════════ -->
-<div id="results-screen" class="screen">
-  <div class="score-banner">
-    <div>
-      <div class="score-you-got">YOU GOT</div>
-      <div class="score-number" id="final-score">0</div>
-    </div>
-    <div class="score-right">RIGHT</div>
-  </div>
-  <div class="res-cols">
-    <div class="res-col">
-      <div class="res-col-lbl">GOT IT</div>
-      <div class="res-list" id="correct-list"></div>
-    </div>
-    <div class="res-col">
-      <div class="res-col-lbl">PASSED</div>
-      <div class="res-list" id="passed-list"></div>
     </div>
   </div>
-  <div class="results-btns">
-    <button class="btn-play-again" id="again-btn">PLAY AGAIN</button>
-    <button class="btn-secondary"  id="home-btn">CHOOSE CATEGORY</button>
+
+  <!-- ══════════ GET READY ══════════ -->
+  <div id="ready-screen" class="screen">
+    <div class="ready-top">
+      <button class="back-btn" id="back-btn">&#8592; BACK</button>
+      <div class="deck-badge" id="rcat"></div>
+    </div>
+
+    <div class="ready-center">
+      <div class="forehead-glyph">
+        <div class="forehead-face"></div>
+        <div class="forehead-phone">
+          <div class="forehead-screen"></div>
+        </div>
+      </div>
+      <div class="ready-heading">HOLD IT TO YOUR FOREHEAD</div>
+      <button class="motion-btn" id="motion-btn">ENABLE MOTION</button>
+    </div>
+
+    <div class="sideways-chip">
+      <div class="sideways-icon"></div>
+      <div class="sideways-lbl">TURN PHONE SIDEWAYS &middot; TILT UP = GOT IT</div>
+    </div>
   </div>
-</div>
 
-<script>
-// ═══════════════════════════════════════════════
-//  WORD PACKS  ← edit these freely
-// ═══════════════════════════════════════════════
-const PACKS = {
+  <!-- ══════════ COUNTDOWN ══════════ -->
+  <div id="countdown-screen" class="screen">
+    <div class="countdown-num" id="countdown-num">3</div>
+  </div>
 
-  mainstream: [
-    // Movies
-    'Titanic','Avengers','Frozen','Jurassic Park','Harry Potter','Star Wars',
-    'The Lion King','Spider-Man','Batman','Toy Story','Moana','Black Panther',
-    'Fast and Furious','Mission Impossible','The Godfather','Shrek','Finding Nemo',
-    'Inception','The Matrix','Home Alone','Forrest Gump','Gladiator','Mulan',
-    'The Incredibles','Coco','Encanto','Top Gun','Interstellar','Avatar','Oppenheimer',
-    // TV
-    'Friends','Stranger Things','Game of Thrones','The Office','Breaking Bad',
-    'Grey\'s Anatomy','Squid Game','Money Heist','Seinfeld','Big Bang Theory',
-    'Survivor','The Bachelor','RuPaul\'s Drag Race','Bridgerton','Emily in Paris',
-    'Wednesday','Ozark','The Crown','Peaky Blinders','White Lotus',
-    // Music & celebs
-    'Michael Jackson','Beyoncé','Taylor Swift','Drake','Rihanna','Ed Sheeran',
-    'Adele','Justin Bieber','Lady Gaga','Bruno Mars','Eminem','Nicki Minaj',
-    'BTS','Coldplay','The Weeknd','Billie Eilish','Dua Lipa','Lizzo',
-    'Oprah Winfrey','Elon Musk','Will Smith','Dwayne Johnson','Kim Kardashian',
-    'Cristiano Ronaldo','Lionel Messi','Serena Williams','LeBron James',
-    'Jennifer Lopez','Ariana Grande','Post Malone','Cardi B','Bad Bunny',
-  ],
+  <!-- ══════════ PLAY ══════════ -->
+  <div id="play-screen" class="screen">
+    <div class="timer-bar">
+      <div class="timer-fill" id="timer-fill"></div>
+    </div>
+    <div class="timer-num" id="timer-num">60</div>
+    <div class="play-wrap">
+      <div class="word" id="word">—</div>
+    </div>
+    <div class="hint-pass">&#x2193; PASS</div>
+    <div class="hint-correct">GOT IT &#x2191;</div>
+    <div class="tap-pass" id="tap-pass"></div>
+    <div class="tap-correct" id="tap-correct"></div>
+    <div class="flash" id="flash">
+      <div class="flash-label" id="flash-label"></div>
+    </div>
+  </div>
 
-  everyday: [
-    // Animals
-    'Elephant','Giraffe','Penguin','Dolphin','Tiger','Gorilla','Kangaroo',
-    'Flamingo','Ostrich','Crocodile','Panda','Koala','Cheetah','Hippopotamus',
-    'Chameleon','Jellyfish','Octopus','Parrot','Peacock','Polar Bear',
-    'Sloth','Meerkat','Platypus','Narwhal','Axolotl','Hummingbird','Mantis Shrimp',
-    // Food
-    'Pizza','Sushi','Hamburger','Ice Cream','Chocolate','Banana','Watermelon',
-    'Pineapple','Popcorn','Sandwich','Taco','Donut','Cupcake','Pancakes',
-    'Spaghetti','Fried Chicken','Mango','Avocado','Pumpkin','Corn on the Cob',
-    'Croissant','Dumplings','Burrito','Cheesecake','Ramen',
-    // Jobs
-    'Doctor','Teacher','Firefighter','Police Officer','Chef','Pilot','Dentist',
-    'Astronaut','Farmer','Mechanic','Nurse','Lawyer','Architect','Photographer',
-    'Lifeguard','Librarian','Vet','Plumber','Electrician','Tour Guide','DJ',
-    // Objects
-    'Umbrella','Telescope','Skateboard','Microwave','Headphones','Backpack',
-    'Bicycle','Calculator','Hammer','Suitcase','Trampoline','Magnifying Glass',
-    'Compass','Binoculars','Parachute','Yo-yo','Boomerang','Kaleidoscope',
-    'Lawnmower','Typewriter',
-  ],
+  <!-- ══════════ PORTRAIT OVERLAY ══════════ -->
+  <div id="portrait-overlay">
+    <div class="rot-phone"></div>
+    <div class="rot-heading">TURN SIDEWAYS</div>
+    <div class="rot-sub">ROTATE TO LANDSCAPE TO PLAY</div>
+  </div>
 
-  fiji: [
-    // Towns & islands
-    'Suva','Nadi','Lautoka','Sigatoka','Savusavu','Levuka','Labasa',
-    'Rakiraki','Ba','Tavua','Korovou','Navua','Pacific Harbour',
-    'Yasawa Islands','Mamanuca Islands','Beqa Island','Kadavu','Taveuni',
-    // Food & drink
-    'kokoda','lovo','palusami','tavioka','rourou','vakalolo','nama',
-    'vudi','kavika','ika','cassava cake','duruka','dalo','chilli water',
-    'kava','yaqona','koko Fiji',
-    // Culture & tradition
-    'sevusevu','meke','kerekere','tabua','magiti','soli','veiqaravi',
-    'loloma','bula','vinaka','moce','tovolea','sega na leqa',
-    'vale ni lotu','mataqali','tokatoka','tikina','turaga ni koro',
-    // Landmarks & icons
-    'Fiji Airways','Thurston Gardens','Suva Market','Saraswati Temple',
-    'Albert Park','USP','FNU','Fiji Museum','Ratu Sukuna Park',
-    'Garden of the Sleeping Giant','Navua River','Bouma Falls',
-    'Sigatoka Sand Dunes','Colo-i-Suva','Natadola Beach',
-    // Everyday Fiji life
-    'bilibili','carrier','minibus','rugby sevens','grog session',
-    'flower garland','pandanus mat','sulu','seawall','Sunday market',
-  ],
+  <!-- ══════════ RESULTS ══════════ -->
+  <div id="results-screen" class="screen">
+    <div class="score-banner">
+      <div>
+        <div class="score-you-got">YOU GOT</div>
+        <div class="score-number" id="final-score">0</div>
+      </div>
+      <div class="score-right">RIGHT</div>
+    </div>
+    <div class="res-cols">
+      <div class="res-col">
+        <div class="res-col-lbl">GOT IT</div>
+        <div class="res-list" id="correct-list"></div>
+      </div>
+      <div class="res-col">
+        <div class="res-col-lbl">PASSED</div>
+        <div class="res-list" id="passed-list"></div>
+      </div>
+    </div>
+    <div class="results-btns">
+      <button class="btn-play-again" id="again-btn">PLAY AGAIN</button>
+      <button class="btn-secondary" id="home-btn">CHOOSE CATEGORY</button>
+    </div>
+  </div>
 
-  sports: [
-    // Sports & games
-    'Football','Basketball','Tennis','Swimming','Boxing','Cricket','Rugby','Golf',
-    'Volleyball','Baseball','Gymnastics','Skateboarding','Surfing','Wrestling',
-    'Cycling','Horse Racing','Table Tennis','Badminton','Archery','Weightlifting',
-    'Pole Vault','High Jump','Relay Race','Triathlon','Water Polo','Rowing',
-    'Ice Skating','Snowboarding','Skiing','Darts',
-    // Athletes
-    'Usain Bolt','Michael Jordan','Serena Williams','Muhammad Ali','Tiger Woods',
-    'Lionel Messi','Cristiano Ronaldo','LeBron James','Roger Federer','Simone Biles',
-    'Michael Phelps','Naomi Osaka','Lewis Hamilton','Pelé','Mike Tyson',
-    'Kobe Bryant','Wayne Gretzky','Tom Brady','Novak Djokovic','Neymar',
-    'Ronda Rousey','Stephen Curry','Rafael Nadal','Lance Armstrong','Carl Lewis',
-    // Actions & moments
-    'Free Kick','Slam Dunk','Home Run','Knockout','Penalty Shootout',
-    'Hat Trick','Photo Finish','Disqualification','Gold Medal','Lap of Honour',
-    'Referee','Cheerleader','Olympic Torch','Victory Lap','Warm Up',
-  ],
+  <script>
+    // ═══════════════════════════════════════════════
+    //  WORD PACKS  ← edit these freely
+    // ═══════════════════════════════════════════════
+    const PACKS = {
 
-  nature: [
-    // Weather & sky
-    'Thunderstorm','Rainbow','Blizzard','Tornado','Tsunami','Earthquake',
-    'Volcano','Eclipse','Aurora Borealis','Hailstorm','Drought','Flood',
-    'Heatwave','Fog','Hurricane','Avalanche','Lightning','Meteor Shower',
-    // Landscapes & geography
-    'Waterfall','Desert','Glacier','Coral Reef','Rainforest','Swamp',
-    'Canyon','Cave','Cliff','Sand Dune','Hot Spring','Lagoon','Fjord',
-    'Savanna','Tundra','Mangrove','Atoll','Geyser','Quicksand',
-    // Plants & trees
-    'Sunflower','Cactus','Bamboo','Coconut Palm','Mushroom','Seaweed',
-    'Venus Flytrap','Baobab Tree','Mangrove Tree','Cherry Blossom',
-    'Tumbleweed','Lily Pad','Fern','Moss','Dandelion',
-    // Creatures
-    'Shark','Blue Whale','Eagle','Chameleon','Firefly','Piranha',
-    'Giant Squid','Komodo Dragon','Snow Leopard','Pangolin','Manta Ray',
-    'Electric Eel','Bald Eagle','Sea Turtle','Dragonfly','Tarantula',
-    'Praying Mantis','Flying Fish','Puffer Fish','Leafy Sea Dragon',
-  ],
+      mainstream: [
+        // Movies
+        'Titanic', 'Avengers', 'Frozen', 'Jurassic Park', 'Harry Potter', 'Star Wars',
+        'The Lion King', 'Spider-Man', 'Batman', 'Toy Story', 'Moana', 'Black Panther',
+        'Fast and Furious', 'Mission Impossible', 'The Godfather', 'Shrek', 'Finding Nemo',
+        'Inception', 'The Matrix', 'Home Alone', 'Forrest Gump', 'Gladiator', 'Mulan',
+        'The Incredibles', 'Coco', 'Encanto', 'Top Gun', 'Interstellar', 'Avatar', 'Oppenheimer',
+        // TV
+        'Friends', 'Stranger Things', 'Game of Thrones', 'The Office', 'Breaking Bad',
+        'Grey\'s Anatomy', 'Squid Game', 'Money Heist', 'Seinfeld', 'Big Bang Theory',
+        'Survivor', 'The Bachelor', 'RuPaul\'s Drag Race', 'Bridgerton', 'Emily in Paris',
+        'Wednesday', 'Ozark', 'The Crown', 'Peaky Blinders', 'White Lotus',
+        // Music & celebs
+        'Michael Jackson', 'Beyoncé', 'Taylor Swift', 'Drake', 'Rihanna', 'Ed Sheeran',
+        'Adele', 'Justin Bieber', 'Lady Gaga', 'Bruno Mars', 'Eminem', 'Nicki Minaj',
+        'BTS', 'Coldplay', 'The Weeknd', 'Billie Eilish', 'Dua Lipa', 'Lizzo',
+        'Oprah Winfrey', 'Elon Musk', 'Will Smith', 'Dwayne Johnson', 'Kim Kardashian',
+        'Cristiano Ronaldo', 'Lionel Messi', 'Serena Williams', 'LeBron James',
+        'Jennifer Lopez', 'Ariana Grande', 'Post Malone', 'Cardi B', 'Bad Bunny',
+      ],
 
-  history: [
-    // World figures
-    'Cleopatra','Napoleon','Julius Caesar','Joan of Arc','Genghis Khan',
-    'Alexander the Great','Abraham Lincoln','Nelson Mandela','Mahatma Gandhi',
-    'Martin Luther King','Winston Churchill','Adolf Hitler','Joseph Stalin',
-    'Queen Victoria','Marie Antoinette','Marco Polo','Christopher Columbus',
-    'Leonardo da Vinci','Michelangelo','Isaac Newton','Albert Einstein',
-    'Charles Darwin','Nikola Tesla','Marie Curie','Galileo Galilei',
-    'William Shakespeare','Mozart','Beethoven','Sigmund Freud',
-    // Events & eras
-    'French Revolution','World War One','World War Two','Moon Landing',
-    'Black Plague','Great Wall of China','Titanic Sinking','Cold War',
-    'American Revolution','Fall of Rome','Industrial Revolution',
-    'Boston Tea Party','D-Day','Hiroshima','Berlin Wall','9/11',
-    'Space Race','Gold Rush','Abolition of Slavery','Women\'s Suffrage',
-    // Inventions & symbols
-    'Printing Press','Steam Engine','Telephone','Light Bulb','Aeroplane',
-    'Internet','Compass','Gunpowder','Wheel','Pyramids','Colosseum',
-    'Stonehenge','Eiffel Tower','Statue of Liberty','Great Barrier Reef',
-  ],
+      everyday: [
+        // Animals
+        'Elephant', 'Giraffe', 'Penguin', 'Dolphin', 'Tiger', 'Gorilla', 'Kangaroo',
+        'Flamingo', 'Ostrich', 'Crocodile', 'Panda', 'Koala', 'Cheetah', 'Hippopotamus',
+        'Chameleon', 'Jellyfish', 'Octopus', 'Parrot', 'Peacock', 'Polar Bear',
+        'Sloth', 'Meerkat', 'Platypus', 'Narwhal', 'Axolotl', 'Hummingbird', 'Mantis Shrimp',
+        // Food
+        'Pizza', 'Sushi', 'Hamburger', 'Ice Cream', 'Chocolate', 'Banana', 'Watermelon',
+        'Pineapple', 'Popcorn', 'Sandwich', 'Taco', 'Donut', 'Cupcake', 'Pancakes',
+        'Spaghetti', 'Fried Chicken', 'Mango', 'Avocado', 'Pumpkin', 'Corn on the Cob',
+        'Croissant', 'Dumplings', 'Burrito', 'Cheesecake', 'Ramen',
+        // Jobs
+        'Doctor', 'Teacher', 'Firefighter', 'Police Officer', 'Chef', 'Pilot', 'Dentist',
+        'Astronaut', 'Farmer', 'Mechanic', 'Nurse', 'Lawyer', 'Architect', 'Photographer',
+        'Lifeguard', 'Librarian', 'Vet', 'Plumber', 'Electrician', 'Tour Guide', 'DJ',
+        // Objects
+        'Umbrella', 'Telescope', 'Skateboard', 'Microwave', 'Headphones', 'Backpack',
+        'Bicycle', 'Calculator', 'Hammer', 'Suitcase', 'Trampoline', 'Magnifying Glass',
+        'Compass', 'Binoculars', 'Parachute', 'Yo-yo', 'Boomerang', 'Kaleidoscope',
+        'Lawnmower', 'Typewriter',
+      ],
 
-  party: [
-    // Actions / mimes
-    'Moonwalking','Proposing marriage','Sneezing in public','Taking a selfie',
-    'Eating too much','Dancing alone at a party','Falling asleep in a meeting',
-    'Trying to parallel park','Eating spicy food','Winning the lottery',
-    'Being chased by a bee','Riding a rollercoaster','Giving a speech',
-    'Blowing out birthday candles','Opening presents','Sneaking into a fridge at night',
-    'Walking in high heels','Playing air guitar','Crying at a movie',
-    'Waking up late for work','Texting while walking','Dropping phone in toilet',
-    'Putting on sunscreen','Killing a spider','Trying not to laugh',
-    // Characters / impressions
-    'British Queen','American Cowboy','Italian Chef','Russian Spy',
-    'Valley Girl','Surfer Dude','News Anchor','Sports Commentator',
-    'Robot','Zombie','Vampire','Pirate','Superhero','Villain',
-    'Gym Bro','Instagram Influencer','Helicopter Parent','Uber Driver',
-    'Annoying Tourist','Strict Teacher','Nervous Bride','Overexcited Fan',
-    'Karate Master','Old Person Texting',
-    // Party scenarios
-    'Spin the Bottle','Limbo','Karaoke','Musical Chairs','Conga Line',
-    'Truth or Dare','Never Have I Ever','Tug of War',
-    'Marco Polo','Three-legged Race','Bobbing for Apples',
-  ],
-};
+      fiji: [
+        // Towns & islands
+        'Suva', 'Nadi', 'Lautoka', 'Sigatoka', 'Savusavu', 'Levuka', 'Labasa',
+        'Rakiraki', 'Ba', 'Tavua', 'Korovou', 'Navua', 'Pacific Harbour',
+        'Yasawa Islands', 'Mamanuca Islands', 'Beqa Island', 'Kadavu', 'Taveuni',
+        // Food & drink
+        'kokoda', 'lovo', 'palusami', 'tavioka', 'rourou', 'vakalolo', 'nama',
+        'vudi', 'kavika', 'ika', 'cassava cake', 'duruka', 'dalo', 'chilli water',
+        'kava', 'yaqona', 'koko Fiji',
+        // Culture & tradition
+        'sevusevu', 'meke', 'kerekere', 'tabua', 'magiti', 'soli', 'veiqaravi',
+        'loloma', 'bula', 'vinaka', 'moce', 'tovolea', 'sega na leqa',
+        'vale ni lotu', 'mataqali', 'tokatoka', 'tikina', 'turaga ni koro',
+        // Landmarks & icons
+        'Fiji Airways', 'Thurston Gardens', 'Suva Market', 'Saraswati Temple',
+        'Albert Park', 'USP', 'FNU', 'Fiji Museum', 'Ratu Sukuna Park',
+        'Garden of the Sleeping Giant', 'Navua River', 'Bouma Falls',
+        'Sigatoka Sand Dunes', 'Colo-i-Suva', 'Natadola Beach',
+        // Everyday Fiji life
+        'bilibili', 'carrier', 'minibus', 'rugby sevens', 'grog session',
+        'flower garland', 'pandanus mat', 'sulu', 'seawall', 'Sunday market',
+      ],
 
-// ═══════════════════════════════════════════════
-//  CATEGORY METADATA
-// ═══════════════════════════════════════════════
-const CAT_META = {
-  mainstream: { color: '#FFD400', name: 'MAINSTREAM'   },
-  everyday:   { color: '#22A7FF', name: 'EVERYDAY'     },
-  fiji:       { color: '#FF7A1A', name: 'FIJI / LOCAL' },
-  party:      { color: '#FF4D9D', name: 'PARTY'        },
-  sports:     { color: '#00C8FF', name: 'SPORTS'       },
-  nature:     { color: '#39DB74', name: 'NATURE'       },
-  history:    { color: '#D4A0FF', name: 'HISTORY'      },
-};
+      sports: [
+        // Sports & games
+        'Football', 'Basketball', 'Tennis', 'Swimming', 'Boxing', 'Cricket', 'Rugby', 'Golf',
+        'Volleyball', 'Baseball', 'Gymnastics', 'Skateboarding', 'Surfing', 'Wrestling',
+        'Cycling', 'Horse Racing', 'Table Tennis', 'Badminton', 'Archery', 'Weightlifting',
+        'Pole Vault', 'High Jump', 'Relay Race', 'Triathlon', 'Water Polo', 'Rowing',
+        'Ice Skating', 'Snowboarding', 'Skiing', 'Darts',
+        // Athletes
+        'Usain Bolt', 'Michael Jordan', 'Serena Williams', 'Muhammad Ali', 'Tiger Woods',
+        'Lionel Messi', 'Cristiano Ronaldo', 'LeBron James', 'Roger Federer', 'Simone Biles',
+        'Michael Phelps', 'Naomi Osaka', 'Lewis Hamilton', 'Pelé', 'Mike Tyson',
+        'Kobe Bryant', 'Wayne Gretzky', 'Tom Brady', 'Novak Djokovic', 'Neymar',
+        'Ronda Rousey', 'Stephen Curry', 'Rafael Nadal', 'Lance Armstrong', 'Carl Lewis',
+        // Actions & moments
+        'Free Kick', 'Slam Dunk', 'Home Run', 'Knockout', 'Penalty Shootout',
+        'Hat Trick', 'Photo Finish', 'Disqualification', 'Gold Medal', 'Lap of Honour',
+        'Referee', 'Cheerleader', 'Olympic Torch', 'Victory Lap', 'Warm Up',
+      ],
 
-// ═══════════════════════════════════════════════
-//  CONSTANTS
-// ═══════════════════════════════════════════════
-const ROUND_TIME         = 60;
-const TILT_CORRECT       = 25;   // portrait beta < this → correct
-const TILT_PASS          = 155;  // portrait beta > this → pass
-const NEUTRAL_LO         = 40;
-const NEUTRAL_HI         = 140;
-const TILT_GAMMA_CORRECT = 40;   // landscape noseDown > this → correct
-const TILT_GAMMA_PASS    = 40;   // landscape noseDown < -this → pass
-const NEUTRAL_GAMMA      = 20;   // |gamma| must drop below this to re-arm
-const FLASH_MS           = 450;
+      nature: [
+        // Weather & sky
+        'Thunderstorm', 'Rainbow', 'Blizzard', 'Tornado', 'Tsunami', 'Earthquake',
+        'Volcano', 'Eclipse', 'Aurora Borealis', 'Hailstorm', 'Drought', 'Flood',
+        'Heatwave', 'Fog', 'Hurricane', 'Avalanche', 'Lightning', 'Meteor Shower',
+        // Landscapes & geography
+        'Waterfall', 'Desert', 'Glacier', 'Coral Reef', 'Rainforest', 'Swamp',
+        'Canyon', 'Cave', 'Cliff', 'Sand Dune', 'Hot Spring', 'Lagoon', 'Fjord',
+        'Savanna', 'Tundra', 'Mangrove', 'Atoll', 'Geyser', 'Quicksand',
+        // Plants & trees
+        'Sunflower', 'Cactus', 'Bamboo', 'Coconut Palm', 'Mushroom', 'Seaweed',
+        'Venus Flytrap', 'Baobab Tree', 'Mangrove Tree', 'Cherry Blossom',
+        'Tumbleweed', 'Lily Pad', 'Fern', 'Moss', 'Dandelion',
+        // Creatures
+        'Shark', 'Blue Whale', 'Eagle', 'Chameleon', 'Firefly', 'Piranha',
+        'Giant Squid', 'Komodo Dragon', 'Snow Leopard', 'Pangolin', 'Manta Ray',
+        'Electric Eel', 'Bald Eagle', 'Sea Turtle', 'Dragonfly', 'Tarantula',
+        'Praying Mantis', 'Flying Fish', 'Puffer Fish', 'Leafy Sea Dragon',
+      ],
 
-// ═══════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════
-let currentCat  = null;
-let deck        = [];
-let deckIdx     = 0;
-let score       = 0;
-let correct     = [];
-let passed      = [];
-let timeLeft    = ROUND_TIME;
-let ticker      = null;
-let wakeLock    = null;
-let motionOn    = false;
-let needNeutral = false;
-let gameActive  = false;
-let audioCtx    = null;
+      history: [
+        // World figures
+        'Cleopatra', 'Napoleon', 'Julius Caesar', 'Joan of Arc', 'Genghis Khan',
+        'Alexander the Great', 'Abraham Lincoln', 'Nelson Mandela', 'Mahatma Gandhi',
+        'Martin Luther King', 'Winston Churchill', 'Adolf Hitler', 'Joseph Stalin',
+        'Queen Victoria', 'Marie Antoinette', 'Marco Polo', 'Christopher Columbus',
+        'Leonardo da Vinci', 'Michelangelo', 'Isaac Newton', 'Albert Einstein',
+        'Charles Darwin', 'Nikola Tesla', 'Marie Curie', 'Galileo Galilei',
+        'William Shakespeare', 'Mozart', 'Beethoven', 'Sigmund Freud',
+        // Events & eras
+        'French Revolution', 'World War One', 'World War Two', 'Moon Landing',
+        'Black Plague', 'Great Wall of China', 'Titanic Sinking', 'Cold War',
+        'American Revolution', 'Fall of Rome', 'Industrial Revolution',
+        'Boston Tea Party', 'D-Day', 'Hiroshima', 'Berlin Wall', '9/11',
+        'Space Race', 'Gold Rush', 'Abolition of Slavery', 'Women\'s Suffrage',
+        // Inventions & symbols
+        'Printing Press', 'Steam Engine', 'Telephone', 'Light Bulb', 'Aeroplane',
+        'Internet', 'Compass', 'Gunpowder', 'Wheel', 'Pyramids', 'Colosseum',
+        'Stonehenge', 'Eiffel Tower', 'Statue of Liberty', 'Great Barrier Reef',
+      ],
 
-// ═══════════════════════════════════════════════
-//  SCREENS
-// ═══════════════════════════════════════════════
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+      party: [
+        // Actions / mimes
+        'Moonwalking', 'Proposing marriage', 'Sneezing in public', 'Taking a selfie',
+        'Eating too much', 'Dancing alone at a party', 'Falling asleep in a meeting',
+        'Trying to parallel park', 'Eating spicy food', 'Winning the lottery',
+        'Being chased by a bee', 'Riding a rollercoaster', 'Giving a speech',
+        'Blowing out birthday candles', 'Opening presents', 'Sneaking into a fridge at night',
+        'Walking in high heels', 'Playing air guitar', 'Crying at a movie',
+        'Waking up late for work', 'Texting while walking', 'Dropping phone in toilet',
+        'Putting on sunscreen', 'Killing a spider', 'Trying not to laugh',
+        // Characters / impressions
+        'British Queen', 'American Cowboy', 'Italian Chef', 'Russian Spy',
+        'Valley Girl', 'Surfer Dude', 'News Anchor', 'Sports Commentator',
+        'Robot', 'Zombie', 'Vampire', 'Pirate', 'Superhero', 'Villain',
+        'Gym Bro', 'Instagram Influencer', 'Helicopter Parent', 'Uber Driver',
+        'Annoying Tourist', 'Strict Teacher', 'Nervous Bride', 'Overexcited Fan',
+        'Karate Master', 'Old Person Texting',
+        // Party scenarios
+        'Spin the Bottle', 'Limbo', 'Karaoke', 'Musical Chairs', 'Conga Line',
+        'Truth or Dare', 'Never Have I Ever', 'Tug of War',
+        'Marco Polo', 'Three-legged Race', 'Bobbing for Apples',
+      ],
+    };
 
-// ═══════════════════════════════════════════════
-//  AUDIO
-// ═══════════════════════════════════════════════
-function ac() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-function tone(freq, dur, type = 'sine', vol = 0.38) {
-  try {
-    const ctx = ac(), o = ctx.createOscillator(), g = ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.type = type; o.frequency.value = freq;
-    g.gain.setValueAtTime(vol, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-    o.start(); o.stop(ctx.currentTime + dur);
-  } catch (_) {}
-}
-const sfx = {
-  correct() { tone(880,.14,'sine',.5); setTimeout(()=>tone(1108,.26,'sine',.5),75); },
-  pass()    { tone(330,.11,'sawtooth',.28); setTimeout(()=>tone(220,.24,'sawtooth',.28),55); },
-  tick()    { tone(440,.18,'sine',.25); },
-  go()      { tone(880,.1,'sine',.5); setTimeout(()=>tone(1320,.35,'sine',.5),70); },
-  end()     { tone(660,.2,'sine',.4); setTimeout(()=>tone(550,.2,'sine',.4),200); setTimeout(()=>tone(440,.5,'sine',.4),400); },
-};
+    // ═══════════════════════════════════════════════
+    //  CATEGORY METADATA
+    // ═══════════════════════════════════════════════
+    const CAT_META = {
+      mainstream: { color: '#FFD400', name: 'MAINSTREAM' },
+      everyday: { color: '#22A7FF', name: 'EVERYDAY' },
+      fiji: { color: '#FF7A1A', name: 'FIJI / LOCAL' },
+      party: { color: '#FF4D9D', name: 'PARTY' },
+      sports: { color: '#00C8FF', name: 'SPORTS' },
+      nature: { color: '#39DB74', name: 'NATURE' },
+      history: { color: '#D4A0FF', name: 'HISTORY' },
+    };
 
-// ═══════════════════════════════════════════════
-//  FLASH OVERLAY
-// ═══════════════════════════════════════════════
-function flash(colour, label) {
-  const el  = document.getElementById('flash');
-  const lbl = document.getElementById('flash-label');
-  el.style.background   = colour;
-  lbl.textContent       = label;
-  el.style.opacity      = '1';
-  el.style.pointerEvents = 'all';
-  setTimeout(() => {
-    el.style.opacity       = '0';
-    el.style.pointerEvents = 'none';
-  }, FLASH_MS);
-}
+    // ═══════════════════════════════════════════════
+    //  CONSTANTS
+    // ═══════════════════════════════════════════════
+    const ROUND_TIME = 60;
+    const TILT_CORRECT = 25;   // portrait beta < this → correct
+    const TILT_PASS = 155;  // portrait beta > this → pass
+    const NEUTRAL_LO = 40;
+    const NEUTRAL_HI = 140;
+    const TILT_GAMMA_CORRECT = 40;   // landscape noseDown > this → correct
+    const TILT_GAMMA_PASS = 40;   // landscape noseDown < -this → pass
+    const NEUTRAL_GAMMA = 20;   // |gamma| must drop below this to re-arm
+    const FLASH_MS = 450;
 
-// ═══════════════════════════════════════════════
-//  SHUFFLE
-// ═══════════════════════════════════════════════
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = (Math.random() * (i + 1)) | 0;
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+    // ═══════════════════════════════════════════════
+    //  STATE
+    // ═══════════════════════════════════════════════
+    let currentCat = null;
+    let deck = [];
+    let deckIdx = 0;
+    let score = 0;
+    let correct = [];
+    let passed = [];
+    let timeLeft = ROUND_TIME;
+    let ticker = null;
+    let wakeLock = null;
+    let motionOn = false;
+    let needNeutral = false;
+    let gameActive = false;
+    let audioCtx = null;
 
-// ═══════════════════════════════════════════════
-//  WAKE LOCK
-// ═══════════════════════════════════════════════
-async function grabWake() {
-  if ('wakeLock' in navigator) {
-    try { wakeLock = await navigator.wakeLock.request('screen'); } catch (_) {}
-  }
-}
-function dropWake() { if (wakeLock) { wakeLock.release(); wakeLock = null; } }
-
-// ═══════════════════════════════════════════════
-//  ORIENTATION GUARD
-// ═══════════════════════════════════════════════
-function checkOrientation() {
-  const playActive     = document.getElementById('play-screen').classList.contains('active');
-  const countdownActive = document.getElementById('countdown-screen').classList.contains('active');
-  const overlay  = document.getElementById('portrait-overlay');
-  const landscape = window.innerWidth > window.innerHeight;
-
-  if ((playActive || countdownActive) && !landscape) {
-    overlay.classList.add('show');
-    if (ticker) { clearInterval(ticker); ticker = null; }
-    gameActive = false;
-  } else if (playActive && landscape && overlay.classList.contains('show')) {
-    overlay.classList.remove('show');
-    if (!ticker && timeLeft > 0) {
-      gameActive = true;
-      ticker = setInterval(tickTimer, 1000);
+    // ═══════════════════════════════════════════════
+    //  SCREENS
+    // ═══════════════════════════════════════════════
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
-  } else if (!playActive && !countdownActive) {
-    overlay.classList.remove('show');
-  }
-}
 
-// ═══════════════════════════════════════════════
-//  TILT HANDLER
-// ═══════════════════════════════════════════════
-function onOrientation(e) {
-  if (!gameActive) return;
-
-  if (window.innerWidth > window.innerHeight) {
-    // Landscape: nose-up/nose-down tilts change gamma, not beta.
-    // screen.orientation.angle 90  = CCW rotation → physical-top LEFT  → nose-down = negative gamma
-    // screen.orientation.angle 270 = CW rotation  → physical-top RIGHT → nose-down = positive gamma
-    const gamma = e.gamma;
-    if (gamma === null) return;
-
-    const angle = screen.orientation
-      ? screen.orientation.angle
-      : (window.orientation === -90 ? 270 : 90);
-    const noseDown = angle === 270 ? gamma : -gamma;
-
-    if (needNeutral) {
-      if (Math.abs(gamma) <= NEUTRAL_GAMMA) needNeutral = false;
-      return;
+    // ═══════════════════════════════════════════════
+    //  AUDIO
+    // ═══════════════════════════════════════════════
+    function ac() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
     }
-    if (noseDown > TILT_GAMMA_CORRECT)    { doPass();    needNeutral = true; }
-    else if (noseDown < -TILT_GAMMA_PASS) { doCorrect(); needNeutral = true; }
-
-  } else {
-    const beta = e.beta;
-    if (beta === null) return;
-    if (needNeutral) {
-      if (beta >= NEUTRAL_LO && beta <= NEUTRAL_HI) needNeutral = false;
-      return;
-    }
-    if (beta < TILT_CORRECT) { doCorrect(); needNeutral = true; }
-    else if (beta > TILT_PASS || beta < -(180 - TILT_PASS)) { doPass(); needNeutral = true; }
-  }
-}
-
-// ═══════════════════════════════════════════════
-//  WORD SIZING  (dynamic to fit long words)
-// ═══════════════════════════════════════════════
-function getWordSize(word) {
-  const maxTok = Math.max(...word.split(' ').map(w => w.length));
-  return Math.max(76, Math.min(140, Math.floor(720 / (maxTok * 0.64))));
-}
-function showWord(word) {
-  const el = document.getElementById('word');
-  el.textContent = word;
-  el.style.fontSize = getWordSize(word) + 'px';
-}
-
-// ═══════════════════════════════════════════════
-//  GAME ACTIONS
-// ═══════════════════════════════════════════════
-function doCorrect() {
-  if (!gameActive) return;
-  correct.push(deck[deckIdx]);
-  score++;
-  sfx.correct();
-  flash('#18C964', 'GOT IT!');
-  nextCard();
-}
-
-function doPass() {
-  if (!gameActive) return;
-  passed.push(deck[deckIdx]);
-  sfx.pass();
-  flash('#FF3A30', 'PASS');
-  nextCard();
-}
-
-function nextCard() {
-  deckIdx++;
-  if (deckIdx >= deck.length) {
-    deck = shuffle(PACKS[currentCat]);
-    deckIdx = 0;
-  }
-  showWord(deck[deckIdx]);
-}
-
-// ═══════════════════════════════════════════════
-//  TIMER
-// ═══════════════════════════════════════════════
-function tickTimer() {
-  timeLeft--;
-  const pct  = (timeLeft / ROUND_TIME) * 100;
-  const fill = document.getElementById('timer-fill');
-  fill.style.width = pct + '%';
-  document.getElementById('timer-num').textContent = timeLeft;
-  if (timeLeft <= 0) endGame();
-}
-
-// ═══════════════════════════════════════════════
-//  START GAME
-// ═══════════════════════════════════════════════
-function startGame(cat) {
-  currentCat = cat;
-  deck = shuffle(PACKS[cat]);
-  deckIdx = 0; score = 0; correct = []; passed = [];
-  timeLeft = ROUND_TIME; needNeutral = false;
-
-  showWord(deck[0]);
-  document.getElementById('timer-num').textContent  = ROUND_TIME;
-  document.getElementById('timer-fill').style.width = '100%';
-
-  show('play-screen');
-  checkOrientation();
-
-  gameActive = window.innerWidth > window.innerHeight;
-  if (gameActive) ticker = setInterval(tickTimer, 1000);
-
-  grabWake();
-}
-
-// ═══════════════════════════════════════════════
-//  END GAME
-// ═══════════════════════════════════════════════
-function endGame() {
-  gameActive = false;
-  clearInterval(ticker); ticker = null;
-  dropWake();
-  sfx.end();
-
-  document.getElementById('final-score').textContent  = score;
-  document.getElementById('correct-list').innerHTML   = correct.map(w => `<div class="chip-correct">${w}</div>`).join('');
-  document.getElementById('passed-list').innerHTML    = passed.map(w => `<div class="chip-pass">${w}</div>`).join('');
-
-  show('results-screen');
-  document.getElementById('portrait-overlay').classList.remove('show');
-}
-
-// ═══════════════════════════════════════════════
-//  MOTION PERMISSION + COUNTDOWN
-// ═══════════════════════════════════════════════
-async function enableMotion(cat) {
-  if (!motionOn) {
-    if (typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function') {
+    function tone(freq, dur, type = 'sine', vol = 0.38) {
       try {
-        const p = await DeviceOrientationEvent.requestPermission();
-        if (p === 'granted') motionOn = true;
-      } catch (_) {}
-    } else {
-      motionOn = true;
+        const ctx = ac(), o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = type; o.frequency.value = freq;
+        g.gain.setValueAtTime(vol, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+        o.start(); o.stop(ctx.currentTime + dur);
+      } catch (_) { }
     }
-    if (motionOn) window.addEventListener('deviceorientation', onOrientation, true);
-  }
-  countdown(cat);
-}
+    const sfx = {
+      correct() { tone(880, .14, 'sine', .5); setTimeout(() => tone(1108, .26, 'sine', .5), 75); },
+      pass() { tone(330, .11, 'sawtooth', .28); setTimeout(() => tone(220, .24, 'sawtooth', .28), 55); },
+      tick() { tone(440, .18, 'sine', .25); },
+      go() { tone(880, .1, 'sine', .5); setTimeout(() => tone(1320, .35, 'sine', .5), 70); },
+      end() { tone(660, .2, 'sine', .4); setTimeout(() => tone(550, .2, 'sine', .4), 200); setTimeout(() => tone(440, .5, 'sine', .4), 400); },
+    };
 
-function countdown(cat) {
-  const cdScreen = document.getElementById('countdown-screen');
-  cdScreen.style.background = CAT_META[cat].color;
-  show('countdown-screen');
-  checkOrientation();
-
-  let n = 3;
-  const el = document.getElementById('countdown-num');
-
-  function setCount(val) {
-    el.textContent = String(val);
-    el.style.animation = 'none';
-    el.offsetHeight; // force reflow to restart animation
-    el.style.animation = 'countPop .5s cubic-bezier(.2,.85,.25,1) both';
-  }
-
-  setCount(3);
-  sfx.tick();
-
-  const iv = setInterval(() => {
-    n--;
-    if (n > 0) { setCount(n); sfx.tick(); }
-    else {
-      clearInterval(iv);
-      setCount('GO!');
-      sfx.go();
-      setTimeout(() => startGame(cat), 550);
+    // ═══════════════════════════════════════════════
+    //  FLASH OVERLAY
+    // ═══════════════════════════════════════════════
+    function flash(colour, label) {
+      const el = document.getElementById('flash');
+      const lbl = document.getElementById('flash-label');
+      el.style.background = colour;
+      lbl.textContent = label;
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'all';
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+      }, FLASH_MS);
     }
-  }, 900);
-}
 
-// ═══════════════════════════════════════════════
-//  APPLY DECK COLOR
-// ═══════════════════════════════════════════════
-function applyDeckColor(cat) {
-  document.documentElement.style.setProperty('--cat-color', CAT_META[cat].color);
-  document.getElementById('ready-screen').style.background = CAT_META[cat].color;
-  document.getElementById('rcat').textContent = CAT_META[cat].name;
-}
+    // ═══════════════════════════════════════════════
+    //  SHUFFLE
+    // ═══════════════════════════════════════════════
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = (Math.random() * (i + 1)) | 0;
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
 
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
+    // ═══════════════════════════════════════════════
+    //  WAKE LOCK
+    // ═══════════════════════════════════════════════
+    async function grabWake() {
+      if ('wakeLock' in navigator) {
+        try { wakeLock = await navigator.wakeLock.request('screen'); } catch (_) { }
+      }
+    }
+    function dropWake() { if (wakeLock) { wakeLock.release(); wakeLock = null; } }
 
-// Word counts on tiles
-Object.keys(PACKS).forEach(cat => {
-  const el = document.getElementById('c-' + cat);
-  if (el) el.textContent = PACKS[cat].length + ' words';
-});
+    // ═══════════════════════════════════════════════
+    //  ORIENTATION GUARD
+    // ═══════════════════════════════════════════════
+    function checkOrientation() {
+      const playActive = document.getElementById('play-screen').classList.contains('active');
+      const countdownActive = document.getElementById('countdown-screen').classList.contains('active');
+      const overlay = document.getElementById('portrait-overlay');
+      const landscape = window.innerWidth > window.innerHeight;
 
-// Category tile clicks
-document.querySelectorAll('.tile').forEach(tile => {
-  tile.addEventListener('click', () => {
-    currentCat = tile.dataset.cat;
-    applyDeckColor(currentCat);
-    document.getElementById('motion-btn').disabled = false;
-    show('ready-screen');
-  });
-});
+      if ((playActive || countdownActive) && !landscape) {
+        overlay.classList.add('show');
+        if (ticker) { clearInterval(ticker); ticker = null; }
+        gameActive = false;
+      } else if (playActive && landscape && overlay.classList.contains('show')) {
+        overlay.classList.remove('show');
+        if (!ticker && timeLeft > 0) {
+          gameActive = true;
+          ticker = setInterval(tickTimer, 1000);
+        }
+      } else if (!playActive && !countdownActive) {
+        overlay.classList.remove('show');
+      }
+    }
 
-// Motion / start button
-document.getElementById('motion-btn').addEventListener('click', () => {
-  document.getElementById('motion-btn').disabled = true;
-  enableMotion(currentCat);
-});
+    // ═══════════════════════════════════════════════
+    //  TILT HANDLER
+    // ═══════════════════════════════════════════════
+    function onOrientation(e) {
+      if (!gameActive) return;
 
-// Back button on ready screen
-document.getElementById('back-btn').addEventListener('click', () => show('home-screen'));
+      if (window.innerWidth > window.innerHeight) {
+        // Landscape: nose-up/nose-down tilts change gamma, not beta.
+        // screen.orientation.angle 90  = CCW rotation → physical-top LEFT  → nose-down = negative gamma
+        // screen.orientation.angle 270 = CW rotation  → physical-top RIGHT → nose-down = positive gamma
+        const gamma = e.gamma;
+        if (gamma === null) return;
 
-// Tap zones (fallback / desktop)
-document.getElementById('tap-correct').addEventListener('click', doCorrect);
-document.getElementById('tap-pass').addEventListener('click', doPass);
+        const angle = screen.orientation
+          ? screen.orientation.angle
+          : (window.orientation === -90 ? 270 : 90);
+        const noseDown = angle === 270 ? gamma : -gamma;
 
-// Results buttons
-document.getElementById('again-btn').addEventListener('click', () => {
-  applyDeckColor(currentCat);
-  document.getElementById('motion-btn').disabled = false;
-  show('ready-screen');
-});
-document.getElementById('home-btn').addEventListener('click', () => show('home-screen'));
+        if (needNeutral) {
+          if (Math.abs(gamma) <= NEUTRAL_GAMMA) needNeutral = false;
+          return;
+        }
+        if (noseDown > TILT_GAMMA_CORRECT) { doPass(); needNeutral = true; }
+        else if (noseDown < -TILT_GAMMA_PASS) { doCorrect(); needNeutral = true; }
 
-// Orientation / resize
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
+      } else {
+        const beta = e.beta;
+        if (beta === null) return;
+        if (needNeutral) {
+          if (beta >= NEUTRAL_LO && beta <= NEUTRAL_HI) needNeutral = false;
+          return;
+        }
+        if (beta < TILT_CORRECT) { doCorrect(); needNeutral = true; }
+        else if (beta > TILT_PASS || beta < -(180 - TILT_PASS)) { doPass(); needNeutral = true; }
+      }
+    }
 
-// Re-acquire wake lock when tab comes back into view
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && gameActive) grabWake();
-});
+    // ═══════════════════════════════════════════════
+    //  WORD SIZING  (dynamic to fit long words)
+    // ═══════════════════════════════════════════════
+    function getWordSize(word) {
+      const maxTok = Math.max(...word.split(' ').map(w => w.length));
+      return Math.max(76, Math.min(140, Math.floor(720 / (maxTok * 0.64))));
+    }
+    function showWord(word) {
+      const el = document.getElementById('word');
+      el.textContent = word;
+      el.style.fontSize = getWordSize(word) + 'px';
+    }
 
-// Service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
+    // ═══════════════════════════════════════════════
+    //  GAME ACTIONS
+    // ═══════════════════════════════════════════════
+    function doCorrect() {
+      if (!gameActive) return;
+      correct.push(deck[deckIdx]);
+      score++;
+      sfx.correct();
+      flash('#18C964', 'GOT IT!');
+      nextCard();
+    }
 
-// Keyboard fallback (desktop / testing)
-document.addEventListener('keydown', e => {
-  if (!gameActive) return;
-  if (e.key === 'ArrowUp'   || e.key === 'Enter') doCorrect();
-  if (e.key === 'ArrowDown' || e.key === ' ')     doPass();
-});
-</script>
+    function doPass() {
+      if (!gameActive) return;
+      passed.push(deck[deckIdx]);
+      sfx.pass();
+      flash('#FF3A30', 'PASS');
+      nextCard();
+    }
+
+    function nextCard() {
+      deckIdx++;
+      if (deckIdx >= deck.length) {
+        deck = shuffle(PACKS[currentCat]);
+        deckIdx = 0;
+      }
+      showWord(deck[deckIdx]);
+    }
+
+    // ═══════════════════════════════════════════════
+    //  TIMER
+    // ═══════════════════════════════════════════════
+    function tickTimer() {
+      timeLeft--;
+      const pct = (timeLeft / ROUND_TIME) * 100;
+      const fill = document.getElementById('timer-fill');
+      fill.style.width = pct + '%';
+      document.getElementById('timer-num').textContent = timeLeft;
+      if (timeLeft <= 0) endGame();
+    }
+
+    // ═══════════════════════════════════════════════
+    //  START GAME
+    // ═══════════════════════════════════════════════
+    function startGame(cat) {
+      currentCat = cat;
+      deck = shuffle(PACKS[cat]);
+      deckIdx = 0; score = 0; correct = []; passed = [];
+      timeLeft = ROUND_TIME; needNeutral = false;
+
+      showWord(deck[0]);
+      document.getElementById('timer-num').textContent = ROUND_TIME;
+      document.getElementById('timer-fill').style.width = '100%';
+
+      show('play-screen');
+      checkOrientation();
+
+      gameActive = window.innerWidth > window.innerHeight;
+      if (gameActive) ticker = setInterval(tickTimer, 1000);
+
+      grabWake();
+    }
+
+    // ═══════════════════════════════════════════════
+    //  END GAME
+    // ═══════════════════════════════════════════════
+    function endGame() {
+      gameActive = false;
+      clearInterval(ticker); ticker = null;
+      dropWake();
+      sfx.end();
+
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('correct-list').innerHTML = correct.map(w => `<div class="chip-correct">${w}</div>`).join('');
+      document.getElementById('passed-list').innerHTML = passed.map(w => `<div class="chip-pass">${w}</div>`).join('');
+
+      show('results-screen');
+      document.getElementById('portrait-overlay').classList.remove('show');
+    }
+
+    // ═══════════════════════════════════════════════
+    //  MOTION PERMISSION + COUNTDOWN
+    // ═══════════════════════════════════════════════
+    async function enableMotion(cat) {
+      if (!motionOn) {
+        if (typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function') {
+          try {
+            const p = await DeviceOrientationEvent.requestPermission();
+            if (p === 'granted') motionOn = true;
+          } catch (_) { }
+        } else {
+          motionOn = true;
+        }
+        if (motionOn) window.addEventListener('deviceorientation', onOrientation, true);
+      }
+      countdown(cat);
+    }
+
+    function countdown(cat) {
+      const cdScreen = document.getElementById('countdown-screen');
+      cdScreen.style.background = CAT_META[cat].color;
+      show('countdown-screen');
+      checkOrientation();
+
+      let n = 3;
+      const el = document.getElementById('countdown-num');
+
+      function setCount(val) {
+        el.textContent = String(val);
+        el.style.animation = 'none';
+        el.offsetHeight; // force reflow to restart animation
+        el.style.animation = 'countPop .5s cubic-bezier(.2,.85,.25,1) both';
+      }
+
+      setCount(3);
+      sfx.tick();
+
+      const iv = setInterval(() => {
+        n--;
+        if (n > 0) { setCount(n); sfx.tick(); }
+        else {
+          clearInterval(iv);
+          setCount('GO!');
+          sfx.go();
+          setTimeout(() => startGame(cat), 550);
+        }
+      }, 900);
+    }
+
+    // ═══════════════════════════════════════════════
+    //  APPLY DECK COLOR
+    // ═══════════════════════════════════════════════
+    function applyDeckColor(cat) {
+      document.documentElement.style.setProperty('--cat-color', CAT_META[cat].color);
+      document.getElementById('ready-screen').style.background = CAT_META[cat].color;
+      document.getElementById('rcat').textContent = CAT_META[cat].name;
+    }
+
+    // ═══════════════════════════════════════════════
+    //  INIT
+    // ═══════════════════════════════════════════════
+
+    // Word counts on tiles
+    Object.keys(PACKS).forEach(cat => {
+      const el = document.getElementById('c-' + cat);
+      if (el) el.textContent = PACKS[cat].length + ' words';
+    });
+
+    // Category tile clicks
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('click', () => {
+        currentCat = tile.dataset.cat;
+        applyDeckColor(currentCat);
+        document.getElementById('motion-btn').disabled = false;
+        show('ready-screen');
+      });
+    });
+
+    // Motion / start button
+    document.getElementById('motion-btn').addEventListener('click', () => {
+      document.getElementById('motion-btn').disabled = true;
+      enableMotion(currentCat);
+    });
+
+    // Back button on ready screen
+    document.getElementById('back-btn').addEventListener('click', () => show('home-screen'));
+
+    // Tap zones (fallback / desktop)
+    document.getElementById('tap-correct').addEventListener('click', doCorrect);
+    document.getElementById('tap-pass').addEventListener('click', doPass);
+
+    // Results buttons
+    document.getElementById('again-btn').addEventListener('click', () => {
+      applyDeckColor(currentCat);
+      document.getElementById('motion-btn').disabled = false;
+      show('ready-screen');
+    });
+    document.getElementById('home-btn').addEventListener('click', () => show('home-screen'));
+
+    // Orientation / resize
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+
+    // Re-acquire wake lock when tab comes back into view
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && gameActive) grabWake();
+    });
+
+    // Service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => { });
+    }
+
+    // Keyboard fallback (desktop / testing)
+    document.addEventListener('keydown', e => {
+      if (!gameActive) return;
+      if (e.key === 'ArrowUp' || e.key === 'Enter') doCorrect();
+      if (e.key === 'ArrowDown' || e.key === ' ') doPass();
+    });
+  </script>
 </body>
+
 </html>
