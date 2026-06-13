@@ -240,12 +240,6 @@
       background: #14B8A6;
     }
 
-    .tile[data-imp-cat=food]    { background: #FF5E3A; }
-    .tile[data-imp-cat=animals] { background: #22A7FF; }
-    .tile[data-imp-cat=movies]  { background: #FFD400; }
-    .tile[data-imp-cat=sports]  { background: #00C8FF; }
-    .tile[data-imp-cat=places]  { background: #14B8A6; }
-    .tile[data-imp-cat=nature]  { background: #39DB74; }
 
     .tile[data-cat=history] {
       background: #D4A0FF;
@@ -1453,45 +1447,6 @@
       <div class="charades-home-title" style="color:#fff;">IMPOSTER</div>
     </div>
 
-    <div class="deck-divider" style="margin-bottom:16px;">
-      <div class="deck-divider-line"></div>
-      <div class="deck-divider-lbl">PICK A CATEGORY</div>
-      <div class="deck-divider-line"></div>
-    </div>
-
-    <div class="deck-grid" id="imp-cat-grid">
-      <div class="tile" data-imp-cat="food">
-        <i class="ph-fill ph-fork-knife tile-glyph"></i>
-        <div class="tile-name">FOOD &amp;<br>DRINK</div>
-        <div class="tile-sub">DISHES &amp; DRINKS &middot; <span id="ic-food"></span></div>
-      </div>
-      <div class="tile" data-imp-cat="animals">
-        <i class="ph-fill ph-paw-print tile-glyph"></i>
-        <div class="tile-name">ANIMALS</div>
-        <div class="tile-sub">CREATURES &middot; <span id="ic-animals"></span></div>
-      </div>
-      <div class="tile" data-imp-cat="movies">
-        <i class="ph-fill ph-film-slate tile-glyph"></i>
-        <div class="tile-name">MOVIES</div>
-        <div class="tile-sub">FILMS &middot; <span id="ic-movies"></span></div>
-      </div>
-      <div class="tile" data-imp-cat="sports">
-        <i class="ph-fill ph-trophy tile-glyph"></i>
-        <div class="tile-name">SPORTS</div>
-        <div class="tile-sub">GAMES &amp; ATHLETES &middot; <span id="ic-sports"></span></div>
-      </div>
-      <div class="tile" data-imp-cat="places">
-        <i class="ph-fill ph-map-pin tile-glyph"></i>
-        <div class="tile-name">PLACES</div>
-        <div class="tile-sub">CITIES &amp; LANDMARKS &middot; <span id="ic-places"></span></div>
-      </div>
-      <div class="tile" data-imp-cat="nature">
-        <i class="ph-fill ph-leaf tile-glyph"></i>
-        <div class="tile-name">NATURE</div>
-        <div class="tile-sub">EARTH &amp; SKY &middot; <span id="ic-nature"></span></div>
-      </div>
-    </div>
-
     <div class="player-stepper">
       <div class="stepper-lbl">PLAYERS</div>
       <div class="stepper-controls">
@@ -1806,79 +1761,72 @@
 
 
     // ═══════════════════════════════════════════════
-    //  IMPOSTER PACKS  { w: word, h: one-word hint }
+    //  IMPOSTER WORDS  { word, hint }
     // ═══════════════════════════════════════════════
-    const IMPOSTER_PACKS = {
-      food: [
-        {w:'Pizza',h:'Doughy'},{w:'Sushi',h:'Raw'},{w:'Burger',h:'Stacked'},
-        {w:'Ice Cream',h:'Frozen'},{w:'Coffee',h:'Bitter'},{w:'Beer',h:'Bubbly'},
-        {w:'Chocolate',h:'Sweet'},{w:'Pancakes',h:'Fluffy'},{w:'Spaghetti',h:'Twirly'},
-        {w:'Tacos',h:'Crunchy'},{w:'Popcorn',h:'Salty'},{w:'Cheesecake',h:'Rich'},
-        {w:'Lemonade',h:'Sour'},{w:'Milkshake',h:'Thick'},{w:'Ramen',h:'Noodle'},
-        {w:'Champagne',h:'Bubbly'},{w:'Donut',h:'Glazed'},{w:'Watermelon',h:'Seedy'},
-        {w:'Mango',h:'Tropical'},{w:'Barbecue',h:'Smoky'},{w:'Croissant',h:'Flaky'},
-        {w:'Avocado',h:'Creamy'},{w:'Espresso',h:'Strong'},{w:'Fried Chicken',h:'Crispy'},
-      ],
-      animals: [
-        {w:'Elephant',h:'Wrinkled'},{w:'Penguin',h:'Waddling'},{w:'Tiger',h:'Striped'},
-        {w:'Giraffe',h:'Tall'},{w:'Parrot',h:'Colourful'},{w:'Octopus',h:'Slimy'},
-        {w:'Dolphin',h:'Playful'},{w:'Shark',h:'Toothy'},{w:'Koala',h:'Sleepy'},
-        {w:'Flamingo',h:'Pink'},{w:'Gorilla',h:'Strong'},{w:'Crocodile',h:'Scaly'},
-        {w:'Peacock',h:'Showy'},{w:'Sloth',h:'Slow'},{w:'Crab',h:'Sideways'},
-        {w:'Chameleon',h:'Blending'},{w:'Kangaroo',h:'Bouncy'},{w:'Jellyfish',h:'Stinging'},
-        {w:'Owl',h:'Wise'},{w:'Panda',h:'Lazy'},{w:'Capybara',h:'Calm'},
-        {w:'Platypus',h:'Odd'},{w:'Narwhal',h:'Horned'},{w:'Axolotl',h:'Smiling'},
-      ],
-      movies: [
-        {w:'Titanic',h:'Sinking'},{w:'Frozen',h:'Cold'},{w:'Shrek',h:'Green'},
-        {w:'Moana',h:'Ocean'},{w:'The Matrix',h:'Digital'},{w:'Jaws',h:'Terrifying'},
-        {w:'Toy Story',h:'Plastic'},{w:'Star Wars',h:'Galactic'},{w:'Home Alone',h:'Trapped'},
-        {w:'Inception',h:'Dreamy'},{w:'Jurassic Park',h:'Prehistoric'},{w:'Gladiator',h:'Roman'},
-        {w:'Coco',h:'Colourful'},{w:'Barbie',h:'Pink'},{w:'Dune',h:'Sandy'},
-        {w:'Parasite',h:'Twisted'},{w:'Get Out',h:'Creepy'},{w:'Encanto',h:'Magical'},
-        {w:'Avatar',h:'Blue'},{w:'Up',h:'Floating'},{w:'Interstellar',h:'Cosmic'},
-        {w:'The Godfather',h:'Ruthless'},{w:'Mulan',h:'Warrior'},{w:'Finding Nemo',h:'Lost'},
-      ],
-      sports: [
-        {w:'Swimming',h:'Wet'},{w:'Boxing',h:'Bruising'},{w:'Surfing',h:'Wavy'},
-        {w:'Gymnastics',h:'Flexible'},{w:'Wrestling',h:'Grappled'},{w:'Golf',h:'Quiet'},
-        {w:'Skateboarding',h:'Grinding'},{w:'Cycling',h:'Pedalling'},{w:'Archery',h:'Pointed'},
-        {w:'Diving',h:'Splashing'},{w:'Rugby',h:'Muddy'},{w:'Tennis',h:'Racquet'},
-        {w:'Volleyball',h:'Net'},{w:'Basketball',h:'Bouncing'},{w:'Weightlifting',h:'Heavy'},
-        {w:'Ice Skating',h:'Slippery'},{w:'Snowboarding',h:'Icy'},{w:'Horse Racing',h:'Galloping'},
-        {w:'Rowing',h:'Rhythmic'},{w:'Rock Climbing',h:'Vertical'},{w:'Pole Vault',h:'Soaring'},
-        {w:'Darts',h:'Pointy'},{w:'Water Polo',h:'Treading'},{w:'Badminton',h:'Feathered'},
-      ],
-      places: [
-        {w:'Paris',h:'Romantic'},{w:'Tokyo',h:'Neon'},{w:'New York',h:'Busy'},
-        {w:'Bali',h:'Tropical'},{w:'London',h:'Rainy'},{w:'Las Vegas',h:'Flashy'},
-        {w:'Rome',h:'Ancient'},{w:'Dubai',h:'Tall'},{w:'Sydney',h:'Sunny'},
-        {w:'Antarctica',h:'Frozen'},{w:'Machu Picchu',h:'Ruins'},{w:'Hawaii',h:'Volcanic'},
-        {w:'Santorini',h:'White'},{w:'Sahara',h:'Sandy'},{w:'Amazon',h:'Dense'},
-        {w:'Cairo',h:'Dusty'},{w:'Venice',h:'Floating'},{w:'Iceland',h:'Icy'},
-        {w:'Bangkok',h:'Spicy'},{w:'Rio de Janeiro',h:'Carnival'},{w:'Maldives',h:'Blue'},
-        {w:'Barcelona',h:'Artistic'},{w:'Istanbul',h:'Ancient'},{w:'Singapore',h:'Clean'},
-      ],
-      nature: [
-        {w:'Volcano',h:'Erupting'},{w:'Rainbow',h:'Arched'},{w:'Tornado',h:'Spinning'},
-        {w:'Waterfall',h:'Crashing'},{w:'Coral Reef',h:'Colourful'},{w:'Glacier',h:'Melting'},
-        {w:'Desert',h:'Scorching'},{w:'Rainforest',h:'Dense'},{w:'Aurora',h:'Dancing'},
-        {w:'Tsunami',h:'Massive'},{w:'Earthquake',h:'Rumbling'},{w:'Thunderstorm',h:'Loud'},
-        {w:'Quicksand',h:'Sinking'},{w:'Geyser',h:'Steaming'},{w:'Avalanche',h:'Sliding'},
-        {w:'Canyon',h:'Deep'},{w:'Eclipse',h:'Dark'},{w:'Meteor Shower',h:'Streaking'},
-        {w:'Bioluminescence',h:'Glowing'},{w:'Hot Spring',h:'Steaming'},{w:'Blizzard',h:'Blinding'},
-        {w:'Flood',h:'Rising'},{w:'Wildfire',h:'Spreading'},{w:'Heatwave',h:'Scorching'},
-      ],
-    };
-
-    const IMP_CAT_META = {
-      food:    { color: '#FF5E3A', name: 'FOOD' },
-      animals: { color: '#22A7FF', name: 'ANIMALS' },
-      movies:  { color: '#FFD400', name: 'MOVIES' },
-      sports:  { color: '#00C8FF', name: 'SPORTS' },
-      places:  { color: '#14B8A6', name: 'PLACES' },
-      nature:  { color: '#39DB74', name: 'NATURE' },
-    };
+    const IMPOSTER_WORDS = [
+      // Food & drink
+      {word:'Pizza',hint:'Doughy'},{word:'Sushi',hint:'Raw'},{word:'Burger',hint:'Stacked'},
+      {word:'Ice Cream',hint:'Frozen'},{word:'Coffee',hint:'Bitter'},{word:'Beer',hint:'Bubbly'},
+      {word:'Chocolate',hint:'Sweet'},{word:'Pancakes',hint:'Fluffy'},{word:'Spaghetti',hint:'Twirly'},
+      {word:'Tacos',hint:'Crunchy'},{word:'Popcorn',hint:'Salty'},{word:'Cheesecake',hint:'Rich'},
+      {word:'Lemonade',hint:'Sour'},{word:'Milkshake',hint:'Thick'},{word:'Ramen',hint:'Noodly'},
+      {word:'Champagne',hint:'Bubbly'},{word:'Donut',hint:'Glazed'},{word:'Watermelon',hint:'Seedy'},
+      {word:'Mango',hint:'Tropical'},{word:'Barbecue',hint:'Smoky'},{word:'Croissant',hint:'Flaky'},
+      {word:'Avocado',hint:'Creamy'},{word:'Espresso',hint:'Strong'},{word:'Fried Chicken',hint:'Crispy'},
+      {word:'Spaghetti',hint:'Twirly'},{word:'Taco',hint:'Folded'},{word:'Sushi',hint:'Delicate'},
+      {word:'Curry',hint:'Spicy'},{word:'Dumplings',hint:'Steamed'},{word:'Waffles',hint:'Gridded'},
+      // Animals
+      {word:'Elephant',hint:'Wrinkled'},{word:'Penguin',hint:'Waddling'},{word:'Tiger',hint:'Striped'},
+      {word:'Giraffe',hint:'Tall'},{word:'Parrot',hint:'Colourful'},{word:'Octopus',hint:'Slimy'},
+      {word:'Dolphin',hint:'Playful'},{word:'Shark',hint:'Toothy'},{word:'Koala',hint:'Sleepy'},
+      {word:'Flamingo',hint:'Pink'},{word:'Gorilla',hint:'Strong'},{word:'Crocodile',hint:'Scaly'},
+      {word:'Peacock',hint:'Showy'},{word:'Sloth',hint:'Slow'},{word:'Crab',hint:'Sideways'},
+      {word:'Chameleon',hint:'Blending'},{word:'Kangaroo',hint:'Bouncy'},{word:'Jellyfish',hint:'Stinging'},
+      {word:'Owl',hint:'Wise'},{word:'Panda',hint:'Lazy'},{word:'Capybara',hint:'Calm'},
+      {word:'Platypus',hint:'Odd'},{word:'Narwhal',hint:'Horned'},{word:'Axolotl',hint:'Smiling'},
+      {word:'Lion',hint:'Maned'},{word:'Zebra',hint:'Striped'},{word:'Flamingo',hint:'Balanced'},
+      // Movies & TV
+      {word:'Titanic',hint:'Sinking'},{word:'Frozen',hint:'Cold'},{word:'Shrek',hint:'Green'},
+      {word:'Moana',hint:'Ocean'},{word:'The Matrix',hint:'Digital'},{word:'Jaws',hint:'Terrifying'},
+      {word:'Toy Story',hint:'Plastic'},{word:'Star Wars',hint:'Galactic'},{word:'Home Alone',hint:'Trapped'},
+      {word:'Inception',hint:'Dreamy'},{word:'Jurassic Park',hint:'Prehistoric'},{word:'Gladiator',hint:'Roman'},
+      {word:'Coco',hint:'Colourful'},{word:'Barbie',hint:'Pink'},{word:'Dune',hint:'Sandy'},
+      {word:'Parasite',hint:'Twisted'},{word:'Get Out',hint:'Creepy'},{word:'Encanto',hint:'Magical'},
+      {word:'Avatar',hint:'Blue'},{word:'Up',hint:'Floating'},{word:'Interstellar',hint:'Cosmic'},
+      {word:'The Godfather',hint:'Ruthless'},{word:'Mulan',hint:'Warrior'},{word:'Finding Nemo',hint:'Lost'},
+      {word:'Game of Thrones',hint:'Gritty'},{word:'Breaking Bad',hint:'Chemical'},{word:'Squid Game',hint:'Deadly'},
+      // Sports
+      {word:'Swimming',hint:'Wet'},{word:'Boxing',hint:'Bruising'},{word:'Surfing',hint:'Wavy'},
+      {word:'Gymnastics',hint:'Flexible'},{word:'Wrestling',hint:'Grappled'},{word:'Golf',hint:'Quiet'},
+      {word:'Skateboarding',hint:'Grinding'},{word:'Cycling',hint:'Pedalling'},{word:'Archery',hint:'Pointed'},
+      {word:'Diving',hint:'Splashing'},{word:'Rugby',hint:'Muddy'},{word:'Tennis',hint:'Racquet'},
+      {word:'Volleyball',hint:'Net'},{word:'Basketball',hint:'Bouncing'},{word:'Weightlifting',hint:'Heavy'},
+      {word:'Ice Skating',hint:'Slippery'},{word:'Snowboarding',hint:'Icy'},{word:'Horse Racing',hint:'Galloping'},
+      {word:'Rowing',hint:'Rhythmic'},{word:'Rock Climbing',hint:'Vertical'},{word:'Pole Vault',hint:'Soaring'},
+      {word:'Darts',hint:'Pointy'},{word:'Water Polo',hint:'Treading'},{word:'Badminton',hint:'Feathered'},
+      // Places
+      {word:'Paris',hint:'Romantic'},{word:'Tokyo',hint:'Neon'},{word:'New York',hint:'Busy'},
+      {word:'Bali',hint:'Tropical'},{word:'London',hint:'Rainy'},{word:'Las Vegas',hint:'Flashy'},
+      {word:'Rome',hint:'Ancient'},{word:'Dubai',hint:'Tall'},{word:'Sydney',hint:'Sunny'},
+      {word:'Antarctica',hint:'Frozen'},{word:'Machu Picchu',hint:'Ruined'},{word:'Hawaii',hint:'Volcanic'},
+      {word:'Santorini',hint:'White'},{word:'Sahara',hint:'Sandy'},{word:'Venice',hint:'Floating'},
+      {word:'Cairo',hint:'Dusty'},{word:'Iceland',hint:'Icy'},{word:'Bangkok',hint:'Spicy'},
+      {word:'Rio de Janeiro',hint:'Carnival'},{word:'Maldives',hint:'Blue'},{word:'Barcelona',hint:'Artistic'},
+      {word:'Istanbul',hint:'Ancient'},{word:'Singapore',hint:'Clean'},{word:'Amsterdam',hint:'Canal'},
+      // Nature
+      {word:'Volcano',hint:'Erupting'},{word:'Rainbow',hint:'Arched'},{word:'Tornado',hint:'Spinning'},
+      {word:'Waterfall',hint:'Crashing'},{word:'Coral Reef',hint:'Colourful'},{word:'Glacier',hint:'Melting'},
+      {word:'Desert',hint:'Scorching'},{word:'Rainforest',hint:'Dense'},{word:'Aurora',hint:'Dancing'},
+      {word:'Tsunami',hint:'Massive'},{word:'Earthquake',hint:'Rumbling'},{word:'Thunderstorm',hint:'Loud'},
+      {word:'Quicksand',hint:'Sinking'},{word:'Geyser',hint:'Steaming'},{word:'Avalanche',hint:'Sliding'},
+      {word:'Canyon',hint:'Deep'},{word:'Eclipse',hint:'Dark'},{word:'Meteor Shower',hint:'Streaking'},
+      {word:'Bioluminescence',hint:'Glowing'},{word:'Blizzard',hint:'Blinding'},{word:'Wildfire',hint:'Spreading'},
+      // Everyday objects & actions
+      {word:'Umbrella',hint:'Dripping'},{word:'Trampoline',hint:'Bouncy'},{word:'Hammock',hint:'Swaying'},
+      {word:'Alarm Clock',hint:'Annoying'},{word:'Vending Machine',hint:'Dispensing'},{word:'Escalator',hint:'Moving'},
+      {word:'Telescope',hint:'Stargazing'},{word:'Magnifying Glass',hint:'Zooming'},{word:'Boomerang',hint:'Returning'},
+      {word:'Piggy Bank',hint:'Saving'},{word:'Hourglass',hint:'Draining'},{word:'Compass',hint:'Pointing'},
+    ];
 
     // ═══════════════════════════════════════════════
     //  CONSTANTS
@@ -1899,7 +1847,6 @@
     let currentCat = null;
     let deck = [];
     // Imposter state
-    let impCat = null;
     let impPlayerCount = 4;
     let impCurrentPlayer = 0;
     let impImposterIdx = -1;
@@ -2246,10 +2193,9 @@
     //  IMPOSTER GAME
     // ═══════════════════════════════════════════════
     function startImposterGame() {
-      const pack = IMPOSTER_PACKS[impCat];
-      const entry = pack[(Math.random() * pack.length) | 0];
-      impWord = entry.w;
-      impHint = entry.h;
+      const entry = IMPOSTER_WORDS[(Math.random() * IMPOSTER_WORDS.length) | 0];
+      impWord = entry.word;
+      impHint = entry.hint;
       impImposterIdx = (Math.random() * impPlayerCount) | 0;
       impCurrentPlayer = 0;
       renderDealScreen();
@@ -2338,21 +2284,6 @@
     document.getElementById('menu-imposter').addEventListener('click', () => show('imp-setup-screen'));
     document.getElementById('charades-back-btn').addEventListener('click', () => show('menu-screen'));
 
-    // Imposter setup — imposter word counts on setup tiles
-    Object.keys(IMPOSTER_PACKS).forEach(cat => {
-      const el = document.getElementById('ic-' + cat);
-      if (el) el.textContent = IMPOSTER_PACKS[cat].length + ' words';
-    });
-
-    // Imposter category tiles
-    document.querySelectorAll('[data-imp-cat]').forEach(tile => {
-      tile.addEventListener('click', () => {
-        impCat = tile.dataset.impCat;
-        document.querySelectorAll('[data-imp-cat]').forEach(t =>
-          t.style.outline = t === tile ? '5px solid #fff' : '');
-      });
-    });
-
     // Player count stepper
     document.getElementById('imp-minus').addEventListener('click', () => {
       if (impPlayerCount > 3) {
@@ -2371,20 +2302,9 @@
       }
     });
 
-    document.getElementById('imp-setup-back-btn').addEventListener('click', () => {
-      document.querySelectorAll('[data-imp-cat]').forEach(t => t.style.outline = '');
-      impCat = null;
-      show('menu-screen');
-    });
+    document.getElementById('imp-setup-back-btn').addEventListener('click', () => show('menu-screen'));
 
-    document.getElementById('imp-start-btn').addEventListener('click', () => {
-      if (!impCat) {
-        document.getElementById('imp-cat-grid').style.outline = '3px solid #FF3A30';
-        setTimeout(() => document.getElementById('imp-cat-grid').style.outline = '', 800);
-        return;
-      }
-      startImposterGame();
-    });
+    document.getElementById('imp-start-btn').addEventListener('click', startImposterGame);
 
     // Deal screen
     document.getElementById('deal-card').addEventListener('click', revealDealCard);
@@ -2396,10 +2316,7 @@
       document.getElementById('discuss-placeholder').classList.add('hide');
     });
 
-    document.getElementById('imp-play-again-btn').addEventListener('click', () => {
-      if (!impCat) { show('imp-setup-screen'); return; }
-      startImposterGame();
-    });
+    document.getElementById('imp-play-again-btn').addEventListener('click', startImposterGame);
 
     document.getElementById('imp-menu-btn').addEventListener('click', () => show('menu-screen'));
 
