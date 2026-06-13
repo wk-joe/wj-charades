@@ -456,7 +456,10 @@
       letter-spacing: -1px;
       padding: 16px 64px 28px;
       max-width: 100%;
-      word-break: break-word;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      hyphens: none;
+      white-space: normal;
     }
 
     .hint-pass {
@@ -1193,14 +1196,30 @@
     // ═══════════════════════════════════════════════
     //  WORD SIZING  (dynamic to fit long words)
     // ═══════════════════════════════════════════════
-    function getWordSize(word) {
-      const maxTok = Math.max(...word.split(' ').map(w => w.length));
-      return Math.max(76, Math.min(140, Math.floor(720 / (maxTok * 0.64))));
-    }
     function showWord(word) {
       const el = document.getElementById('word');
       el.textContent = word;
-      el.style.fontSize = getWordSize(word) + 'px';
+
+      // Binary-search the largest font size where no token wraps mid-word.
+      // Available width = screen short dimension minus horizontal padding (64px each side).
+      const availW = Math.min(window.innerWidth, window.innerHeight) - 128;
+      const tokens = word.split(' ');
+
+      // Use a hidden canvas for fast text measurement
+      if (!showWord._canvas) {
+        showWord._canvas = document.createElement('canvas');
+      }
+      const ctx = showWord._canvas.getContext('2d');
+
+      let lo = 40, hi = 160, best = lo;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        ctx.font = `${mid}px 'Archivo Black', sans-serif`;
+        const maxW = Math.max(...tokens.map(t => ctx.measureText(t).width));
+        if (maxW <= availW) { best = mid; lo = mid + 1; }
+        else { hi = mid - 1; }
+      }
+      el.style.fontSize = best + 'px';
     }
 
     // ═══════════════════════════════════════════════
