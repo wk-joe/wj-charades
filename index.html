@@ -95,7 +95,7 @@
 ══════════════════════════════════════ */
     #home-screen {
       background: var(--purple);
-      padding: max(30px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
+      padding: 0 26px max(26px, env(safe-area-inset-bottom));
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -240,9 +240,423 @@
       background: #14B8A6;
     }
 
+
     .tile[data-cat=history] {
       background: #D4A0FF;
       grid-column: 1 / -1;
+    }
+
+    /* ══════════════════════════════════════
+   MENU SCREEN
+══════════════════════════════════════ */
+    #menu-screen {
+      background: var(--purple);
+      padding: max(30px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;
+    }
+
+    .menu-game-tiles {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .menu-tile {
+      position: relative;
+      overflow: hidden;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      min-height: 140px;
+      transition: none;
+      background: #FFD400;
+    }
+
+    .menu-tile:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .menu-tile-imp {
+      background: var(--ink);
+      border-color: #fff;
+      box-shadow: 8px 8px 0 rgba(255,255,255,.3);
+    }
+
+    .menu-tile-imp .tile-glyph { color: #fff; }
+    .menu-tile-imp .tile-name  { color: #fff; }
+    .menu-tile-imp .tile-sub   { color: rgba(255,255,255,.55); }
+
+    /* ══════════════════════════════════════
+   CHARADES HOME HEADER (replaces wordmark)
+══════════════════════════════════════ */
+    .charades-home-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: max(36px, env(safe-area-inset-top)) 26px 0;
+      margin-bottom: 20px;
+    }
+
+    .charades-home-title {
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════
+   IMPOSTER SETUP
+══════════════════════════════════════ */
+    #imp-setup-screen {
+      background: var(--purple);
+      padding: max(30px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .imp-setup-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .player-stepper {
+      background: var(--ink);
+      border: 5px solid #fff;
+      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+
+    .stepper-lbl {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+
+    .stepper-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .stepper-btn {
+      background: #fff;
+      color: var(--ink);
+      border: none;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 28px;
+      width: 52px;
+      height: 52px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .stepper-btn:active { opacity: .7; }
+    .stepper-btn:disabled { opacity: .3; cursor: default; }
+
+    .stepper-num {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 52px;
+      color: #fff;
+      min-width: 52px;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .imp-start-btn {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 28px;
+      text-align: center;
+      padding: 22px;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      cursor: pointer;
+      width: 100%;
+      transition: none;
+    }
+
+    .imp-start-btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    /* ══════════════════════════════════════
+   IMPOSTER DEAL SCREEN
+══════════════════════════════════════ */
+    #imp-deal-screen {
+      background: var(--ink);
+      padding: max(30px, env(safe-area-inset-top)) 0 max(26px, env(safe-area-inset-bottom));
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
+    .deal-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 0 24px;
+    }
+
+    .deal-player-label {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.5);
+    }
+
+    .deal-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .deal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      transition: background .2s;
+    }
+
+    .deal-dot.seen { background: rgba(255,255,255,.35); }
+    .deal-dot.current { background: #FFD400; }
+
+    .deal-card-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 24px;
+    }
+
+    .deal-card {
+      width: 100%;
+      max-width: 380px;
+      min-height: 240px;
+      border: 5px solid rgba(255,255,255,.3);
+      box-shadow: 8px 8px 0 rgba(255,255,255,.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 28px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: none;
+      background: #1c1c1c;
+    }
+
+    .deal-card:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 rgba(255,255,255,.1);
+    }
+
+    .deal-card.revealed {
+      background: #fff;
+      border-color: var(--ink);
+      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+      cursor: default;
+    }
+
+    .deal-card.revealed:active {
+      transform: none;
+      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+    }
+
+    .deal-tap-icon {
+      font-size: 56px;
+      color: rgba(255,255,255,.2);
+      margin-bottom: 14px;
+    }
+
+    .deal-tap-hint {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.35);
+      text-align: center;
+    }
+
+    .deal-hidden-content,
+    .deal-shown-content { display: flex; flex-direction: column; align-items: center; }
+
+    .deal-shown-content { display: none; }
+    .deal-card.revealed .deal-hidden-content { display: none; }
+    .deal-card.revealed .deal-shown-content { display: flex; }
+
+    .deal-role-badge {
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 3px;
+      padding: 6px 14px;
+      border: 3px solid var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .badge-crew { background: var(--correct); color: var(--ink); }
+    .badge-imp  { background: var(--pass);    color: #fff; }
+
+    .deal-word-text {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(34px, 9vw, 60px);
+      line-height: .95;
+      color: var(--ink);
+      text-align: center;
+      letter-spacing: -1px;
+    }
+
+    .deal-hint-sub {
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(0,0,0,.4);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .deal-footer {
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .deal-next-btn {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 24px;
+      text-align: center;
+      padding: 18px;
+      border: 5px solid rgba(255,255,255,.4);
+      box-shadow: 8px 8px 0 rgba(255,255,255,.15);
+      cursor: pointer;
+      transition: none;
+      display: none;
+    }
+
+    .deal-next-btn.visible { display: block; }
+
+    .deal-next-btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 rgba(255,255,255,.15);
+    }
+
+    /* ══════════════════════════════════════
+   IMPOSTER DISCUSS SCREEN
+══════════════════════════════════════ */
+    #imp-discuss-screen {
+      background: var(--ink);
+      padding: max(36px, env(safe-area-inset-top)) 26px max(26px, env(safe-area-inset-bottom));
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
+    .discuss-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .discuss-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(52px, 15vw, 88px);
+      color: #FFD400;
+      line-height: .9;
+      letter-spacing: -2px;
+      text-align: center;
+    }
+
+    .discuss-sub {
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.4);
+      text-align: center;
+    }
+
+    .discuss-reveal-box {
+      width: 100%;
+      max-width: 380px;
+      border: 4px solid rgba(255,255,255,.15);
+      padding: 18px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: none;
+    }
+
+    .discuss-reveal-box:active { opacity: .7; }
+
+    .discuss-reveal-lbl {
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 8px;
+    }
+
+    .discuss-reveal-word {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 40px;
+      color: #fff;
+      letter-spacing: -1px;
+      display: none;
+    }
+
+    .discuss-reveal-word.show { display: block; }
+
+    .discuss-reveal-placeholder {
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.25);
+    }
+
+    .discuss-reveal-placeholder.hide { display: none; }
+
+    .discuss-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .discuss-play-again {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 26px;
+      text-align: center;
+      padding: 20px;
+      border: 5px solid rgba(255,255,255,.4);
+      box-shadow: 8px 8px 0 rgba(255,255,255,.15);
+      cursor: pointer;
+      transition: none;
+    }
+
+    .discuss-play-again:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 rgba(255,255,255,.15);
     }
 
     /* ══════════════════════════════════════
@@ -838,13 +1252,40 @@
 
 <body>
 
-  <!-- ══════════ HOME ══════════ -->
-  <div id="home-screen" class="screen active">
+  <!-- ══════════ MENU ══════════ -->
+  <div id="menu-screen" class="screen active">
     <div class="wordmark-wrap">
       <div class="wordmark-box">
         <div class="wordmark-text">Tilt!</div>
       </div>
       <div class="wordmark-chip">CHARADES FOR THE GANG!</div>
+    </div>
+
+    <div class="deck-divider" style="margin: 0 0 16px;">
+      <div class="deck-divider-line"></div>
+      <div class="deck-divider-lbl">PICK A GAME</div>
+      <div class="deck-divider-line"></div>
+    </div>
+
+    <div class="menu-game-tiles">
+      <div class="menu-tile" id="menu-charades">
+        <i class="ph-fill ph-cards tile-glyph"></i>
+        <div class="tile-name">CHARADES</div>
+        <div class="tile-sub">TILT TO GUESS &middot; FOREHEAD GAME</div>
+      </div>
+      <div class="menu-tile menu-tile-imp" id="menu-imposter">
+        <i class="ph-fill ph-user-secret tile-glyph"></i>
+        <div class="tile-name">IMPOSTER</div>
+        <div class="tile-sub">FIND THE SPY &middot; PASS &amp; PEEK</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ HOME (CHARADES) ══════════ -->
+  <div id="home-screen" class="screen">
+    <div class="charades-home-header">
+      <button class="back-btn" id="charades-back-btn">&#8592; BACK</button>
+      <div class="charades-home-title">CHARADES</div>
     </div>
 
     <div class="deck-divider">
@@ -996,6 +1437,68 @@
     <div class="results-btns">
       <button class="btn-play-again" id="again-btn">PLAY AGAIN</button>
       <button class="btn-secondary" id="home-btn">CHOOSE CATEGORY</button>
+    </div>
+  </div>
+
+  <!-- ══════════ IMPOSTER SETUP ══════════ -->
+  <div id="imp-setup-screen" class="screen">
+    <div class="imp-setup-header">
+      <button class="back-btn" id="imp-setup-back-btn">&#8592; BACK</button>
+      <div class="charades-home-title" style="color:#fff;">IMPOSTER</div>
+    </div>
+
+    <div class="player-stepper">
+      <div class="stepper-lbl">PLAYERS</div>
+      <div class="stepper-controls">
+        <button class="stepper-btn" id="imp-minus">&#8722;</button>
+        <div class="stepper-num" id="imp-player-count">4</div>
+        <button class="stepper-btn" id="imp-plus">&#43;</button>
+      </div>
+    </div>
+
+    <button class="imp-start-btn" id="imp-start-btn">START GAME</button>
+  </div>
+
+  <!-- ══════════ IMPOSTER DEAL ══════════ -->
+  <div id="imp-deal-screen" class="screen">
+    <div class="deal-header">
+      <div class="deal-player-label" id="deal-player-label">PLAYER 1 OF 4</div>
+      <div class="deal-dots" id="deal-dots"></div>
+    </div>
+
+    <div class="deal-card-wrap">
+      <div class="deal-card" id="deal-card">
+        <div class="deal-hidden-content">
+          <i class="ph-fill ph-hand-tap deal-tap-icon"></i>
+          <div class="deal-tap-hint">TAP TO REVEAL</div>
+        </div>
+        <div class="deal-shown-content">
+          <div class="deal-role-badge" id="deal-role-badge">CREW MEMBER</div>
+          <div class="deal-word-text" id="deal-word-text"></div>
+          <div class="deal-hint-sub" id="deal-hint-sub"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deal-footer">
+      <button class="deal-next-btn" id="deal-next-btn">NEXT PLAYER &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ══════════ IMPOSTER DISCUSS ══════════ -->
+  <div id="imp-discuss-screen" class="screen">
+    <div class="discuss-body">
+      <div class="discuss-heading">DISCUSS!</div>
+      <div class="discuss-sub">WHO IS THE IMPOSTER?</div>
+      <div class="discuss-reveal-box" id="discuss-reveal-box">
+        <div class="discuss-reveal-lbl">TAP TO REVEAL THE WORD</div>
+        <div class="discuss-reveal-placeholder" id="discuss-placeholder">&#128065; HIDDEN</div>
+        <div class="discuss-reveal-word" id="discuss-word"></div>
+      </div>
+    </div>
+    <div class="discuss-btns">
+      <button class="discuss-play-again" id="imp-play-again-btn">PLAY AGAIN</button>
+      <button class="btn-secondary" id="imp-menu-btn">CHANGE GAME</button>
     </div>
   </div>
 
@@ -1258,6 +1761,74 @@
 
 
     // ═══════════════════════════════════════════════
+    //  IMPOSTER WORDS  { word, hint }
+    // ═══════════════════════════════════════════════
+    const IMPOSTER_WORDS = [
+      // Food & drink
+      {word:'Pizza',hint:'Doughy'},{word:'Sushi',hint:'Raw'},{word:'Burger',hint:'Stacked'},
+      {word:'Ice Cream',hint:'Frozen'},{word:'Coffee',hint:'Bitter'},{word:'Beer',hint:'Bubbly'},
+      {word:'Chocolate',hint:'Sweet'},{word:'Pancakes',hint:'Fluffy'},{word:'Spaghetti',hint:'Twirly'},
+      {word:'Tacos',hint:'Crunchy'},{word:'Popcorn',hint:'Salty'},{word:'Cheesecake',hint:'Rich'},
+      {word:'Lemonade',hint:'Sour'},{word:'Milkshake',hint:'Thick'},{word:'Ramen',hint:'Noodly'},
+      {word:'Champagne',hint:'Bubbly'},{word:'Donut',hint:'Glazed'},{word:'Watermelon',hint:'Seedy'},
+      {word:'Mango',hint:'Tropical'},{word:'Barbecue',hint:'Smoky'},{word:'Croissant',hint:'Flaky'},
+      {word:'Avocado',hint:'Creamy'},{word:'Espresso',hint:'Strong'},{word:'Fried Chicken',hint:'Crispy'},
+      {word:'Spaghetti',hint:'Twirly'},{word:'Taco',hint:'Folded'},{word:'Sushi',hint:'Delicate'},
+      {word:'Curry',hint:'Spicy'},{word:'Dumplings',hint:'Steamed'},{word:'Waffles',hint:'Gridded'},
+      // Animals
+      {word:'Elephant',hint:'Wrinkled'},{word:'Penguin',hint:'Waddling'},{word:'Tiger',hint:'Striped'},
+      {word:'Giraffe',hint:'Tall'},{word:'Parrot',hint:'Colourful'},{word:'Octopus',hint:'Slimy'},
+      {word:'Dolphin',hint:'Playful'},{word:'Shark',hint:'Toothy'},{word:'Koala',hint:'Sleepy'},
+      {word:'Flamingo',hint:'Pink'},{word:'Gorilla',hint:'Strong'},{word:'Crocodile',hint:'Scaly'},
+      {word:'Peacock',hint:'Showy'},{word:'Sloth',hint:'Slow'},{word:'Crab',hint:'Sideways'},
+      {word:'Chameleon',hint:'Blending'},{word:'Kangaroo',hint:'Bouncy'},{word:'Jellyfish',hint:'Stinging'},
+      {word:'Owl',hint:'Wise'},{word:'Panda',hint:'Lazy'},{word:'Capybara',hint:'Calm'},
+      {word:'Platypus',hint:'Odd'},{word:'Narwhal',hint:'Horned'},{word:'Axolotl',hint:'Smiling'},
+      {word:'Lion',hint:'Maned'},{word:'Zebra',hint:'Striped'},{word:'Flamingo',hint:'Balanced'},
+      // Movies & TV
+      {word:'Titanic',hint:'Sinking'},{word:'Frozen',hint:'Cold'},{word:'Shrek',hint:'Green'},
+      {word:'Moana',hint:'Ocean'},{word:'The Matrix',hint:'Digital'},{word:'Jaws',hint:'Terrifying'},
+      {word:'Toy Story',hint:'Plastic'},{word:'Star Wars',hint:'Galactic'},{word:'Home Alone',hint:'Trapped'},
+      {word:'Inception',hint:'Dreamy'},{word:'Jurassic Park',hint:'Prehistoric'},{word:'Gladiator',hint:'Roman'},
+      {word:'Coco',hint:'Colourful'},{word:'Barbie',hint:'Pink'},{word:'Dune',hint:'Sandy'},
+      {word:'Parasite',hint:'Twisted'},{word:'Get Out',hint:'Creepy'},{word:'Encanto',hint:'Magical'},
+      {word:'Avatar',hint:'Blue'},{word:'Up',hint:'Floating'},{word:'Interstellar',hint:'Cosmic'},
+      {word:'The Godfather',hint:'Ruthless'},{word:'Mulan',hint:'Warrior'},{word:'Finding Nemo',hint:'Lost'},
+      {word:'Game of Thrones',hint:'Gritty'},{word:'Breaking Bad',hint:'Chemical'},{word:'Squid Game',hint:'Deadly'},
+      // Sports
+      {word:'Swimming',hint:'Wet'},{word:'Boxing',hint:'Bruising'},{word:'Surfing',hint:'Wavy'},
+      {word:'Gymnastics',hint:'Flexible'},{word:'Wrestling',hint:'Grappled'},{word:'Golf',hint:'Quiet'},
+      {word:'Skateboarding',hint:'Grinding'},{word:'Cycling',hint:'Pedalling'},{word:'Archery',hint:'Pointed'},
+      {word:'Diving',hint:'Splashing'},{word:'Rugby',hint:'Muddy'},{word:'Tennis',hint:'Racquet'},
+      {word:'Volleyball',hint:'Net'},{word:'Basketball',hint:'Bouncing'},{word:'Weightlifting',hint:'Heavy'},
+      {word:'Ice Skating',hint:'Slippery'},{word:'Snowboarding',hint:'Icy'},{word:'Horse Racing',hint:'Galloping'},
+      {word:'Rowing',hint:'Rhythmic'},{word:'Rock Climbing',hint:'Vertical'},{word:'Pole Vault',hint:'Soaring'},
+      {word:'Darts',hint:'Pointy'},{word:'Water Polo',hint:'Treading'},{word:'Badminton',hint:'Feathered'},
+      // Places
+      {word:'Paris',hint:'Romantic'},{word:'Tokyo',hint:'Neon'},{word:'New York',hint:'Busy'},
+      {word:'Bali',hint:'Tropical'},{word:'London',hint:'Rainy'},{word:'Las Vegas',hint:'Flashy'},
+      {word:'Rome',hint:'Ancient'},{word:'Dubai',hint:'Tall'},{word:'Sydney',hint:'Sunny'},
+      {word:'Antarctica',hint:'Frozen'},{word:'Machu Picchu',hint:'Ruined'},{word:'Hawaii',hint:'Volcanic'},
+      {word:'Santorini',hint:'White'},{word:'Sahara',hint:'Sandy'},{word:'Venice',hint:'Floating'},
+      {word:'Cairo',hint:'Dusty'},{word:'Iceland',hint:'Icy'},{word:'Bangkok',hint:'Spicy'},
+      {word:'Rio de Janeiro',hint:'Carnival'},{word:'Maldives',hint:'Blue'},{word:'Barcelona',hint:'Artistic'},
+      {word:'Istanbul',hint:'Ancient'},{word:'Singapore',hint:'Clean'},{word:'Amsterdam',hint:'Canal'},
+      // Nature
+      {word:'Volcano',hint:'Erupting'},{word:'Rainbow',hint:'Arched'},{word:'Tornado',hint:'Spinning'},
+      {word:'Waterfall',hint:'Crashing'},{word:'Coral Reef',hint:'Colourful'},{word:'Glacier',hint:'Melting'},
+      {word:'Desert',hint:'Scorching'},{word:'Rainforest',hint:'Dense'},{word:'Aurora',hint:'Dancing'},
+      {word:'Tsunami',hint:'Massive'},{word:'Earthquake',hint:'Rumbling'},{word:'Thunderstorm',hint:'Loud'},
+      {word:'Quicksand',hint:'Sinking'},{word:'Geyser',hint:'Steaming'},{word:'Avalanche',hint:'Sliding'},
+      {word:'Canyon',hint:'Deep'},{word:'Eclipse',hint:'Dark'},{word:'Meteor Shower',hint:'Streaking'},
+      {word:'Bioluminescence',hint:'Glowing'},{word:'Blizzard',hint:'Blinding'},{word:'Wildfire',hint:'Spreading'},
+      // Everyday objects & actions
+      {word:'Umbrella',hint:'Dripping'},{word:'Trampoline',hint:'Bouncy'},{word:'Hammock',hint:'Swaying'},
+      {word:'Alarm Clock',hint:'Annoying'},{word:'Vending Machine',hint:'Dispensing'},{word:'Escalator',hint:'Moving'},
+      {word:'Telescope',hint:'Stargazing'},{word:'Magnifying Glass',hint:'Zooming'},{word:'Boomerang',hint:'Returning'},
+      {word:'Piggy Bank',hint:'Saving'},{word:'Hourglass',hint:'Draining'},{word:'Compass',hint:'Pointing'},
+    ];
+
+    // ═══════════════════════════════════════════════
     //  CONSTANTS
     // ═══════════════════════════════════════════════
     const ROUND_TIME = 60;
@@ -1275,6 +1846,12 @@
     // ═══════════════════════════════════════════════
     let currentCat = null;
     let deck = [];
+    // Imposter state
+    let impPlayerCount = 4;
+    let impCurrentPlayer = 0;
+    let impImposterIdx = -1;
+    let impWord = '';
+    let impHint = '';
     let deckIdx = 0;
     let score = 0;
     let correct = [];
@@ -1613,19 +2190,141 @@
     }
 
     // ═══════════════════════════════════════════════
+    //  IMPOSTER GAME
+    // ═══════════════════════════════════════════════
+    function startImposterGame() {
+      const entry = IMPOSTER_WORDS[(Math.random() * IMPOSTER_WORDS.length) | 0];
+      impWord = entry.word;
+      impHint = entry.hint;
+      impImposterIdx = (Math.random() * impPlayerCount) | 0;
+      impCurrentPlayer = 0;
+      renderDealScreen();
+      show('imp-deal-screen');
+    }
+
+    function renderDealScreen() {
+      const total = impPlayerCount;
+      const cur = impCurrentPlayer;
+
+      document.getElementById('deal-player-label').textContent =
+        `PLAYER ${cur + 1} OF ${total}`;
+
+      // dots
+      const dots = document.getElementById('deal-dots');
+      dots.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const d = document.createElement('div');
+        d.className = 'deal-dot' + (i < cur ? ' seen' : i === cur ? ' current' : '');
+        dots.appendChild(d);
+      }
+
+      // reset card to hidden state
+      const card = document.getElementById('deal-card');
+      card.classList.remove('revealed');
+      document.getElementById('deal-next-btn').classList.remove('visible');
+    }
+
+    function revealDealCard() {
+      const card = document.getElementById('deal-card');
+      if (card.classList.contains('revealed')) return;
+
+      const isImposter = impCurrentPlayer === impImposterIdx;
+      const badge = document.getElementById('deal-role-badge');
+      const wordEl = document.getElementById('deal-word-text');
+      const hintEl = document.getElementById('deal-hint-sub');
+
+      if (isImposter) {
+        badge.textContent = 'IMPOSTER';
+        badge.className = 'deal-role-badge badge-imp';
+        wordEl.textContent = impHint;
+        hintEl.textContent = 'YOUR HINT — BLEND IN!';
+      } else {
+        badge.textContent = 'CREW MEMBER';
+        badge.className = 'deal-role-badge badge-crew';
+        wordEl.textContent = impWord;
+        hintEl.textContent = 'THE WORD — KEEP IT SECRET!';
+      }
+
+      card.classList.add('revealed');
+      const nextBtn = document.getElementById('deal-next-btn');
+      nextBtn.textContent = impCurrentPlayer < impPlayerCount - 1
+        ? 'NEXT PLAYER →'
+        : 'START DISCUSSION →';
+      nextBtn.classList.add('visible');
+    }
+
+    function advanceDeal() {
+      impCurrentPlayer++;
+      if (impCurrentPlayer >= impPlayerCount) {
+        showDiscussScreen();
+      } else {
+        renderDealScreen();
+      }
+    }
+
+    function showDiscussScreen() {
+      document.getElementById('discuss-word').textContent = impWord;
+      document.getElementById('discuss-word').classList.remove('show');
+      document.getElementById('discuss-placeholder').classList.remove('hide');
+      show('imp-discuss-screen');
+    }
+
+    // ═══════════════════════════════════════════════
     //  INIT
     // ═══════════════════════════════════════════════
 
-    // Word counts on tiles
+    // Word counts on charades tiles
     Object.keys(PACKS).forEach(cat => {
       const el = document.getElementById('c-' + cat);
       if (el) el.textContent = PACKS[cat].length + ' words';
     });
 
-    // Category tile clicks
+    // Menu screen
+    document.getElementById('menu-charades').addEventListener('click', () => show('home-screen'));
+    document.getElementById('menu-imposter').addEventListener('click', () => show('imp-setup-screen'));
+    document.getElementById('charades-back-btn').addEventListener('click', () => show('menu-screen'));
+
+    // Player count stepper
+    document.getElementById('imp-minus').addEventListener('click', () => {
+      if (impPlayerCount > 3) {
+        impPlayerCount--;
+        document.getElementById('imp-player-count').textContent = impPlayerCount;
+        document.getElementById('imp-minus').disabled = impPlayerCount <= 3;
+        document.getElementById('imp-plus').disabled = false;
+      }
+    });
+    document.getElementById('imp-plus').addEventListener('click', () => {
+      if (impPlayerCount < 10) {
+        impPlayerCount++;
+        document.getElementById('imp-player-count').textContent = impPlayerCount;
+        document.getElementById('imp-plus').disabled = impPlayerCount >= 10;
+        document.getElementById('imp-minus').disabled = false;
+      }
+    });
+
+    document.getElementById('imp-setup-back-btn').addEventListener('click', () => show('menu-screen'));
+
+    document.getElementById('imp-start-btn').addEventListener('click', startImposterGame);
+
+    // Deal screen
+    document.getElementById('deal-card').addEventListener('click', revealDealCard);
+    document.getElementById('deal-next-btn').addEventListener('click', advanceDeal);
+
+    // Discuss screen
+    document.getElementById('discuss-reveal-box').addEventListener('click', () => {
+      document.getElementById('discuss-word').classList.add('show');
+      document.getElementById('discuss-placeholder').classList.add('hide');
+    });
+
+    document.getElementById('imp-play-again-btn').addEventListener('click', startImposterGame);
+
+    document.getElementById('imp-menu-btn').addEventListener('click', () => show('menu-screen'));
+
+    // Charades category tile clicks
     document.querySelectorAll('.tile').forEach(tile => {
       tile.addEventListener('click', () => {
         currentCat = tile.dataset.cat;
+        if (!currentCat) return;
         applyDeckColor(currentCat);
         document.getElementById('motion-btn').disabled = false;
         show('ready-screen');
