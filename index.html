@@ -418,7 +418,6 @@
       right: 0;
       height: 16px;
       background: var(--cream-shade);
-      border-bottom: 4px solid var(--ink);
       z-index: 5;
     }
 
@@ -508,17 +507,18 @@
       position: absolute;
       top: 0;
       left: 0;
+      width: 44px;
       height: 44px;
-      padding: 0 20px;
-      background: none;
+      background: var(--pass);
       border: none;
       font-family: 'Archivo Black', sans-serif;
-      font-size: 20px;
-      color: var(--ink);
+      font-size: 18px;
+      color: #fff;
       cursor: pointer;
       z-index: 11;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     #quit-modal {
@@ -804,6 +804,31 @@
       opacity: .65;
     }
 
+    .ready-bg-icon {
+      position: absolute;
+      right: -24px;
+      bottom: -24px;
+      font-size: 320px;
+      line-height: 1;
+      color: var(--ink);
+      opacity: .1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .play-bg-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(220px, 48vw, 360px);
+      line-height: 1;
+      color: var(--ink);
+      opacity: .06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     @media (orientation: landscape) {
       .res-col-lbl { display: none; }
       .forehead-glyph { display: none; }
@@ -881,6 +906,7 @@
 
   <!-- ══════════ GET READY ══════════ -->
   <div id="ready-screen" class="screen">
+    <i class="ready-bg-icon" id="ready-bg-icon"></i>
     <div class="ready-top">
       <button class="back-btn" id="back-btn">&#8592; BACK</button>
       <div class="deck-badge" id="rcat"></div>
@@ -915,6 +941,7 @@
     </div>
     <div class="timer-num" id="timer-num">60</div>
     <div class="play-wrap">
+      <i class="play-bg-icon" id="play-bg-icon"></i>
       <div class="word" id="word">—</div>
     </div>
     <div class="hint-pass">&#x2193; PASS</div>
@@ -1125,13 +1152,23 @@
     //  CATEGORY METADATA
     // ═══════════════════════════════════════════════
     const CAT_META = {
-      mainstream: { color: '#FFD400', name: 'MAINSTREAM' },
-      everyday: { color: '#22A7FF', name: 'EVERYDAY' },
-      fiji: { color: '#FF7A1A', name: 'FIJI / LOCAL' },
-      party: { color: '#FF4D9D', name: 'PARTY' },
-      sports: { color: '#00C8FF', name: 'SPORTS' },
-      nature: { color: '#39DB74', name: 'NATURE' },
-      history: { color: '#D4A0FF', name: 'HISTORY' },
+      mainstream: { color: '#FFD400', name: 'MAINSTREAM', icon: 'ph-film-slate' },
+      everyday:   { color: '#22A7FF', name: 'EVERYDAY',   icon: 'ph-storefront' },
+      fiji:       { color: '#FF7A1A', name: 'FIJI / LOCAL', icon: 'ph-island' },
+      party:      { color: '#FF4D9D', name: 'PARTY',      icon: 'ph-confetti' },
+      sports:     { color: '#00C8FF', name: 'SPORTS',     icon: 'ph-trophy' },
+      nature:     { color: '#39DB74', name: 'NATURE',     icon: 'ph-leaf' },
+      history:    { color: '#D4A0FF', name: 'HISTORY',    icon: 'ph-crown' },
+    };
+
+    const CAT_ICONS = {
+      mainstream: ['ph-film-slate', 'ph-television', 'ph-microphone', 'ph-star', 'ph-camera', 'ph-music-notes', 'ph-popcorn'],
+      everyday:   ['ph-storefront', 'ph-fork-knife', 'ph-house', 'ph-car', 'ph-bicycle', 'ph-dog', 'ph-shopping-cart'],
+      fiji:       ['ph-island', 'ph-waves', 'ph-sun', 'ph-fish', 'ph-anchor', 'ph-boat'],
+      party:      ['ph-confetti', 'ph-smiley', 'ph-music-notes', 'ph-beer-bottle', 'ph-balloon'],
+      sports:     ['ph-trophy', 'ph-basketball', 'ph-medal', 'ph-soccer-ball', 'ph-tennis-ball', 'ph-barbell'],
+      nature:     ['ph-leaf', 'ph-tree', 'ph-sun', 'ph-cloud', 'ph-snowflake', 'ph-flower', 'ph-butterfly'],
+      history:    ['ph-crown', 'ph-book', 'ph-scroll', 'ph-globe-hemisphere-west', 'ph-castle', 'ph-bank'],
     };
 
     // ═══════════════════════════════════════════════
@@ -1336,6 +1373,13 @@
         else { hi = mid - 1; }
       }
       el.style.fontSize = best + 'px';
+
+      const icons = CAT_ICONS[currentCat];
+      if (icons) {
+        const bgIcon = document.getElementById('play-bg-icon');
+        const pick = icons[(Math.random() * icons.length) | 0];
+        bgIcon.className = `ph-fill ${pick} play-bg-icon`;
+      }
     }
 
     // ═══════════════════════════════════════════════
@@ -1477,6 +1521,8 @@
       document.documentElement.style.setProperty('--cat-color', CAT_META[cat].color);
       document.getElementById('ready-screen').style.background = CAT_META[cat].color;
       document.getElementById('rcat').textContent = CAT_META[cat].name;
+      const bg = document.getElementById('ready-bg-icon');
+      bg.className = `ph-fill ${CAT_META[cat].icon} ready-bg-icon`;
     }
 
     // ═══════════════════════════════════════════════
