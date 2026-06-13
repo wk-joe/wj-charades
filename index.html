@@ -504,6 +504,94 @@
       right: 0;
     }
 
+    .quit-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 44px;
+      padding: 0 20px;
+      background: none;
+      border: none;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      color: var(--ink);
+      cursor: pointer;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+    }
+
+    #quit-modal {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      z-index: 50;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 32px;
+    }
+
+    #quit-modal.show {
+      display: flex;
+    }
+
+    .quit-heading {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(56px, 14vw, 96px);
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .quit-sub {
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, .45);
+      margin-top: -8px;
+    }
+
+    .quit-keep {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(18px, 4vw, 26px);
+      padding: 18px 32px;
+      border: 5px solid #fff;
+      box-shadow: 8px 8px 0 #fff;
+      cursor: pointer;
+      width: 100%;
+      max-width: 380px;
+      transition: none;
+    }
+
+    .quit-keep:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 #fff;
+    }
+
+    .quit-end {
+      background: var(--pass);
+      color: #fff;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(16px, 3.5vw, 22px);
+      padding: 14px 32px;
+      border: 5px solid rgba(255, 255, 255, .5);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .3);
+      cursor: pointer;
+      width: 100%;
+      max-width: 380px;
+      transition: none;
+    }
+
+    .quit-end:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .3);
+    }
+
     .flash {
       position: absolute;
       inset: 0;
@@ -826,6 +914,13 @@
     <div class="tap-correct" id="tap-correct"></div>
     <div class="flash" id="flash">
       <div class="flash-label" id="flash-label"></div>
+    </div>
+    <button class="quit-btn" id="quit-btn">&#x2715;</button>
+    <div id="quit-modal">
+      <div class="quit-heading">QUIT?</div>
+      <div class="quit-sub">YOUR SCORE SO FAR WILL BE SAVED</div>
+      <button class="quit-keep" id="quit-keep">KEEP PLAYING</button>
+      <button class="quit-end" id="quit-end">END GAME</button>
     </div>
   </div>
 
@@ -1313,6 +1408,7 @@
 
       show('results-screen');
       document.getElementById('portrait-overlay').classList.remove('show');
+      document.getElementById('quit-modal').classList.remove('show');
     }
 
     // ═══════════════════════════════════════════════
@@ -1406,6 +1502,25 @@
     // Tap zones (fallback / desktop)
     document.getElementById('tap-correct').addEventListener('click', doCorrect);
     document.getElementById('tap-pass').addEventListener('click', doPass);
+
+    // Quit button + confirmation modal
+    document.getElementById('quit-btn').addEventListener('click', () => {
+      if (!gameActive) return;
+      gameActive = false;
+      if (ticker) { clearInterval(ticker); ticker = null; }
+      document.getElementById('quit-modal').classList.add('show');
+    });
+    document.getElementById('quit-keep').addEventListener('click', () => {
+      document.getElementById('quit-modal').classList.remove('show');
+      if (timeLeft > 0) {
+        gameActive = true;
+        ticker = setInterval(tickTimer, 1000);
+      }
+    });
+    document.getElementById('quit-end').addEventListener('click', () => {
+      document.getElementById('quit-modal').classList.remove('show');
+      endGame();
+    });
 
     // Results buttons
     document.getElementById('again-btn').addEventListener('click', () => {
