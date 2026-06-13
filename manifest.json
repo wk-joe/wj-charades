@@ -1,7 +1,7 @@
 {
-  "name": "Tilt!",
-  "short_name": "Tilt",
-  "description": "Phone-to-forehead charades — tilt up to get it, tilt down to pass",
+  "name": "GG! Grog Games",
+  "short_name": "GG!",
+  "description": "Grog Games — phone-to-forehead charades, imposter, and more for the group",
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",

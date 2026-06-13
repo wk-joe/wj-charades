@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Tilt!">
+  <meta name="apple-mobile-web-app-title" content="GG!">
   <meta name="theme-color" content="#6322d6">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="/app-icon.png">
@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700;800;900&display=swap"
     rel="stylesheet">
-  <title>Tilt!</title>
+  <title>GG! Grog Games</title>
   <style>
     :root {
       --ink: #141414;
@@ -1247,6 +1247,149 @@
       .motion-btn { padding: 14px 40px; font-size: clamp(18px, 4vw, 24px); }
       .sideways-chip { display: none; }
     }
+
+    /* ══════════════════════════════════════
+   GG! WORDMARK — TANOA ACCENT
+══════════════════════════════════════ */
+    .wordmark-bowl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .wordmark-bowl i {
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════════
+   IMPOSTER SETUP — PLAYER NAME INPUT
+══════════════════════════════════════ */
+    .imp-player-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .imp-add-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .imp-name-input {
+      flex: 1;
+      background: #fff;
+      border: 5px solid #fff;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 1px;
+      padding: 14px 16px;
+      color: var(--ink);
+      outline: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      text-transform: uppercase;
+      min-width: 0;
+    }
+
+    .imp-name-input::placeholder {
+      color: rgba(0, 0, 0, .3);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .imp-add-btn {
+      background: #FFD400;
+      color: var(--ink);
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      padding: 0 18px;
+      border: 5px solid rgba(255, 255, 255, .4);
+      box-shadow: 4px 4px 0 rgba(255, 255, 255, .2);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: none;
+      flex-shrink: 0;
+    }
+
+    .imp-add-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .2);
+    }
+
+    .imp-player-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .imp-player-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, .1);
+      border: 3px solid rgba(255, 255, 255, .25);
+      padding: 12px 16px;
+      flex-shrink: 0;
+    }
+
+    .imp-player-name-text {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 18px;
+      color: #fff;
+      letter-spacing: .5px;
+    }
+
+    .imp-player-remove {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, .4);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 2px 6px;
+      line-height: 1;
+      font-family: 'Archivo Black', sans-serif;
+      transition: color .15s;
+    }
+
+    .imp-player-remove:active { color: var(--pass); }
+
+    .imp-player-hint {
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, .35);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .imp-start-btn:disabled {
+      opacity: .35;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════
+   DEAL SCREEN — PLAYER NAME HEADER
+══════════════════════════════════════ */
+    .deal-player-name {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(22px, 6vw, 34px);
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
   </style>
 </head>
 
@@ -1256,9 +1399,9 @@
   <div id="menu-screen" class="screen active">
     <div class="wordmark-wrap">
       <div class="wordmark-box">
-        <div class="wordmark-text">Tilt!</div>
+        <div class="wordmark-text">GG!</div>
       </div>
-      <div class="wordmark-chip">CHARADES FOR THE GANG!</div>
+      <div class="wordmark-chip wordmark-bowl"><i class="ph-fill ph-bowl-food"></i>GROG GAMES</div>
     </div>
 
     <div class="deck-divider" style="margin: 0 0 16px;">
@@ -1447,22 +1590,24 @@
       <div class="charades-home-title" style="color:#fff;">IMPOSTER</div>
     </div>
 
-    <div class="player-stepper">
-      <div class="stepper-lbl">PLAYERS</div>
-      <div class="stepper-controls">
-        <button class="stepper-btn" id="imp-minus">&#8722;</button>
-        <div class="stepper-num" id="imp-player-count">4</div>
-        <button class="stepper-btn" id="imp-plus">&#43;</button>
+    <div class="imp-player-section">
+      <div class="imp-add-row">
+        <input type="text" id="imp-name-input" class="imp-name-input"
+          placeholder="PLAYER NAME" maxlength="20" autocomplete="off" autocapitalize="characters">
+        <button class="imp-add-btn" id="imp-add-btn">+ ADD</button>
       </div>
+      <div class="imp-player-list" id="imp-player-list"></div>
+      <div class="imp-player-hint" id="imp-player-hint">ADD AT LEAST 3 PLAYERS</div>
     </div>
 
-    <button class="imp-start-btn" id="imp-start-btn">START GAME</button>
+    <button class="imp-start-btn" id="imp-start-btn" disabled>START GAME</button>
   </div>
 
   <!-- ══════════ IMPOSTER DEAL ══════════ -->
   <div id="imp-deal-screen" class="screen">
     <div class="deal-header">
-      <div class="deal-player-label" id="deal-player-label">PLAYER 1 OF 4</div>
+      <div class="deal-player-name" id="deal-player-name">PLAYER</div>
+      <div class="deal-player-label" id="deal-player-label">1 OF 4</div>
       <div class="deal-dots" id="deal-dots"></div>
     </div>
 
@@ -1847,7 +1992,9 @@
     let currentCat = null;
     let deck = [];
     // Imposter state
-    let impPlayerCount = 4;
+    let playerNames = [];
+    let imposterWeights = {};   // name → 0.0–1.0; recent imposters get lower weight
+    let lastImposterName = null;
     let impCurrentPlayer = 0;
     let impImposterIdx = -1;
     let impWord = '';
@@ -2192,22 +2339,54 @@
     // ═══════════════════════════════════════════════
     //  IMPOSTER GAME
     // ═══════════════════════════════════════════════
+
+    // Weighted random imposter selection:
+    // · Hard rule: can't be the same person back-to-back (weight = 0)
+    // · Soft rule: being picked drops your weight to 15% of its current value,
+    //   making you much less likely soon after — but never impossible
+    // · Every round you're NOT picked, your weight recovers toward 1.0 (× 1.8, capped)
+    // · Result: naturally self-corrects toward fairness, stays genuinely unpredictable
+    const IMP_PENALTY  = 0.15;   // weight multiplier on being picked
+    const IMP_RECOVERY = 1.8;    // weight multiplier per round not picked
+
+    function pickImposter() {
+      const eligible = playerNames.filter(p => p !== lastImposterName);
+      const weights   = eligible.map(p => imposterWeights[p] ?? 1.0);
+      const total     = weights.reduce((a, b) => a + b, 0);
+
+      let r = Math.random() * total, chosen = eligible[eligible.length - 1];
+      for (let i = 0; i < eligible.length; i++) {
+        r -= weights[i];
+        if (r <= 0) { chosen = eligible[i]; break; }
+      }
+
+      // Penalise chosen; let everyone else recover a step
+      playerNames.forEach(p => {
+        imposterWeights[p] = p === chosen
+          ? (imposterWeights[p] ?? 1.0) * IMP_PENALTY
+          : Math.min(1.0, (imposterWeights[p] ?? 1.0) * IMP_RECOVERY);
+      });
+
+      lastImposterName = chosen;
+      return playerNames.indexOf(chosen);
+    }
+
     function startImposterGame() {
       const entry = IMPOSTER_WORDS[(Math.random() * IMPOSTER_WORDS.length) | 0];
       impWord = entry.word;
       impHint = entry.hint;
-      impImposterIdx = (Math.random() * impPlayerCount) | 0;
+      impImposterIdx = pickImposter();
       impCurrentPlayer = 0;
       renderDealScreen();
       show('imp-deal-screen');
     }
 
     function renderDealScreen() {
-      const total = impPlayerCount;
+      const total = playerNames.length;
       const cur = impCurrentPlayer;
 
-      document.getElementById('deal-player-label').textContent =
-        `PLAYER ${cur + 1} OF ${total}`;
+      document.getElementById('deal-player-name').textContent = playerNames[cur].toUpperCase();
+      document.getElementById('deal-player-label').textContent = `${cur + 1} OF ${total}`;
 
       // dots
       const dots = document.getElementById('deal-dots');
@@ -2247,7 +2426,7 @@
 
       card.classList.add('revealed');
       const nextBtn = document.getElementById('deal-next-btn');
-      nextBtn.textContent = impCurrentPlayer < impPlayerCount - 1
+      nextBtn.textContent = impCurrentPlayer < playerNames.length - 1
         ? 'NEXT PLAYER →'
         : 'START DISCUSSION →';
       nextBtn.classList.add('visible');
@@ -2255,7 +2434,7 @@
 
     function advanceDeal() {
       impCurrentPlayer++;
-      if (impCurrentPlayer >= impPlayerCount) {
+      if (impCurrentPlayer >= playerNames.length) {
         showDiscussScreen();
       } else {
         renderDealScreen();
@@ -2281,30 +2460,62 @@
 
     // Menu screen
     document.getElementById('menu-charades').addEventListener('click', () => show('home-screen'));
-    document.getElementById('menu-imposter').addEventListener('click', () => show('imp-setup-screen'));
+    document.getElementById('menu-imposter').addEventListener('click', () => {
+      // Fresh session — reset imposter tracking
+      playerNames.forEach(p => delete imposterWeights[p]);
+      lastImposterName = null;
+      show('imp-setup-screen');
+    });
     document.getElementById('charades-back-btn').addEventListener('click', () => show('menu-screen'));
 
-    // Player count stepper
-    document.getElementById('imp-minus').addEventListener('click', () => {
-      if (impPlayerCount > 3) {
-        impPlayerCount--;
-        document.getElementById('imp-player-count').textContent = impPlayerCount;
-        document.getElementById('imp-minus').disabled = impPlayerCount <= 3;
-        document.getElementById('imp-plus').disabled = false;
-      }
-    });
-    document.getElementById('imp-plus').addEventListener('click', () => {
-      if (impPlayerCount < 10) {
-        impPlayerCount++;
-        document.getElementById('imp-player-count').textContent = impPlayerCount;
-        document.getElementById('imp-plus').disabled = impPlayerCount >= 10;
-        document.getElementById('imp-minus').disabled = false;
-      }
-    });
+    // Imposter player name input
+    function updateImposterSetup() {
+      const list = document.getElementById('imp-player-list');
+      const hint = document.getElementById('imp-player-hint');
+      const startBtn = document.getElementById('imp-start-btn');
+      const count = playerNames.length;
 
+      list.innerHTML = playerNames.map((name, i) => `
+        <div class="imp-player-chip">
+          <div class="imp-player-name-text">${name}</div>
+          <button class="imp-player-remove" data-idx="${i}">&#x2715;</button>
+        </div>
+      `).join('');
+
+      list.querySelectorAll('.imp-player-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = +btn.dataset.idx;
+          const removed = playerNames.splice(idx, 1)[0];
+          delete imposterWeights[removed];
+          if (lastImposterName === removed) lastImposterName = null;
+          updateImposterSetup();
+        });
+      });
+
+      startBtn.disabled = count < 3;
+      hint.textContent = count === 0 ? 'ADD AT LEAST 3 PLAYERS'
+        : count < 3 ? `NEED ${3 - count} MORE PLAYER${3 - count > 1 ? 'S' : ''}`
+        : `${count} PLAYERS READY`;
+    }
+
+    function addImposterPlayer() {
+      const input = document.getElementById('imp-name-input');
+      const name = input.value.trim().toUpperCase();
+      if (!name || playerNames.includes(name)) { input.value = ''; return; }
+      playerNames.push(name);
+      input.value = '';
+      updateImposterSetup();
+      input.focus();
+    }
+
+    document.getElementById('imp-add-btn').addEventListener('click', addImposterPlayer);
+    document.getElementById('imp-name-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); addImposterPlayer(); }
+    });
     document.getElementById('imp-setup-back-btn').addEventListener('click', () => show('menu-screen'));
-
     document.getElementById('imp-start-btn').addEventListener('click', startImposterGame);
+
+    updateImposterSetup();
 
     // Deal screen
     document.getElementById('deal-card').addEventListener('click', revealDealCard);
