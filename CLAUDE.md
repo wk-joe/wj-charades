@@ -108,12 +108,20 @@ Social deduction game. One player secretly gets a hint instead of the word — e
    - **Imposter** sees only a one-word hint (e.g. word: "Pizza", hint: "Doughy") and "YOUR HINT — BLEND IN!"
 4. **Discuss screen:** Group discusses, then votes. Host can tap to reveal the word. Play Again shuffles a new round using the same player list.
 
-### Imposter fair-rotation logic (`pickImposter()`)
+### Imposter selection logic (`pickImposter()`)
 
-- **Never** picks the same player who was imposter last round (no back-to-back).
-- **Never** picks the same player twice in the same cycle — once every player has had a turn the cycle resets.
-- If removing the last-imposter constraint leaves no eligible players (e.g. pool just reset), the constraint is still respected; only as a last resort (1-player edge case) does it allow a repeat.
-- State: `imposterHistory` (current cycle), `lastImposterName`. Both reset when entering the Imposter setup from the hub.
+Weighted random — all players stay in the pool every round:
+
+| Constant | Value | Effect |
+|---|---|---|
+| `IMP_PENALTY` | `0.15` | Weight multiplier when picked as imposter |
+| `IMP_RECOVERY` | `1.8` | Weight multiplier per round not picked (caps at 1.0) |
+
+- **Hard rule:** last round's imposter has weight `0` — no back-to-back ever.
+- **Soft rule:** being picked drops your weight to 15% of its current value — much less likely soon after, but never impossible.
+- Each round you're not picked your weight recovers ×1.8, returning to `1.0` after ~3–4 rounds.
+- Nobody can deduce who's next — probabilities are invisible and the same person *could* be picked again at low odds.
+- State: `imposterWeights` (per-player float), `lastImposterName`. Both reset on entering setup from the hub. Removing a player also clears their weight entry.
 
 ### Imposter word pool
 
