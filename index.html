@@ -833,7 +833,7 @@
   <div id="portrait-overlay">
     <div class="rot-phone"></div>
     <div class="rot-heading">TURN SIDEWAYS</div>
-    <div class="rot-sub">ROTATE TO LANDSCAPE TO PLAY</div>
+    <div class="rot-sub">TIMER PAUSED &middot; ROTATE TO RESUME</div>
   </div>
 
   <!-- ══════════ RESULTS ══════════ -->
@@ -1202,7 +1202,7 @@
 
       // Binary-search the largest font size where no token wraps mid-word.
       // Available width = screen short dimension minus horizontal padding (64px each side).
-      const availW = Math.min(window.innerWidth, window.innerHeight) - 128;
+      const availW = Math.max(window.innerWidth, window.innerHeight) - 128;
       const tokens = word.split(' ');
 
       // Use a hidden canvas for fast text measurement
@@ -1270,7 +1270,7 @@
       currentCat = cat;
       deck = shuffle(PACKS[cat]);
       deckIdx = 0; score = 0; correct = []; passed = [];
-      timeLeft = ROUND_TIME; needNeutral = false;
+      timeLeft = ROUND_TIME; needNeutral = true;
 
       showWord(deck[0]);
       document.getElementById('timer-num').textContent = ROUND_TIME;
@@ -1279,6 +1279,7 @@
       show('play-screen');
       checkOrientation();
 
+      if (ticker) { clearInterval(ticker); ticker = null; }
       gameActive = window.innerWidth > window.innerHeight;
       if (gameActive) ticker = setInterval(tickTimer, 1000);
 
