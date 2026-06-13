@@ -1,12 +1,12 @@
 {
-  "name": "Charades!",
-  "short_name": "Charades",
-  "description": "Heads Up style charades — tilt to play",
+  "name": "Tilt!",
+  "short_name": "Tilt",
+  "description": "Phone-to-forehead charades — tilt up to get it, tilt down to pass",
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#1a1a2e",
-  "theme_color": "#1a1a2e",
+  "background_color": "#6322d6",
+  "theme_color": "#6322d6",
   "icons": [
     {
       "src": "/icon-192.png",
