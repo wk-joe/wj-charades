@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700;800;900&display=swap"
     rel="stylesheet">
-  <title>GG! Grog Games</title>
+  <title>GG! - Grog Games</title>
   <style>
     :root {
       --ink: #141414;
@@ -286,12 +286,20 @@
     .menu-tile-imp {
       background: var(--ink);
       border-color: #fff;
-      box-shadow: 8px 8px 0 rgba(255,255,255,.3);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .3);
     }
 
-    .menu-tile-imp .tile-glyph { color: #fff; }
-    .menu-tile-imp .tile-name  { color: #fff; }
-    .menu-tile-imp .tile-sub   { color: rgba(255,255,255,.55); }
+    .menu-tile-imp .tile-glyph {
+      color: #fff;
+    }
+
+    .menu-tile-imp .tile-name {
+      color: #fff;
+    }
+
+    .menu-tile-imp .tile-sub {
+      color: rgba(255, 255, 255, .55);
+    }
 
     /* ══════════════════════════════════════
    CHARADES HOME HEADER (replaces wordmark)
@@ -331,7 +339,7 @@
     .player-stepper {
       background: var(--ink);
       border: 5px solid #fff;
-      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .25);
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -367,8 +375,14 @@
       line-height: 1;
     }
 
-    .stepper-btn:active { opacity: .7; }
-    .stepper-btn:disabled { opacity: .3; cursor: default; }
+    .stepper-btn:active {
+      opacity: .7;
+    }
+
+    .stepper-btn:disabled {
+      opacity: .3;
+      cursor: default;
+    }
 
     .stepper-num {
       font-family: 'Archivo Black', sans-serif;
@@ -420,7 +434,7 @@
       font-weight: 900;
       font-size: 13px;
       letter-spacing: 3px;
-      color: rgba(255,255,255,.5);
+      color: rgba(255, 255, 255, .5);
     }
 
     .deal-dots {
@@ -432,12 +446,17 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: rgba(255,255,255,.15);
+      background: rgba(255, 255, 255, .15);
       transition: background .2s;
     }
 
-    .deal-dot.seen { background: rgba(255,255,255,.35); }
-    .deal-dot.current { background: #FFD400; }
+    .deal-dot.seen {
+      background: rgba(255, 255, 255, .35);
+    }
+
+    .deal-dot.current {
+      background: #FFD400;
+    }
 
     .deal-card-wrap {
       flex: 1;
@@ -451,8 +470,8 @@
       width: 100%;
       max-width: 380px;
       min-height: 240px;
-      border: 5px solid rgba(255,255,255,.3);
-      box-shadow: 8px 8px 0 rgba(255,255,255,.1);
+      border: 5px solid rgba(255, 255, 255, .3);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .1);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -466,24 +485,24 @@
 
     .deal-card:active {
       transform: translate(4px, 4px);
-      box-shadow: 2px 2px 0 rgba(255,255,255,.1);
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .1);
     }
 
     .deal-card.revealed {
       background: #fff;
       border-color: var(--ink);
-      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .25);
       cursor: default;
     }
 
     .deal-card.revealed:active {
       transform: none;
-      box-shadow: 8px 8px 0 rgba(255,255,255,.25);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .25);
     }
 
     .deal-tap-icon {
       font-size: 56px;
-      color: rgba(255,255,255,.2);
+      color: rgba(255, 255, 255, .2);
       margin-bottom: 14px;
     }
 
@@ -491,16 +510,28 @@
       font-weight: 900;
       font-size: 13px;
       letter-spacing: 3px;
-      color: rgba(255,255,255,.35);
+      color: rgba(255, 255, 255, .35);
       text-align: center;
     }
 
     .deal-hidden-content,
-    .deal-shown-content { display: flex; flex-direction: column; align-items: center; }
+    .deal-shown-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    .deal-shown-content { display: none; }
-    .deal-card.revealed .deal-hidden-content { display: none; }
-    .deal-card.revealed .deal-shown-content { display: flex; }
+    .deal-shown-content {
+      display: none;
+    }
+
+    .deal-card.revealed .deal-hidden-content {
+      display: none;
+    }
+
+    .deal-card.revealed .deal-shown-content {
+      display: flex;
+    }
 
     .deal-role-badge {
       font-weight: 900;
@@ -511,8 +542,15 @@
       margin-bottom: 18px;
     }
 
-    .badge-crew { background: var(--correct); color: var(--ink); }
-    .badge-imp  { background: var(--pass);    color: #fff; }
+    .badge-crew {
+      background: var(--correct);
+      color: var(--ink);
+    }
+
+    .badge-imp {
+      background: var(--pass);
+      color: #fff;
+    }
 
     .deal-word-text {
       font-family: 'Archivo Black', sans-serif;
@@ -527,7 +565,7 @@
       font-weight: 900;
       font-size: 11px;
       letter-spacing: 3px;
-      color: rgba(0,0,0,.4);
+      color: rgba(0, 0, 0, .4);
       margin-top: 10px;
       text-align: center;
     }
@@ -546,18 +584,20 @@
       font-size: 24px;
       text-align: center;
       padding: 18px;
-      border: 5px solid rgba(255,255,255,.4);
-      box-shadow: 8px 8px 0 rgba(255,255,255,.15);
+      border: 5px solid rgba(255, 255, 255, .4);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .15);
       cursor: pointer;
       transition: none;
       display: none;
     }
 
-    .deal-next-btn.visible { display: block; }
+    .deal-next-btn.visible {
+      display: block;
+    }
 
     .deal-next-btn:active {
       transform: translate(4px, 4px);
-      box-shadow: 2px 2px 0 rgba(255,255,255,.15);
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .15);
     }
 
     /* ══════════════════════════════════════
@@ -592,27 +632,29 @@
       font-weight: 900;
       font-size: 13px;
       letter-spacing: 3px;
-      color: rgba(255,255,255,.4);
+      color: rgba(255, 255, 255, .4);
       text-align: center;
     }
 
     .discuss-reveal-box {
       width: 100%;
       max-width: 380px;
-      border: 4px solid rgba(255,255,255,.15);
+      border: 4px solid rgba(255, 255, 255, .15);
       padding: 18px 24px;
       text-align: center;
       cursor: pointer;
       transition: none;
     }
 
-    .discuss-reveal-box:active { opacity: .7; }
+    .discuss-reveal-box:active {
+      opacity: .7;
+    }
 
     .discuss-reveal-lbl {
       font-weight: 900;
       font-size: 11px;
       letter-spacing: 3px;
-      color: rgba(255,255,255,.35);
+      color: rgba(255, 255, 255, .35);
       margin-bottom: 8px;
     }
 
@@ -624,7 +666,9 @@
       display: none;
     }
 
-    .discuss-reveal-word.show { display: block; }
+    .discuss-reveal-word.show {
+      display: block;
+    }
 
     .discuss-reveal-imposter {
       font-family: 'Archivo Black', sans-serif;
@@ -635,7 +679,9 @@
       display: none;
     }
 
-    .discuss-reveal-imposter.show { display: block; }
+    .discuss-reveal-imposter.show {
+      display: block;
+    }
 
     .discuss-reveal-sublbl {
       font-weight: 900;
@@ -647,17 +693,24 @@
       display: none;
     }
 
-    .discuss-reveal-sublbl.imp-sublbl { color: rgba(255, 96, 80, .6); }
-    .discuss-reveal-sublbl.show { display: block; }
+    .discuss-reveal-sublbl.imp-sublbl {
+      color: rgba(255, 96, 80, .6);
+    }
+
+    .discuss-reveal-sublbl.show {
+      display: block;
+    }
 
     .discuss-reveal-placeholder {
       font-weight: 900;
       font-size: 18px;
       letter-spacing: 2px;
-      color: rgba(255,255,255,.25);
+      color: rgba(255, 255, 255, .25);
     }
 
-    .discuss-reveal-placeholder.hide { display: none; }
+    .discuss-reveal-placeholder.hide {
+      display: none;
+    }
 
     .discuss-btns {
       display: flex;
@@ -672,15 +725,15 @@
       font-size: 26px;
       text-align: center;
       padding: 20px;
-      border: 5px solid rgba(255,255,255,.4);
-      box-shadow: 8px 8px 0 rgba(255,255,255,.15);
+      border: 5px solid rgba(255, 255, 255, .4);
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .15);
       cursor: pointer;
       transition: none;
     }
 
     .discuss-play-again:active {
       transform: translate(4px, 4px);
-      box-shadow: 2px 2px 0 rgba(255,255,255,.15);
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .15);
     }
 
     /* ══════════════════════════════════════
@@ -1263,13 +1316,31 @@
       z-index: 0;
     }
 
-@media (orientation: landscape) {
-      .res-col-lbl { display: none; }
-      .forehead-glyph { display: none; }
-      .ready-center { gap: 14px; }
-      .ready-heading { font-size: clamp(20px, 4vw, 28px); }
-      .motion-btn { padding: 14px 40px; font-size: clamp(18px, 4vw, 24px); }
-      .sideways-chip { display: none; }
+    @media (orientation: landscape) {
+      .res-col-lbl {
+        display: none;
+      }
+
+      .forehead-glyph {
+        display: none;
+      }
+
+      .ready-center {
+        gap: 14px;
+      }
+
+      .ready-heading {
+        font-size: clamp(20px, 4vw, 28px);
+      }
+
+      .motion-btn {
+        padding: 14px 40px;
+        font-size: clamp(18px, 4vw, 24px);
+      }
+
+      .sideways-chip {
+        display: none;
+      }
     }
 
     /* ══════════════════════════════════════
@@ -1387,7 +1458,9 @@
       transition: color .15s;
     }
 
-    .imp-player-remove:active { color: var(--pass); }
+    .imp-player-remove:active {
+      color: var(--pass);
+    }
 
     .imp-player-hint {
       font-weight: 900;
@@ -1425,7 +1498,7 @@
       <div class="wordmark-box">
         <div class="wordmark-text">GG!</div>
       </div>
-      <div class="wordmark-chip wordmark-bowl"><i class="ph-fill ph-bowl-food"></i>GROG GAMES</div>
+      <div class="wordmark-chip wordmark-bowl">GROG GAMES</div>
     </div>
 
     <div class="deck-divider" style="margin: 0 0 16px;">
@@ -1438,10 +1511,10 @@
       <div class="menu-tile" id="menu-charades">
         <i class="ph-fill ph-cards tile-glyph"></i>
         <div class="tile-name">CHARADES</div>
-        <div class="tile-sub">TILT TO GUESS &middot; FOREHEAD GAME</div>
+        <div class="tile-sub">LET YOUR FRIENDS SHOW YOU THE WAY!</div>
       </div>
       <div class="menu-tile menu-tile-imp" id="menu-imposter">
-        <i class="ph-fill ph-user-secret tile-glyph"></i>
+        <i class="ph-fill ph-detective tile-glyph"></i>
         <div class="tile-name">IMPOSTER</div>
         <div class="tile-sub">FIND THE SPY &middot; PASS &amp; PEEK</div>
       </div>
@@ -1616,8 +1689,8 @@
 
     <div class="imp-player-section">
       <div class="imp-add-row">
-        <input type="text" id="imp-name-input" class="imp-name-input"
-          placeholder="PLAYER NAME" maxlength="20" autocomplete="off" autocapitalize="characters">
+        <input type="text" id="imp-name-input" class="imp-name-input" placeholder="PLAYER NAME" maxlength="20"
+          autocomplete="off" autocapitalize="characters">
         <button class="imp-add-btn" id="imp-add-btn">+ ADD</button>
       </div>
       <div class="imp-player-list" id="imp-player-list"></div>
@@ -1921,14 +1994,14 @@
     // ═══════════════════════════════════════════════
     const CAT_META = {
       mainstream: { color: '#FFD400', name: 'MAINSTREAM', icon: 'ph-film-slate' },
-      everyday:   { color: '#22A7FF', name: 'EVERYDAY',   icon: 'ph-storefront' },
-      fiji:       { color: '#FF7A1A', name: 'FIJI / LOCAL', icon: 'ph-island' },
-      party:      { color: '#FF4D9D', name: 'PARTY',      icon: 'ph-confetti' },
-      sports:     { color: '#00C8FF', name: 'SPORTS',     icon: 'ph-trophy' },
-      nature:     { color: '#39DB74', name: 'NATURE',     icon: 'ph-leaf' },
-      history:    { color: '#D4A0FF', name: 'HISTORY',    icon: 'ph-crown' },
-      food:       { color: '#FF5E3A', name: 'FOOD & DRINK', icon: 'ph-fork-knife' },
-      places:     { color: '#14B8A6', name: 'PLACES',     icon: 'ph-map-pin' },
+      everyday: { color: '#22A7FF', name: 'EVERYDAY', icon: 'ph-storefront' },
+      fiji: { color: '#FF7A1A', name: 'FIJI / LOCAL', icon: 'ph-island' },
+      party: { color: '#FF4D9D', name: 'PARTY', icon: 'ph-confetti' },
+      sports: { color: '#00C8FF', name: 'SPORTS', icon: 'ph-trophy' },
+      nature: { color: '#39DB74', name: 'NATURE', icon: 'ph-leaf' },
+      history: { color: '#D4A0FF', name: 'HISTORY', icon: 'ph-crown' },
+      food: { color: '#FF5E3A', name: 'FOOD & DRINK', icon: 'ph-fork-knife' },
+      places: { color: '#14B8A6', name: 'PLACES', icon: 'ph-map-pin' },
     };
 
 
@@ -1937,67 +2010,67 @@
     // ═══════════════════════════════════════════════
     const IMPOSTER_WORDS = [
       // Food & drink
-      {word:'Pizza',hint:'Doughy'},{word:'Sushi',hint:'Raw'},{word:'Burger',hint:'Stacked'},
-      {word:'Ice Cream',hint:'Frozen'},{word:'Coffee',hint:'Bitter'},{word:'Beer',hint:'Bubbly'},
-      {word:'Chocolate',hint:'Sweet'},{word:'Pancakes',hint:'Fluffy'},{word:'Spaghetti',hint:'Twirly'},
-      {word:'Tacos',hint:'Crunchy'},{word:'Popcorn',hint:'Salty'},{word:'Cheesecake',hint:'Rich'},
-      {word:'Lemonade',hint:'Sour'},{word:'Milkshake',hint:'Thick'},{word:'Ramen',hint:'Noodly'},
-      {word:'Champagne',hint:'Bubbly'},{word:'Donut',hint:'Glazed'},{word:'Watermelon',hint:'Seedy'},
-      {word:'Mango',hint:'Tropical'},{word:'Barbecue',hint:'Smoky'},{word:'Croissant',hint:'Flaky'},
-      {word:'Avocado',hint:'Creamy'},{word:'Espresso',hint:'Strong'},{word:'Fried Chicken',hint:'Crispy'},
-      {word:'Spaghetti',hint:'Twirly'},{word:'Taco',hint:'Folded'},{word:'Sushi',hint:'Delicate'},
-      {word:'Curry',hint:'Spicy'},{word:'Dumplings',hint:'Steamed'},{word:'Waffles',hint:'Gridded'},
+      { word: 'Pizza', hint: 'Doughy' }, { word: 'Sushi', hint: 'Raw' }, { word: 'Burger', hint: 'Stacked' },
+      { word: 'Ice Cream', hint: 'Frozen' }, { word: 'Coffee', hint: 'Bitter' }, { word: 'Beer', hint: 'Bubbly' },
+      { word: 'Chocolate', hint: 'Sweet' }, { word: 'Pancakes', hint: 'Fluffy' }, { word: 'Spaghetti', hint: 'Twirly' },
+      { word: 'Tacos', hint: 'Crunchy' }, { word: 'Popcorn', hint: 'Salty' }, { word: 'Cheesecake', hint: 'Rich' },
+      { word: 'Lemonade', hint: 'Sour' }, { word: 'Milkshake', hint: 'Thick' }, { word: 'Ramen', hint: 'Noodly' },
+      { word: 'Champagne', hint: 'Bubbly' }, { word: 'Donut', hint: 'Glazed' }, { word: 'Watermelon', hint: 'Seedy' },
+      { word: 'Mango', hint: 'Tropical' }, { word: 'Barbecue', hint: 'Smoky' }, { word: 'Croissant', hint: 'Flaky' },
+      { word: 'Avocado', hint: 'Creamy' }, { word: 'Espresso', hint: 'Strong' }, { word: 'Fried Chicken', hint: 'Crispy' },
+      { word: 'Spaghetti', hint: 'Twirly' }, { word: 'Taco', hint: 'Folded' }, { word: 'Sushi', hint: 'Delicate' },
+      { word: 'Curry', hint: 'Spicy' }, { word: 'Dumplings', hint: 'Steamed' }, { word: 'Waffles', hint: 'Gridded' },
       // Animals
-      {word:'Elephant',hint:'Wrinkled'},{word:'Penguin',hint:'Waddling'},{word:'Tiger',hint:'Striped'},
-      {word:'Giraffe',hint:'Tall'},{word:'Parrot',hint:'Colourful'},{word:'Octopus',hint:'Slimy'},
-      {word:'Dolphin',hint:'Playful'},{word:'Shark',hint:'Toothy'},{word:'Koala',hint:'Sleepy'},
-      {word:'Flamingo',hint:'Pink'},{word:'Gorilla',hint:'Strong'},{word:'Crocodile',hint:'Scaly'},
-      {word:'Peacock',hint:'Showy'},{word:'Sloth',hint:'Slow'},{word:'Crab',hint:'Sideways'},
-      {word:'Chameleon',hint:'Blending'},{word:'Kangaroo',hint:'Bouncy'},{word:'Jellyfish',hint:'Stinging'},
-      {word:'Owl',hint:'Wise'},{word:'Panda',hint:'Lazy'},{word:'Capybara',hint:'Calm'},
-      {word:'Platypus',hint:'Odd'},{word:'Narwhal',hint:'Horned'},{word:'Axolotl',hint:'Smiling'},
-      {word:'Lion',hint:'Maned'},{word:'Zebra',hint:'Striped'},{word:'Flamingo',hint:'Balanced'},
+      { word: 'Elephant', hint: 'Wrinkled' }, { word: 'Penguin', hint: 'Waddling' }, { word: 'Tiger', hint: 'Striped' },
+      { word: 'Giraffe', hint: 'Tall' }, { word: 'Parrot', hint: 'Colourful' }, { word: 'Octopus', hint: 'Slimy' },
+      { word: 'Dolphin', hint: 'Playful' }, { word: 'Shark', hint: 'Toothy' }, { word: 'Koala', hint: 'Sleepy' },
+      { word: 'Flamingo', hint: 'Pink' }, { word: 'Gorilla', hint: 'Strong' }, { word: 'Crocodile', hint: 'Scaly' },
+      { word: 'Peacock', hint: 'Showy' }, { word: 'Sloth', hint: 'Slow' }, { word: 'Crab', hint: 'Sideways' },
+      { word: 'Chameleon', hint: 'Blending' }, { word: 'Kangaroo', hint: 'Bouncy' }, { word: 'Jellyfish', hint: 'Stinging' },
+      { word: 'Owl', hint: 'Wise' }, { word: 'Panda', hint: 'Lazy' }, { word: 'Capybara', hint: 'Calm' },
+      { word: 'Platypus', hint: 'Odd' }, { word: 'Narwhal', hint: 'Horned' }, { word: 'Axolotl', hint: 'Smiling' },
+      { word: 'Lion', hint: 'Maned' }, { word: 'Zebra', hint: 'Striped' }, { word: 'Flamingo', hint: 'Balanced' },
       // Movies & TV
-      {word:'Titanic',hint:'Sinking'},{word:'Frozen',hint:'Cold'},{word:'Shrek',hint:'Green'},
-      {word:'Moana',hint:'Ocean'},{word:'The Matrix',hint:'Digital'},{word:'Jaws',hint:'Terrifying'},
-      {word:'Toy Story',hint:'Plastic'},{word:'Star Wars',hint:'Galactic'},{word:'Home Alone',hint:'Trapped'},
-      {word:'Inception',hint:'Dreamy'},{word:'Jurassic Park',hint:'Prehistoric'},{word:'Gladiator',hint:'Roman'},
-      {word:'Coco',hint:'Colourful'},{word:'Barbie',hint:'Pink'},{word:'Dune',hint:'Sandy'},
-      {word:'Parasite',hint:'Twisted'},{word:'Get Out',hint:'Creepy'},{word:'Encanto',hint:'Magical'},
-      {word:'Avatar',hint:'Blue'},{word:'Up',hint:'Floating'},{word:'Interstellar',hint:'Cosmic'},
-      {word:'The Godfather',hint:'Ruthless'},{word:'Mulan',hint:'Warrior'},{word:'Finding Nemo',hint:'Lost'},
-      {word:'Game of Thrones',hint:'Gritty'},{word:'Breaking Bad',hint:'Chemical'},{word:'Squid Game',hint:'Deadly'},
+      { word: 'Titanic', hint: 'Sinking' }, { word: 'Frozen', hint: 'Cold' }, { word: 'Shrek', hint: 'Green' },
+      { word: 'Moana', hint: 'Ocean' }, { word: 'The Matrix', hint: 'Digital' }, { word: 'Jaws', hint: 'Terrifying' },
+      { word: 'Toy Story', hint: 'Plastic' }, { word: 'Star Wars', hint: 'Galactic' }, { word: 'Home Alone', hint: 'Trapped' },
+      { word: 'Inception', hint: 'Dreamy' }, { word: 'Jurassic Park', hint: 'Prehistoric' }, { word: 'Gladiator', hint: 'Roman' },
+      { word: 'Coco', hint: 'Colourful' }, { word: 'Barbie', hint: 'Pink' }, { word: 'Dune', hint: 'Sandy' },
+      { word: 'Parasite', hint: 'Twisted' }, { word: 'Get Out', hint: 'Creepy' }, { word: 'Encanto', hint: 'Magical' },
+      { word: 'Avatar', hint: 'Blue' }, { word: 'Up', hint: 'Floating' }, { word: 'Interstellar', hint: 'Cosmic' },
+      { word: 'The Godfather', hint: 'Ruthless' }, { word: 'Mulan', hint: 'Warrior' }, { word: 'Finding Nemo', hint: 'Lost' },
+      { word: 'Game of Thrones', hint: 'Gritty' }, { word: 'Breaking Bad', hint: 'Chemical' }, { word: 'Squid Game', hint: 'Deadly' },
       // Sports
-      {word:'Swimming',hint:'Wet'},{word:'Boxing',hint:'Bruising'},{word:'Surfing',hint:'Wavy'},
-      {word:'Gymnastics',hint:'Flexible'},{word:'Wrestling',hint:'Grappled'},{word:'Golf',hint:'Quiet'},
-      {word:'Skateboarding',hint:'Grinding'},{word:'Cycling',hint:'Pedalling'},{word:'Archery',hint:'Pointed'},
-      {word:'Diving',hint:'Splashing'},{word:'Rugby',hint:'Muddy'},{word:'Tennis',hint:'Racquet'},
-      {word:'Volleyball',hint:'Net'},{word:'Basketball',hint:'Bouncing'},{word:'Weightlifting',hint:'Heavy'},
-      {word:'Ice Skating',hint:'Slippery'},{word:'Snowboarding',hint:'Icy'},{word:'Horse Racing',hint:'Galloping'},
-      {word:'Rowing',hint:'Rhythmic'},{word:'Rock Climbing',hint:'Vertical'},{word:'Pole Vault',hint:'Soaring'},
-      {word:'Darts',hint:'Pointy'},{word:'Water Polo',hint:'Treading'},{word:'Badminton',hint:'Feathered'},
+      { word: 'Swimming', hint: 'Wet' }, { word: 'Boxing', hint: 'Bruising' }, { word: 'Surfing', hint: 'Wavy' },
+      { word: 'Gymnastics', hint: 'Flexible' }, { word: 'Wrestling', hint: 'Grappled' }, { word: 'Golf', hint: 'Quiet' },
+      { word: 'Skateboarding', hint: 'Grinding' }, { word: 'Cycling', hint: 'Pedalling' }, { word: 'Archery', hint: 'Pointed' },
+      { word: 'Diving', hint: 'Splashing' }, { word: 'Rugby', hint: 'Muddy' }, { word: 'Tennis', hint: 'Racquet' },
+      { word: 'Volleyball', hint: 'Net' }, { word: 'Basketball', hint: 'Bouncing' }, { word: 'Weightlifting', hint: 'Heavy' },
+      { word: 'Ice Skating', hint: 'Slippery' }, { word: 'Snowboarding', hint: 'Icy' }, { word: 'Horse Racing', hint: 'Galloping' },
+      { word: 'Rowing', hint: 'Rhythmic' }, { word: 'Rock Climbing', hint: 'Vertical' }, { word: 'Pole Vault', hint: 'Soaring' },
+      { word: 'Darts', hint: 'Pointy' }, { word: 'Water Polo', hint: 'Treading' }, { word: 'Badminton', hint: 'Feathered' },
       // Places
-      {word:'Paris',hint:'Romantic'},{word:'Tokyo',hint:'Neon'},{word:'New York',hint:'Busy'},
-      {word:'Bali',hint:'Tropical'},{word:'London',hint:'Rainy'},{word:'Las Vegas',hint:'Flashy'},
-      {word:'Rome',hint:'Ancient'},{word:'Dubai',hint:'Tall'},{word:'Sydney',hint:'Sunny'},
-      {word:'Antarctica',hint:'Frozen'},{word:'Machu Picchu',hint:'Ruined'},{word:'Hawaii',hint:'Volcanic'},
-      {word:'Santorini',hint:'White'},{word:'Sahara',hint:'Sandy'},{word:'Venice',hint:'Floating'},
-      {word:'Cairo',hint:'Dusty'},{word:'Iceland',hint:'Icy'},{word:'Bangkok',hint:'Spicy'},
-      {word:'Rio de Janeiro',hint:'Carnival'},{word:'Maldives',hint:'Blue'},{word:'Barcelona',hint:'Artistic'},
-      {word:'Istanbul',hint:'Ancient'},{word:'Singapore',hint:'Clean'},{word:'Amsterdam',hint:'Canal'},
+      { word: 'Paris', hint: 'Romantic' }, { word: 'Tokyo', hint: 'Neon' }, { word: 'New York', hint: 'Busy' },
+      { word: 'Bali', hint: 'Tropical' }, { word: 'London', hint: 'Rainy' }, { word: 'Las Vegas', hint: 'Flashy' },
+      { word: 'Rome', hint: 'Ancient' }, { word: 'Dubai', hint: 'Tall' }, { word: 'Sydney', hint: 'Sunny' },
+      { word: 'Antarctica', hint: 'Frozen' }, { word: 'Machu Picchu', hint: 'Ruined' }, { word: 'Hawaii', hint: 'Volcanic' },
+      { word: 'Santorini', hint: 'White' }, { word: 'Sahara', hint: 'Sandy' }, { word: 'Venice', hint: 'Floating' },
+      { word: 'Cairo', hint: 'Dusty' }, { word: 'Iceland', hint: 'Icy' }, { word: 'Bangkok', hint: 'Spicy' },
+      { word: 'Rio de Janeiro', hint: 'Carnival' }, { word: 'Maldives', hint: 'Blue' }, { word: 'Barcelona', hint: 'Artistic' },
+      { word: 'Istanbul', hint: 'Ancient' }, { word: 'Singapore', hint: 'Clean' }, { word: 'Amsterdam', hint: 'Canal' },
       // Nature
-      {word:'Volcano',hint:'Erupting'},{word:'Rainbow',hint:'Arched'},{word:'Tornado',hint:'Spinning'},
-      {word:'Waterfall',hint:'Crashing'},{word:'Coral Reef',hint:'Colourful'},{word:'Glacier',hint:'Melting'},
-      {word:'Desert',hint:'Scorching'},{word:'Rainforest',hint:'Dense'},{word:'Aurora',hint:'Dancing'},
-      {word:'Tsunami',hint:'Massive'},{word:'Earthquake',hint:'Rumbling'},{word:'Thunderstorm',hint:'Loud'},
-      {word:'Quicksand',hint:'Sinking'},{word:'Geyser',hint:'Steaming'},{word:'Avalanche',hint:'Sliding'},
-      {word:'Canyon',hint:'Deep'},{word:'Eclipse',hint:'Dark'},{word:'Meteor Shower',hint:'Streaking'},
-      {word:'Bioluminescence',hint:'Glowing'},{word:'Blizzard',hint:'Blinding'},{word:'Wildfire',hint:'Spreading'},
+      { word: 'Volcano', hint: 'Erupting' }, { word: 'Rainbow', hint: 'Arched' }, { word: 'Tornado', hint: 'Spinning' },
+      { word: 'Waterfall', hint: 'Crashing' }, { word: 'Coral Reef', hint: 'Colourful' }, { word: 'Glacier', hint: 'Melting' },
+      { word: 'Desert', hint: 'Scorching' }, { word: 'Rainforest', hint: 'Dense' }, { word: 'Aurora', hint: 'Dancing' },
+      { word: 'Tsunami', hint: 'Massive' }, { word: 'Earthquake', hint: 'Rumbling' }, { word: 'Thunderstorm', hint: 'Loud' },
+      { word: 'Quicksand', hint: 'Sinking' }, { word: 'Geyser', hint: 'Steaming' }, { word: 'Avalanche', hint: 'Sliding' },
+      { word: 'Canyon', hint: 'Deep' }, { word: 'Eclipse', hint: 'Dark' }, { word: 'Meteor Shower', hint: 'Streaking' },
+      { word: 'Bioluminescence', hint: 'Glowing' }, { word: 'Blizzard', hint: 'Blinding' }, { word: 'Wildfire', hint: 'Spreading' },
       // Everyday objects & actions
-      {word:'Umbrella',hint:'Dripping'},{word:'Trampoline',hint:'Bouncy'},{word:'Hammock',hint:'Swaying'},
-      {word:'Alarm Clock',hint:'Annoying'},{word:'Vending Machine',hint:'Dispensing'},{word:'Escalator',hint:'Moving'},
-      {word:'Telescope',hint:'Stargazing'},{word:'Magnifying Glass',hint:'Zooming'},{word:'Boomerang',hint:'Returning'},
-      {word:'Piggy Bank',hint:'Saving'},{word:'Hourglass',hint:'Draining'},{word:'Compass',hint:'Pointing'},
+      { word: 'Umbrella', hint: 'Dripping' }, { word: 'Trampoline', hint: 'Bouncy' }, { word: 'Hammock', hint: 'Swaying' },
+      { word: 'Alarm Clock', hint: 'Annoying' }, { word: 'Vending Machine', hint: 'Dispensing' }, { word: 'Escalator', hint: 'Moving' },
+      { word: 'Telescope', hint: 'Stargazing' }, { word: 'Magnifying Glass', hint: 'Zooming' }, { word: 'Boomerang', hint: 'Returning' },
+      { word: 'Piggy Bank', hint: 'Saving' }, { word: 'Hourglass', hint: 'Draining' }, { word: 'Compass', hint: 'Pointing' },
     ];
 
     // ═══════════════════════════════════════════════
@@ -2373,13 +2446,13 @@
     //   making you much less likely soon after — but never impossible
     // · Every round you're NOT picked, your weight recovers toward 1.0 (× 1.8, capped)
     // · Result: naturally self-corrects toward fairness, stays genuinely unpredictable
-    const IMP_PENALTY  = 0.15;   // weight multiplier on being picked
+    const IMP_PENALTY = 0.15;   // weight multiplier on being picked
     const IMP_RECOVERY = 1.8;    // weight multiplier per round not picked
 
     function pickImposter() {
       const eligible = playerNames.filter(p => p !== lastImposterName);
-      const weights   = eligible.map(p => imposterWeights[p] ?? 1.0);
-      const total     = weights.reduce((a, b) => a + b, 0);
+      const weights = eligible.map(p => imposterWeights[p] ?? 1.0);
+      const total = weights.reduce((a, b) => a + b, 0);
 
       let r = Math.random() * total, chosen = eligible[eligible.length - 1];
       for (let i = 0; i < eligible.length; i++) {
@@ -2526,7 +2599,7 @@
       startBtn.disabled = count < 3;
       hint.textContent = count === 0 ? 'ADD AT LEAST 3 PLAYERS'
         : count < 3 ? `NEED ${3 - count} MORE PLAYER${3 - count > 1 ? 'S' : ''}`
-        : `${count} PLAYERS READY`;
+          : `${count} PLAYERS READY`;
     }
 
     function addImposterPlayer() {
