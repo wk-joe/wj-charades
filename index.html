@@ -626,6 +626,30 @@
 
     .discuss-reveal-word.show { display: block; }
 
+    .discuss-reveal-imposter {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 32px;
+      color: var(--pass);
+      letter-spacing: -1px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .discuss-reveal-imposter.show { display: block; }
+
+    .discuss-reveal-sublbl {
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, .35);
+      margin-top: 14px;
+      margin-bottom: 2px;
+      display: none;
+    }
+
+    .discuss-reveal-sublbl.imp-sublbl { color: rgba(255, 96, 80, .6); }
+    .discuss-reveal-sublbl.show { display: block; }
+
     .discuss-reveal-placeholder {
       font-weight: 900;
       font-size: 18px;
@@ -1636,9 +1660,12 @@
       <div class="discuss-heading">DISCUSS!</div>
       <div class="discuss-sub">WHO IS THE IMPOSTER?</div>
       <div class="discuss-reveal-box" id="discuss-reveal-box">
-        <div class="discuss-reveal-lbl">TAP TO REVEAL THE WORD</div>
+        <div class="discuss-reveal-lbl">TAP TO REVEAL</div>
         <div class="discuss-reveal-placeholder" id="discuss-placeholder">&#128065; HIDDEN</div>
+        <div class="discuss-reveal-sublbl">THE WORD</div>
         <div class="discuss-reveal-word" id="discuss-word"></div>
+        <div class="discuss-reveal-sublbl imp-sublbl">THE IMPOSTER</div>
+        <div class="discuss-reveal-imposter" id="discuss-imposter"></div>
       </div>
     </div>
     <div class="discuss-btns">
@@ -2443,7 +2470,11 @@
 
     function showDiscussScreen() {
       document.getElementById('discuss-word').textContent = impWord;
-      document.getElementById('discuss-word').classList.remove('show');
+      document.getElementById('discuss-imposter').textContent = playerNames[impImposterIdx].toUpperCase();
+      ['discuss-word', 'discuss-imposter'].forEach(id =>
+        document.getElementById(id).classList.remove('show'));
+      document.querySelectorAll('.discuss-reveal-sublbl').forEach(el =>
+        el.classList.remove('show'));
       document.getElementById('discuss-placeholder').classList.remove('hide');
       show('imp-discuss-screen');
     }
@@ -2523,7 +2554,10 @@
 
     // Discuss screen
     document.getElementById('discuss-reveal-box').addEventListener('click', () => {
-      document.getElementById('discuss-word').classList.add('show');
+      ['discuss-word', 'discuss-imposter'].forEach(id =>
+        document.getElementById(id).classList.add('show'));
+      document.querySelectorAll('.discuss-reveal-sublbl').forEach(el =>
+        el.classList.add('show'));
       document.getElementById('discuss-placeholder').classList.add('hide');
     });
 
