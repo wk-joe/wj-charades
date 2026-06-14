@@ -1177,6 +1177,14 @@
       overflow-y: auto;
     }
 
+    .score-banners {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
     .score-banner {
       display: flex;
       align-items: flex-end;
@@ -1185,8 +1193,32 @@
       border: 5px solid var(--ink);
       box-shadow: 8px 8px 0 var(--ink);
       padding: 16px 22px;
-      margin-bottom: 20px;
       flex-shrink: 0;
+    }
+
+    .score-passed-banner {
+      display: none;
+      align-items: flex-end;
+      justify-content: space-between;
+      background: var(--pass);
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 16px 22px;
+      flex-shrink: 0;
+    }
+
+    .score-passed-num {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 94px;
+      line-height: .78;
+      color: #fff;
+    }
+
+    .score-passed-lbl {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 28px;
+      color: #fff;
+      padding-bottom: 8px;
     }
 
     .score-you-got {
@@ -1319,6 +1351,42 @@
     @media (orientation: landscape) {
       .res-col-lbl {
         display: none;
+      }
+
+      .res-list {
+        display: none;
+      }
+
+      .score-banners {
+        flex-direction: row;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .score-banner,
+      .score-passed-banner {
+        flex: 1;
+        padding: 10px 16px;
+        box-shadow: 4px 4px 0 var(--ink);
+      }
+
+      .score-passed-banner {
+        display: flex;
+      }
+
+      .score-number,
+      .score-passed-num {
+        font-size: 52px;
+      }
+
+      .score-you-got {
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+
+      .score-right,
+      .score-passed-lbl {
+        font-size: 20px;
       }
 
       .forehead-glyph {
@@ -1657,12 +1725,18 @@
 
   <!-- ══════════ RESULTS ══════════ -->
   <div id="results-screen" class="screen">
-    <div class="score-banner">
-      <div>
-        <div class="score-you-got">YOU GOT</div>
-        <div class="score-number" id="final-score">0</div>
+    <div class="score-banners">
+      <div class="score-banner">
+        <div>
+          <div class="score-you-got">YOU GOT</div>
+          <div class="score-number" id="final-score">0</div>
+        </div>
+        <div class="score-right">RIGHT</div>
       </div>
-      <div class="score-right">RIGHT</div>
+      <div class="score-passed-banner">
+        <div class="score-passed-num" id="final-passed">0</div>
+        <div class="score-passed-lbl">PASSED</div>
+      </div>
     </div>
     <div class="res-cols">
       <div class="res-col">
@@ -2367,6 +2441,7 @@
       sfx.end();
 
       document.getElementById('final-score').textContent = score;
+      document.getElementById('final-passed').textContent = passed.length;
       document.getElementById('correct-list').innerHTML = correct.map(w => `<div class="chip-correct">${w}</div>`).join('');
       document.getElementById('passed-list').innerHTML = passed.map(w => `<div class="chip-pass">${w}</div>`).join('');
 
