@@ -1555,6 +1555,218 @@
       letter-spacing: -1px;
       line-height: 1;
     }
+
+    /* ══════════════════════════════════════
+   TRIVIA — MENU TILE
+══════════════════════════════════════ */
+    .menu-tile-trivia {
+      background: #1A6B3C;
+      border-color: #fff;
+      box-shadow: 8px 8px 0 rgba(255, 255, 255, .25);
+    }
+
+    .menu-tile-trivia:active {
+      box-shadow: 2px 2px 0 rgba(255, 255, 255, .25);
+    }
+
+    .menu-tile-trivia .tile-glyph,
+    .menu-tile-trivia .tile-name,
+    .menu-tile-trivia .tile-sub {
+      color: #fff;
+    }
+
+    .menu-tile-trivia .tile-sub {
+      opacity: .6;
+    }
+
+    /* ══════════════════════════════════════
+   TRIVIA HOME
+══════════════════════════════════════ */
+    #triv-home-screen {
+      background: var(--purple);
+      padding: 0 22px max(26px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .triv-tile {
+      position: relative;
+      overflow: hidden;
+      border: 5px solid var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      min-height: 115px;
+      transition: none;
+    }
+
+    .triv-tile:active {
+      transform: translate(4px, 4px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .triv-tile-full { grid-column: 1 / -1; }
+
+    .triv-tile[data-trivcat=rugby]      { background: #1A6B3C; }
+    .triv-tile[data-trivcat=volleyball] { background: #FF7A1A; }
+    .triv-tile[data-trivcat=fiji]       { background: #00BFAE; }
+    .triv-tile[data-trivcat=capitals]   { background: #7C3AED; }
+    .triv-tile[data-trivcat=general]    { background: #E11D48; }
+
+    .triv-tile[data-trivcat=rugby] .tile-name,
+    .triv-tile[data-trivcat=rugby] .tile-sub,
+    .triv-tile[data-trivcat=rugby] .tile-glyph,
+    .triv-tile[data-trivcat=capitals] .tile-name,
+    .triv-tile[data-trivcat=capitals] .tile-sub,
+    .triv-tile[data-trivcat=capitals] .tile-glyph,
+    .triv-tile[data-trivcat=general] .tile-name,
+    .triv-tile[data-trivcat=general] .tile-sub,
+    .triv-tile[data-trivcat=general] .tile-glyph {
+      color: #fff;
+    }
+
+    /* ══════════════════════════════════════
+   TRIVIA PLAY SCREEN
+══════════════════════════════════════ */
+    #triv-play-screen {
+      background: var(--cream);
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    .triv-timer-bar {
+      height: 14px;
+      background: var(--cream-shade);
+      flex-shrink: 0;
+    }
+
+    .triv-timer-fill {
+      height: 100%;
+      background: var(--ink);
+      transition: width 1s linear;
+      will-change: width;
+    }
+
+    .triv-timer-num {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 22px;
+      color: var(--ink);
+      z-index: 5;
+    }
+
+    .triv-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px 24px 16px;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    .triv-q-label,
+    .triv-a-label {
+      font-weight: 900;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(0, 0, 0, .4);
+      margin-bottom: 8px;
+    }
+
+    .triv-question {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(17px, 4.5vw, 26px);
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -.3px;
+    }
+
+    .triv-a-box {
+      background: #fff;
+      border: 5px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 14px 18px;
+    }
+
+    .triv-answer {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(20px, 5.5vw, 32px);
+      line-height: 1.05;
+      color: var(--ink);
+      letter-spacing: -.5px;
+    }
+
+    .triv-zones {
+      display: flex;
+      height: 100px;
+      flex-shrink: 0;
+      border-top: 5px solid var(--ink);
+    }
+
+    .triv-zone-skip,
+    .triv-zone-correct {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .triv-zone-skip {
+      background: var(--pass);
+      color: #fff;
+      border-right: 3px solid var(--ink);
+    }
+
+    .triv-zone-correct {
+      background: var(--correct);
+      color: var(--ink);
+      border-left: 3px solid var(--ink);
+    }
+
+    .triv-zone-skip:active,
+    .triv-zone-correct:active { opacity: .7; }
+
+    .triv-zone-skip i,
+    .triv-zone-correct i { font-size: 30px; }
+
+    #triv-quit-modal {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      z-index: 50;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 32px;
+    }
+
+    #triv-quit-modal.show { display: flex; }
+
+    /* ══════════════════════════════════════
+   TRIVIA RESULTS
+══════════════════════════════════════ */
+    #triv-results-screen {
+      background: var(--purple);
+      padding: max(28px, env(safe-area-inset-top)) 24px max(20px, env(safe-area-inset-bottom));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   </style>
 </head>
 
@@ -1585,6 +1797,11 @@
         <i class="ph-fill ph-detective tile-glyph"></i>
         <div class="tile-name">IMPOSTER</div>
         <div class="tile-sub">FIND THE SPY &middot; PASS &amp; PEEK</div>
+      </div>
+      <div class="menu-tile menu-tile-trivia" id="menu-trivia">
+        <i class="ph-fill ph-brain tile-glyph"></i>
+        <div class="tile-name">TRIVIA</div>
+        <div class="tile-sub">READ THE QUESTION &middot; TEST YOUR CREW!</div>
       </div>
     </div>
   </div>
@@ -1818,6 +2035,118 @@
     <div class="discuss-btns">
       <button class="discuss-play-again" id="imp-play-again-btn">PLAY AGAIN</button>
       <button class="btn-secondary" id="imp-menu-btn">CHANGE GAME</button>
+    </div>
+  </div>
+
+  <!-- ══════════ TRIVIA HOME ══════════ -->
+  <div id="triv-home-screen" class="screen">
+    <div class="charades-home-header">
+      <button class="back-btn" id="triv-back-btn">&#8592; BACK</button>
+      <div class="charades-home-title">TRIVIA</div>
+    </div>
+
+    <div class="deck-divider">
+      <div class="deck-divider-line"></div>
+      <div class="deck-divider-lbl">PICK A CATEGORY</div>
+      <div class="deck-divider-line"></div>
+    </div>
+
+    <div class="deck-grid">
+      <div class="triv-tile" data-trivcat="rugby">
+        <i class="ph-fill ph-medal tile-glyph"></i>
+        <div class="tile-name">RUGBY</div>
+        <div class="tile-sub">SEVENS, FIJI &amp; WORLD CUP &middot; <span id="tc-rugby"></span></div>
+      </div>
+      <div class="triv-tile" data-trivcat="volleyball">
+        <i class="ph-fill ph-lightning tile-glyph"></i>
+        <div class="tile-name">VOLLEY<br>BALL</div>
+        <div class="tile-sub">RULES, PLAYERS &amp; OLYMPICS &middot; <span id="tc-volleyball"></span></div>
+      </div>
+      <div class="triv-tile" data-trivcat="fiji">
+        <i class="ph-fill ph-island tile-glyph"></i>
+        <div class="tile-name">FIJI</div>
+        <div class="tile-sub">CULTURE, PLACES &amp; PEOPLE &middot; <span id="tc-fiji"></span></div>
+      </div>
+      <div class="triv-tile" data-trivcat="capitals">
+        <i class="ph-fill ph-globe tile-glyph"></i>
+        <div class="tile-name">CAPITAL<br>CITIES</div>
+        <div class="tile-sub">COUNTRIES &amp; CAPITALS &middot; <span id="tc-capitals"></span></div>
+      </div>
+      <div class="triv-tile triv-tile-full" data-trivcat="general">
+        <i class="ph-fill ph-brain tile-glyph"></i>
+        <div class="tile-name">GENERAL KNOWLEDGE</div>
+        <div class="tile-sub">SCIENCE, HISTORY, POP CULTURE &amp; MORE &middot; <span id="tc-general"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TRIVIA PLAY ══════════ -->
+  <div id="triv-play-screen" class="screen">
+    <div class="triv-timer-bar">
+      <div class="triv-timer-fill" id="triv-timer-fill"></div>
+    </div>
+    <div class="triv-timer-num" id="triv-timer-num">60</div>
+    <div class="triv-content">
+      <div>
+        <div class="triv-q-label">QUESTION</div>
+        <div class="triv-question" id="triv-question">—</div>
+      </div>
+      <div class="triv-a-box">
+        <div class="triv-a-label">ANSWER</div>
+        <div class="triv-answer" id="triv-answer">—</div>
+      </div>
+    </div>
+    <div class="triv-zones">
+      <div class="triv-zone-skip" id="triv-zone-skip">
+        <i class="ph-fill ph-x-circle"></i>
+        <span>SKIP</span>
+      </div>
+      <div class="triv-zone-correct" id="triv-zone-correct">
+        <i class="ph-fill ph-check-circle"></i>
+        <span>GOT IT</span>
+      </div>
+    </div>
+    <div class="flash" id="triv-flash">
+      <div class="flash-label" id="triv-flash-label"></div>
+    </div>
+    <button class="quit-btn" id="triv-quit-btn">&#x2715;</button>
+    <div id="triv-quit-modal">
+      <div class="quit-heading">QUIT?</div>
+      <div class="quit-sub">YOUR SCORE SO FAR WILL BE SAVED</div>
+      <button class="quit-keep" id="triv-quit-keep">KEEP PLAYING</button>
+      <button class="quit-end" id="triv-quit-end">END GAME</button>
+    </div>
+  </div>
+
+  <!-- ══════════ TRIVIA RESULTS ══════════ -->
+  <div id="triv-results-screen" class="screen">
+    <div class="score-banners">
+      <div class="score-banner">
+        <div>
+          <div class="score-you-got">YOU GOT</div>
+          <div class="score-number" id="triv-final-score">0</div>
+        </div>
+        <div class="score-right">RIGHT</div>
+      </div>
+      <div class="score-passed-banner" id="triv-skipped-banner">
+        <div class="score-passed-num" id="triv-final-skipped">0</div>
+        <div class="score-passed-lbl">SKIPPED</div>
+      </div>
+    </div>
+    <div class="res-cols">
+      <div class="res-col">
+        <div class="res-col-lbl">GOT IT</div>
+        <div class="res-list" id="triv-correct-list"></div>
+      </div>
+      <div class="res-col">
+        <div class="res-col-lbl">SKIPPED</div>
+        <div class="res-list" id="triv-skipped-list"></div>
+      </div>
+    </div>
+    <div class="results-btns">
+      <button class="btn-play-again" id="triv-again-btn">PLAY AGAIN</button>
+      <button class="btn-secondary" id="triv-cat-btn">CHOOSE CATEGORY</button>
+      <button class="btn-secondary" id="triv-menu-btn">CHANGE GAME</button>
     </div>
   </div>
 
@@ -2148,6 +2477,176 @@
     ];
 
     // ═══════════════════════════════════════════════
+    //  TRIVIA PACKS  ← edit freely
+    // ═══════════════════════════════════════════════
+    const TRIVIA_PACKS = {
+      rugby: [
+        { q: 'How many players are on each team in rugby sevens?', a: '7' },
+        { q: 'What year did Fiji first win Olympic gold in rugby sevens?', a: '2016 (Rio)' },
+        { q: 'How many points is a try worth in rugby union?', a: '5' },
+        { q: 'What is the name of Fiji\'s national rugby union team?', a: 'The Flying Fijians' },
+        { q: 'How long is a full rugby sevens match (total minutes)?', a: '14 min (two 7-min halves)' },
+        { q: 'How many points is a conversion worth in rugby?', a: '2' },
+        { q: 'Which country has won the most Rugby World Cups?', a: 'New Zealand (4)' },
+        { q: 'How many points is a penalty goal worth in rugby?', a: '3' },
+        { q: 'How many players are in the scrum from each team in rugby union?', a: '8' },
+        { q: 'Who is Fiji\'s most celebrated sevens player, "King of Sevens"?', a: 'Waisale Serevi' },
+        { q: 'How many points is a drop goal worth in rugby union?', a: '3' },
+        { q: 'What city hosted the 2023 Rugby World Cup final?', a: 'Paris' },
+        { q: 'What is the annual international sevens series called?', a: 'HSBC World Rugby Sevens Series' },
+        { q: 'Fiji\'s Jerry Tuwai won World Rugby Sevens Player of the Year in which two years?', a: '2015 and 2019' },
+        { q: 'What do you call the kick taken after a try is scored?', a: 'Conversion' },
+        { q: 'How long is a half in rugby union?', a: '40 minutes' },
+        { q: 'In which city is the famous Hong Kong Sevens held?', a: 'Hong Kong' },
+        { q: 'What is a "knock-on" in rugby?', a: 'Ball dropped or knocked forward' },
+        { q: 'Fiji won back-to-back Olympic sevens gold in which year?', a: '2020 (Tokyo, held 2021)' },
+        { q: 'What does TMO stand for in rugby?', a: 'Television Match Official' },
+        { q: 'What trophy is awarded to the Rugby World Cup winners?', a: 'Webb Ellis Cup' },
+        { q: 'How many points is a penalty try worth?', a: '7' },
+        { q: 'What is a "ruck" in rugby?', a: 'A contest over the ball on the ground between players on their feet' },
+        { q: 'What is the offside rule called when a player is ahead of the ball?', a: 'Offside' },
+        { q: 'In sevens, how long is extra time if scores are tied?', a: '5 minutes (sudden death)' },
+        { q: 'What does it mean when a player receives a yellow card in rugby?', a: '10-minute sin bin (temporary suspension)' },
+        { q: 'How many points does a team need to win in extra time in sevens?', a: 'First to score wins (sudden death)' },
+        { q: 'What is the name of Fiji\'s iconic try-scoring winger who played in the early 2000s?', a: 'Rupeni Caucaunibuca' },
+      ],
+      volleyball: [
+        { q: 'How many players are on each side in indoor volleyball?', a: '6' },
+        { q: 'How many sets does a team need to win a volleyball match?', a: '3 (best of 5)' },
+        { q: 'What is the maximum touches a team can make before sending the ball over?', a: '3' },
+        { q: 'How many points to win a regular set in volleyball?', a: '25 (with a 2-point lead)' },
+        { q: 'How many points to win the deciding fifth set?', a: '15 (with a 2-point lead)' },
+        { q: 'What is the name of the defensive specialist who wears a different coloured jersey?', a: 'Libero' },
+        { q: 'Can the libero serve in indoor volleyball?', a: 'No (cannot serve or attack above the net)' },
+        { q: 'What is it called when a player hits the ball hard downward into the opponent\'s court?', a: 'Spike (or attack)' },
+        { q: 'What is the net height for men\'s indoor volleyball?', a: '2.43 metres' },
+        { q: 'What is the net height for women\'s indoor volleyball?', a: '2.24 metres' },
+        { q: 'How many players are on each side in beach volleyball?', a: '2' },
+        { q: 'What do you call the first contact to receive a serve?', a: 'Pass (or reception/dig)' },
+        { q: 'What is a "kill" in volleyball?', a: 'An attack resulting in a point that cannot be returned' },
+        { q: 'What is an "ace" in volleyball?', a: 'A serve the opponent cannot return' },
+        { q: 'What year did volleyball debut at the Olympic Games?', a: '1964 (Tokyo)' },
+        { q: 'What year did beach volleyball debut at the Olympics?', a: '1996 (Atlanta)' },
+        { q: 'What country has won the most men\'s volleyball World Championships?', a: 'Brazil' },
+        { q: 'What is "rotation" in volleyball?', a: 'Players shift one position clockwise after winning the serve' },
+        { q: 'What is a "float serve"?', a: 'A serve with no spin that moves unpredictably' },
+        { q: 'What does it mean when the ball touches the boundary line in volleyball?', a: 'It\'s in bounds' },
+        { q: 'How many substitutions are allowed per set in FIVB indoor volleyball?', a: '6' },
+        { q: 'What position is responsible for the second touch — setting up the attack?', a: 'Setter' },
+        { q: 'What is a "pancake" in volleyball?', a: 'A defensive save with the hand flat on the floor' },
+        { q: 'What is "blocking" in volleyball?', a: 'Stopping the ball at the net with your hands' },
+        { q: 'How wide is each side of a standard indoor volleyball court?', a: '9 metres (9 × 9 m per side)' },
+        { q: 'Which team won gold at the 2024 Paris Olympics men\'s volleyball?', a: 'France' },
+        { q: 'What is an "overpass" in volleyball?', a: 'When the ball is passed back over the net on the first touch' },
+        { q: 'What is a "side-out" in volleyball?', a: 'Winning the rally to gain the serve from the opponent' },
+      ],
+      fiji: [
+        { q: 'What is the capital city of Fiji?', a: 'Suva' },
+        { q: 'What does "bula" mean in Fijian?', a: 'Hello / life / cheers' },
+        { q: 'What is the traditional Fijian drink made from the yaqona root?', a: 'Kava (grog)' },
+        { q: 'What is Fiji\'s national airline called?', a: 'Fiji Airways' },
+        { q: 'What is a "lovo"?', a: 'A traditional underground earth oven used for feasts' },
+        { q: 'What is the largest island in Fiji?', a: 'Viti Levu' },
+        { q: 'What does "vinaka" mean in Fijian?', a: 'Thank you' },
+        { q: 'What year did Fiji gain independence from Britain?', a: '1970' },
+        { q: 'What is "kokoda"?', a: 'Fijian fish ceviche marinated in lime juice and coconut cream' },
+        { q: 'What is a "sulu"?', a: 'A wraparound garment worn by Fijians (like a sarong)' },
+        { q: 'What is the currency of Fiji?', a: 'Fijian dollar' },
+        { q: 'What is "palusami"?', a: 'Taro leaves baked in coconut cream' },
+        { q: 'What is the name of Fiji\'s second-largest city?', a: 'Lautoka' },
+        { q: 'What is "sevusevu"?', a: 'A ceremony of presenting kava as a formal gift of respect' },
+        { q: 'What is "meke"?', a: 'Traditional Fijian song and dance performance' },
+        { q: 'What island is home to Tavoro Waterfalls and Bouma National Heritage Park?', a: 'Taveuni' },
+        { q: 'What is "dalo"?', a: 'Taro root — a staple crop in Fiji' },
+        { q: 'What ocean does Fiji sit in?', a: 'South Pacific Ocean' },
+        { q: 'What is the name of Fiji\'s historic first capital?', a: 'Levuka' },
+        { q: 'What does "loloma" mean in Fijian?', a: 'Love / care shown to others' },
+        { q: 'What does "moce" mean in Fijian?', a: 'Goodbye' },
+        { q: 'What is the main sugar-producing city in Fiji?', a: 'Lautoka' },
+        { q: 'What does "sega na leqa" mean?', a: 'No worries / it\'s okay' },
+        { q: 'What is the national sport of Fiji?', a: 'Rugby (union/sevens)' },
+        { q: 'What are the two main ethnic groups in Fiji?', a: 'iTaukei Fijians and Indo-Fijians' },
+        { q: 'What is "tabua"?', a: 'A whale\'s tooth — the most important traditional gift in Fijian culture' },
+        { q: 'What is the name of Fiji\'s main international airport?', a: 'Nadi International Airport' },
+        { q: 'What does "kerekere" mean?', a: 'Asking for something with the expectation it will be given' },
+        { q: 'What is Fiji\'s official name?', a: 'Republic of Fiji' },
+        { q: 'What ocean landmark passes through Fiji?', a: 'The 180th meridian (International Date Line)' },
+      ],
+      capitals: [
+        { q: 'What is the capital of Australia?', a: 'Canberra' },
+        { q: 'What is the capital of Brazil?', a: 'Brasília' },
+        { q: 'What is the capital of Canada?', a: 'Ottawa' },
+        { q: 'What is the capital of Japan?', a: 'Tokyo' },
+        { q: 'What is the capital of Germany?', a: 'Berlin' },
+        { q: 'What is the capital of South Africa?', a: 'Pretoria (executive) / Cape Town (legislative)' },
+        { q: 'What is the capital of Argentina?', a: 'Buenos Aires' },
+        { q: 'What is the capital of Egypt?', a: 'Cairo' },
+        { q: 'What is the capital of India?', a: 'New Delhi' },
+        { q: 'What is the capital of Russia?', a: 'Moscow' },
+        { q: 'What is the capital of New Zealand?', a: 'Wellington' },
+        { q: 'What is the capital of Kenya?', a: 'Nairobi' },
+        { q: 'What is the capital of Saudi Arabia?', a: 'Riyadh' },
+        { q: 'What is the capital of Mexico?', a: 'Mexico City' },
+        { q: 'What is the capital of Indonesia?', a: 'Jakarta' },
+        { q: 'What is the capital of Thailand?', a: 'Bangkok' },
+        { q: 'What is the capital of Turkey?', a: 'Ankara' },
+        { q: 'What is the capital of Sweden?', a: 'Stockholm' },
+        { q: 'What is the capital of Norway?', a: 'Oslo' },
+        { q: 'What is the capital of Pakistan?', a: 'Islamabad' },
+        { q: 'What is the capital of Nigeria?', a: 'Abuja' },
+        { q: 'What is the capital of Peru?', a: 'Lima' },
+        { q: 'What is the capital of Vietnam?', a: 'Hanoi' },
+        { q: 'What is the capital of Greece?', a: 'Athens' },
+        { q: 'What is the capital of Portugal?', a: 'Lisbon' },
+        { q: 'What is the capital of the Philippines?', a: 'Manila' },
+        { q: 'What is the capital of Ethiopia?', a: 'Addis Ababa' },
+        { q: 'What is the capital of Cuba?', a: 'Havana' },
+        { q: 'What is the capital of the United Arab Emirates?', a: 'Abu Dhabi' },
+        { q: 'What is the capital of South Korea?', a: 'Seoul' },
+      ],
+      general: [
+        { q: 'What planet is known as the Red Planet?', a: 'Mars' },
+        { q: 'How many bones are in the adult human body?', a: '206' },
+        { q: 'What is the chemical symbol for gold?', a: 'Au' },
+        { q: 'Who painted the Mona Lisa?', a: 'Leonardo da Vinci' },
+        { q: 'What is the fastest land animal?', a: 'Cheetah' },
+        { q: 'How many sides does a hexagon have?', a: '6' },
+        { q: 'What gas do plants absorb during photosynthesis?', a: 'Carbon dioxide (CO₂)' },
+        { q: 'What year did the Berlin Wall fall?', a: '1989' },
+        { q: 'Who wrote Romeo and Juliet?', a: 'William Shakespeare' },
+        { q: 'How many continents are there?', a: '7' },
+        { q: 'What is the longest river in the world?', a: 'The Nile (or Amazon)' },
+        { q: 'What does DNA stand for?', a: 'Deoxyribonucleic acid' },
+        { q: 'In what year did humans first land on the Moon?', a: '1969' },
+        { q: 'What is the square root of 144?', a: '12' },
+        { q: 'How many strings does a standard guitar have?', a: '6' },
+        { q: 'What is the most spoken language in the world by native speakers?', a: 'Mandarin Chinese' },
+        { q: 'What is the largest ocean on Earth?', a: 'Pacific Ocean' },
+        { q: 'How many players are on a football (soccer) team?', a: '11' },
+        { q: 'What element has the atomic number 1?', a: 'Hydrogen' },
+        { q: 'Who wrote the Harry Potter series?', a: 'J.K. Rowling' },
+        { q: 'What is the tallest mountain in the world?', a: 'Mount Everest' },
+        { q: 'What year was the first iPhone released?', a: '2007' },
+        { q: 'How many days are in a leap year?', a: '366' },
+        { q: 'What is the powerhouse of the cell?', a: 'Mitochondria' },
+        { q: 'Which planet has the most moons?', a: 'Saturn' },
+        { q: 'What does HTTP stand for?', a: 'HyperText Transfer Protocol' },
+        { q: 'Who discovered penicillin?', a: 'Alexander Fleming' },
+        { q: 'What is the national bird of Australia?', a: 'Emu' },
+        { q: 'What is the hardest natural substance on Earth?', a: 'Diamond' },
+        { q: 'How many teeth does an adult human have?', a: '32' },
+      ],
+    };
+
+    const TRIV_CAT_META = {
+      rugby:      { color: '#1A6B3C', name: 'RUGBY' },
+      volleyball: { color: '#FF7A1A', name: 'VOLLEYBALL' },
+      fiji:       { color: '#00BFAE', name: 'FIJI' },
+      capitals:   { color: '#7C3AED', name: 'CAPITAL CITIES' },
+      general:    { color: '#E11D48', name: 'GENERAL KNOWLEDGE' },
+    };
+
+    // ═══════════════════════════════════════════════
     //  CONSTANTS
     // ═══════════════════════════════════════════════
     const ROUND_TIME = 60;
@@ -2184,6 +2683,16 @@
     let needNeutral = false;
     let gameActive = false;
     let audioCtx = null;
+    // ── TRIVIA STATE ──
+    let trivCat = null;
+    let trivDeck = [];
+    let trivIdx = 0;
+    let trivScore = 0;
+    let trivCorrect = [];
+    let trivSkipped = [];
+    let trivTimeLeft = 60;
+    let trivTicker = null;
+    let trivActive = false;
 
     // ═══════════════════════════════════════════════
     //  SCREENS
@@ -2628,6 +3137,100 @@
     }
 
     // ═══════════════════════════════════════════════
+    //  TRIVIA
+    // ═══════════════════════════════════════════════
+    function startTrivia(cat) {
+      trivCat = cat;
+      trivDeck = shuffle(TRIVIA_PACKS[cat]);
+      trivIdx = 0; trivScore = 0; trivCorrect = []; trivSkipped = [];
+      trivTimeLeft = 60;
+
+      const meta = TRIV_CAT_META[cat];
+      document.getElementById('triv-play-screen').style.background = tintColor(meta.color, 0.88);
+      document.getElementById('triv-timer-fill').style.background = meta.color;
+      document.getElementById('triv-timer-fill').style.width = '100%';
+      document.getElementById('triv-timer-num').textContent = '60';
+
+      showTrivQuestion();
+      show('triv-play-screen');
+
+      if (trivTicker) { clearInterval(trivTicker); trivTicker = null; }
+      trivActive = true;
+      trivTicker = setInterval(trivTickTimer, 1000);
+      grabWake();
+    }
+
+    function showTrivQuestion() {
+      const entry = trivDeck[trivIdx];
+      document.getElementById('triv-question').textContent = entry.q;
+      document.getElementById('triv-answer').textContent = entry.a;
+    }
+
+    function trivNextCard() {
+      trivIdx++;
+      if (trivIdx >= trivDeck.length) {
+        trivDeck = shuffle(TRIVIA_PACKS[trivCat]);
+        trivIdx = 0;
+      }
+      showTrivQuestion();
+    }
+
+    function trivFlash(colour, label) {
+      const el = document.getElementById('triv-flash');
+      const lbl = document.getElementById('triv-flash-label');
+      el.style.background = colour;
+      lbl.textContent = label;
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'all';
+      setTimeout(() => { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }, FLASH_MS);
+    }
+
+    function triviaCorrect() {
+      if (!trivActive) return;
+      trivCorrect.push(trivDeck[trivIdx]);
+      trivScore++;
+      sfx.correct();
+      trivFlash('#18C964', 'GOT IT!');
+      trivNextCard();
+    }
+
+    function triviaSkip() {
+      if (!trivActive) return;
+      trivSkipped.push(trivDeck[trivIdx]);
+      sfx.pass();
+      trivFlash('#FF3A30', 'SKIP');
+      trivNextCard();
+    }
+
+    function trivTickTimer() {
+      trivTimeLeft--;
+      const pct = (trivTimeLeft / 60) * 100;
+      document.getElementById('triv-timer-fill').style.width = pct + '%';
+      document.getElementById('triv-timer-num').textContent = trivTimeLeft;
+      if (trivTimeLeft <= 3) sfx.tick();
+      if (trivTimeLeft <= 0) endTrivia();
+    }
+
+    function endTrivia() {
+      trivActive = false;
+      clearInterval(trivTicker); trivTicker = null;
+      dropWake();
+      sfx.end();
+
+      document.getElementById('triv-final-score').textContent = trivScore;
+      document.getElementById('triv-final-skipped').textContent = trivSkipped.length;
+      document.getElementById('triv-skipped-banner').style.display = 'flex';
+
+      document.getElementById('triv-correct-list').innerHTML =
+        trivCorrect.map(e => `<div class="chip-correct">${e.a}</div>`).join('');
+      document.getElementById('triv-skipped-list').innerHTML =
+        trivSkipped.map(e => `<div class="chip-pass">${e.a}</div>`).join('');
+
+      show('triv-results-screen');
+      document.getElementById('triv-quit-modal').classList.remove('show');
+    }
+
+    // ═══════════════════════════════════════════════
     //  INIT
     // ═══════════════════════════════════════════════
 
@@ -2712,6 +3315,52 @@
     document.getElementById('imp-play-again-btn').addEventListener('click', startImposterGame);
 
     document.getElementById('imp-menu-btn').addEventListener('click', () => show('menu-screen'));
+
+    // ── TRIVIA ──
+
+    // Question counts on tiles
+    Object.keys(TRIVIA_PACKS).forEach(cat => {
+      const el = document.getElementById('tc-' + cat);
+      if (el) el.textContent = TRIVIA_PACKS[cat].length + ' questions';
+    });
+
+    document.getElementById('menu-trivia').addEventListener('click', () => show('triv-home-screen'));
+    document.getElementById('triv-back-btn').addEventListener('click', () => show('menu-screen'));
+
+    document.querySelectorAll('.triv-tile').forEach(tile => {
+      tile.addEventListener('click', () => {
+        const cat = tile.dataset.trivcat;
+        if (!cat) return;
+        startTrivia(cat);
+      });
+    });
+
+    document.getElementById('triv-zone-correct').addEventListener('click', triviaCorrect);
+    document.getElementById('triv-zone-skip').addEventListener('click', triviaSkip);
+
+    document.getElementById('triv-quit-btn').addEventListener('click', () => {
+      if (!trivActive) return;
+      trivActive = false;
+      if (trivTicker) { clearInterval(trivTicker); trivTicker = null; }
+      document.getElementById('triv-quit-modal').classList.add('show');
+    });
+
+    document.getElementById('triv-quit-keep').addEventListener('click', () => {
+      document.getElementById('triv-quit-modal').classList.remove('show');
+      if (trivTimeLeft > 0) {
+        trivActive = true;
+        trivTicker = setInterval(trivTickTimer, 1000);
+      }
+    });
+
+    document.getElementById('triv-quit-end').addEventListener('click', () => {
+      document.getElementById('triv-quit-modal').classList.remove('show');
+      endTrivia();
+    });
+
+    document.getElementById('triv-again-btn').addEventListener('click', () => startTrivia(trivCat));
+    document.getElementById('triv-cat-btn').addEventListener('click', () => show('triv-home-screen'));
+    document.getElementById('triv-menu-btn').addEventListener('click', () => show('menu-screen'));
 
     // Charades category tile clicks
     document.querySelectorAll('.tile').forEach(tile => {

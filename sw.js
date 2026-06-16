@@ -1,4 +1,4 @@
-const CACHE = 'gg-v1';
+const CACHE = 'gg-v2';
 const PRECACHE = ['/', '/index.html', '/manifest.json', '/sw.js', '/app-icon.png'];
 
 self.addEventListener('install', e => {
