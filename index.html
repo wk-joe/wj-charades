@@ -1615,6 +1615,8 @@
     .triv-tile[data-trivcat=fiji]       { background: #00BFAE; }
     .triv-tile[data-trivcat=capitals]   { background: #7C3AED; }
     .triv-tile[data-trivcat=general]    { background: #E11D48; }
+    .triv-tile[data-trivcat=movies]     { background: #1565C0; }
+    .triv-tile[data-trivcat=popculture] { background: #C2185B; }
 
     .triv-tile[data-trivcat=rugby] .tile-name,
     .triv-tile[data-trivcat=rugby] .tile-sub,
@@ -1624,7 +1626,13 @@
     .triv-tile[data-trivcat=capitals] .tile-glyph,
     .triv-tile[data-trivcat=general] .tile-name,
     .triv-tile[data-trivcat=general] .tile-sub,
-    .triv-tile[data-trivcat=general] .tile-glyph {
+    .triv-tile[data-trivcat=general] .tile-glyph,
+    .triv-tile[data-trivcat=movies] .tile-name,
+    .triv-tile[data-trivcat=movies] .tile-sub,
+    .triv-tile[data-trivcat=movies] .tile-glyph,
+    .triv-tile[data-trivcat=popculture] .tile-name,
+    .triv-tile[data-trivcat=popculture] .tile-sub,
+    .triv-tile[data-trivcat=popculture] .tile-glyph {
       color: #fff;
     }
 
@@ -2072,10 +2080,20 @@
         <div class="tile-name">CAPITAL<br>CITIES</div>
         <div class="tile-sub">COUNTRIES &amp; CAPITALS &middot; <span id="tc-capitals"></span></div>
       </div>
+      <div class="triv-tile" data-trivcat="movies">
+        <i class="ph-fill ph-film-slate tile-glyph"></i>
+        <div class="tile-name">MOVIES<br>&amp; TV</div>
+        <div class="tile-sub">FILMS, SHOWS &amp; STARS &middot; <span id="tc-movies"></span></div>
+      </div>
+      <div class="triv-tile" data-trivcat="popculture">
+        <i class="ph-fill ph-star tile-glyph"></i>
+        <div class="tile-name">POP<br>CULTURE</div>
+        <div class="tile-sub">MUSIC, CELEBS &amp; SLANG &middot; <span id="tc-popculture"></span></div>
+      </div>
       <div class="triv-tile triv-tile-full" data-trivcat="general">
         <i class="ph-fill ph-brain tile-glyph"></i>
         <div class="tile-name">GENERAL KNOWLEDGE</div>
-        <div class="tile-sub">SCIENCE, HISTORY, POP CULTURE &amp; MORE &middot; <span id="tc-general"></span></div>
+        <div class="tile-sub">SCIENCE, HISTORY &amp; MORE &middot; <span id="tc-general"></span></div>
       </div>
     </div>
   </div>
@@ -2481,6 +2499,7 @@
     // ═══════════════════════════════════════════════
     const TRIVIA_PACKS = {
       rugby: [
+        // Basics
         { q: 'How many players are on each team in rugby sevens?', a: '7' },
         { q: 'What year did Fiji first win Olympic gold in rugby sevens?', a: '2016 (Rio)' },
         { q: 'How many points is a try worth in rugby union?', a: '5' },
@@ -2509,6 +2528,22 @@
         { q: 'What does it mean when a player receives a yellow card in rugby?', a: '10-minute sin bin (temporary suspension)' },
         { q: 'How many points does a team need to win in extra time in sevens?', a: 'First to score wins (sudden death)' },
         { q: 'What is the name of Fiji\'s iconic try-scoring winger who played in the early 2000s?', a: 'Rupeni Caucaunibuca' },
+        // Harder
+        { q: 'What number jersey does the fly-half wear in rugby union?', a: '10' },
+        { q: 'What number jersey does the scrum-half wear?', a: '9' },
+        { q: 'Who won the inaugural Rugby World Cup in 1987?', a: 'New Zealand' },
+        { q: 'What year was the Rugby World Cup first held?', a: '1987' },
+        { q: 'How many players are on a rugby league team?', a: '13' },
+        { q: 'What is the "Bledisloe Cup"?', a: 'Annual trophy between New Zealand and Australia' },
+        { q: 'What is a "maul" in rugby?', a: 'A contest around an upright ball carrier, not on the ground' },
+        { q: 'What is a "lineout" in rugby?', a: 'Restart after the ball goes into touch (out of bounds)' },
+        { q: 'What is Fiji\'s national stadium in Suva called?', a: 'ANZ National Stadium' },
+        { q: 'Which NZ winger was known as a "freight train" at the 1999 World Cup?', a: 'Jonah Lomu' },
+        { q: 'What is the name of the Pacific rival nations to Fiji in rugby (name both)?', a: 'Samoa and Tonga' },
+        { q: 'What is the "Ranfurly Shield"?', a: 'A challenge shield in New Zealand domestic rugby' },
+        { q: 'In rugby union, what is "the gainline"?', a: 'An imaginary line through the breakdown — crossing it gains territory' },
+        { q: 'What does "grubber" mean in rugby?', a: 'A kick along the ground that bounces unpredictably' },
+        { q: 'How many points does a team score for a pushover try?', a: '5 (same as a regular try)' },
       ],
       volleyball: [
         { q: 'How many players are on each side in indoor volleyball?', a: '6' },
@@ -2539,6 +2574,19 @@
         { q: 'Which team won gold at the 2024 Paris Olympics men\'s volleyball?', a: 'France' },
         { q: 'What is an "overpass" in volleyball?', a: 'When the ball is passed back over the net on the first touch' },
         { q: 'What is a "side-out" in volleyball?', a: 'Winning the rally to gain the serve from the opponent' },
+        // Harder
+        { q: 'What does FIVB stand for?', a: 'Fédération Internationale de Volleyball' },
+        { q: 'How far is the attack line from the centre line in volleyball?', a: '3 metres' },
+        { q: 'Who invented volleyball and in what year?', a: 'William G. Morgan, 1895' },
+        { q: 'How high is the net in beach volleyball (men\'s)?', a: '2.43 metres (same as indoor men\'s)' },
+        { q: 'What is a "jump serve" in volleyball?', a: 'A powerful serve where the player tosses, jumps, and strikes the ball in the air' },
+        { q: 'How many points does a team score if their opponent commits a "double hit"?', a: '1 point (the other team wins the rally)' },
+        { q: 'What is a "dig" in volleyball?', a: 'Passing a hard-driven ball (usually a spike) using the forearms' },
+        { q: 'Which country has won the most women\'s FIVB World Championship titles?', a: 'Russia / USSR (6 titles)' },
+        { q: 'What is it called when a player contacts the ball with open hands from above shoulder level?', a: 'Set (or overhead pass)' },
+        { q: 'Can a player touch the net during play?', a: 'No — touching the net is a fault' },
+        { q: 'Who won women\'s volleyball gold at the 2024 Paris Olympics?', a: 'USA' },
+        { q: 'What is a "pipe" attack in volleyball?', a: 'A back-row attack through the middle of the court' },
       ],
       fiji: [
         { q: 'What is the capital city of Fiji?', a: 'Suva' },
@@ -2571,6 +2619,37 @@
         { q: 'What does "kerekere" mean?', a: 'Asking for something with the expectation it will be given' },
         { q: 'What is Fiji\'s official name?', a: 'Republic of Fiji' },
         { q: 'What ocean landmark passes through Fiji?', a: 'The 180th meridian (International Date Line)' },
+        // Harder / more specific
+        { q: 'What is the Fijian word for "house"?', a: 'Vale' },
+        { q: 'What is a "bure"?', a: 'A traditional thatched Fijian house' },
+        { q: 'What is the Fijian word for "fish"?', a: 'Ika' },
+        { q: 'What is the Fijian word for "water"?', a: 'Wai' },
+        { q: 'What does "kana" mean in Fijian?', a: 'Eat / food' },
+        { q: 'What is Fiji\'s national flower, found only on Taveuni?', a: 'Tagimoucia' },
+        { q: 'What is a "mataqali"?', a: 'A Fijian landowning clan unit' },
+        { q: 'What is Fiji\'s national bird?', a: 'Collared lory (Kula)' },
+        { q: 'What is the famous surfing break off the Mamanuca Islands?', a: 'Cloudbreak' },
+        { q: 'Who was Fiji\'s first Prime Minister after independence in 1970?', a: 'Ratu Sir Kamisese Mara' },
+        { q: 'What is the fire-walking ceremony of the Sawau tribe called?', a: 'Vilavilairevo' },
+        { q: 'What is the name of Fiji\'s traditional double-hulled sailing canoe?', a: 'Drua' },
+        { q: 'What does "tokatoka" mean in Fijian society?', a: 'The smallest social unit — a household group' },
+        { q: 'What is "nama"?', a: 'Sea grapes — a Fijian delicacy (edible seaweed)' },
+        { q: 'What is Fiji\'s international calling code?', a: '+679' },
+        { q: 'Which Fijian island is known as the "Garden Island"?', a: 'Taveuni' },
+        { q: 'What is the second-largest island in Fiji?', a: 'Vanua Levu' },
+        { q: 'What sea lies between Viti Levu and Vanua Levu?', a: 'Koro Sea' },
+        { q: 'What year was Fiji\'s first coup?', a: '1987' },
+        { q: 'What colour is the background of Fiji\'s national flag?', a: 'Light blue' },
+        { q: 'What is the name of Fiji\'s longest river?', a: 'Rewa River' },
+        { q: 'What is the Great Sea Reef\'s local Fijian name?', a: 'Cakaulevu Reef' },
+        { q: 'What does "ratu" mean in Fijian?', a: 'A chiefly title for men of high rank' },
+        { q: 'What is the Fijian term for "chief" or "gentleman"?', a: 'Turaga' },
+        { q: 'What famous Fijian rugby family produced both sevens and union internationals?', a: 'The Bobo family / Rabaka family / Naevo family (accept well-known Fijian rugby families)' },
+        { q: 'What does "tovolea" mean in Fijian?', a: 'To try / to attempt something' },
+        { q: 'What is Fiji\'s traditional fermented cassava pudding called?', a: 'Vakasoso / cassava pudding (or "vakalolo" for a similar sweet)' },
+        { q: 'What is the Fijian word for "welcome"?', a: 'Bula (also used as welcome) / "Voleka mai"' },
+        { q: 'Which island group is known as the "Yasawas"?', a: 'A chain of volcanic islands northwest of Viti Levu' },
+        { q: 'What does "i taukei" mean?', a: 'The indigenous Fijian people / landowner' },
       ],
       capitals: [
         { q: 'What is the capital of Australia?', a: 'Canberra' },
@@ -2603,6 +2682,27 @@
         { q: 'What is the capital of Cuba?', a: 'Havana' },
         { q: 'What is the capital of the United Arab Emirates?', a: 'Abu Dhabi' },
         { q: 'What is the capital of South Korea?', a: 'Seoul' },
+        // Harder / more obscure
+        { q: 'What is the capital of Kazakhstan?', a: 'Astana' },
+        { q: 'What is the capital of Myanmar (Burma)?', a: 'Naypyidaw' },
+        { q: 'What is the capital of Tanzania?', a: 'Dodoma' },
+        { q: 'What is the capital of Papua New Guinea?', a: 'Port Moresby' },
+        { q: 'What is the capital of Vanuatu?', a: 'Port Vila' },
+        { q: 'What is the capital of Samoa?', a: 'Apia' },
+        { q: 'What is the capital of Tonga?', a: 'Nuku\'alofa' },
+        { q: 'What is the capital of Mongolia?', a: 'Ulaanbaatar' },
+        { q: 'What is the capital of Morocco?', a: 'Rabat' },
+        { q: 'What is the legislative capital of Bolivia?', a: 'Sucre (La Paz is seat of government)' },
+        { q: 'What is the capital of Nepal?', a: 'Kathmandu' },
+        { q: 'What is the capital of Ukraine?', a: 'Kyiv' },
+        { q: 'What is the capital of Romania?', a: 'Bucharest' },
+        { q: 'What is the capital of Bangladesh?', a: 'Dhaka' },
+        { q: 'What is the capital of Ecuador?', a: 'Quito' },
+        { q: 'What is the capital of Finland?', a: 'Helsinki' },
+        { q: 'What is the capital of Hungary?', a: 'Budapest' },
+        { q: 'What is the capital of Colombia?', a: 'Bogotá' },
+        { q: 'What is the capital of Kiribati?', a: 'South Tarawa' },
+        { q: 'What is the capital of Fiji\'s closest neighbour, Solomon Islands?', a: 'Honiara' },
       ],
       general: [
         { q: 'What planet is known as the Red Planet?', a: 'Mars' },
@@ -2635,6 +2735,107 @@
         { q: 'What is the national bird of Australia?', a: 'Emu' },
         { q: 'What is the hardest natural substance on Earth?', a: 'Diamond' },
         { q: 'How many teeth does an adult human have?', a: '32' },
+        // Harder
+        { q: 'What is the speed of light (approximately)?', a: '300,000 km/s' },
+        { q: 'How many chambers does the human heart have?', a: '4' },
+        { q: 'What is the rarest blood type?', a: 'AB negative' },
+        { q: 'Which planet is closest in size to Earth?', a: 'Venus' },
+        { q: 'What is the smallest country in the world?', a: 'Vatican City' },
+        { q: 'In what century did the Renaissance begin?', a: '14th century (1300s)' },
+        { q: 'What gas makes up about 78% of Earth\'s atmosphere?', a: 'Nitrogen' },
+        { q: 'What is the study of earthquakes called?', a: 'Seismology' },
+        { q: 'How many keys are on a standard piano?', a: '88' },
+        { q: 'What year did World War II end?', a: '1945' },
+      ],
+      movies: [
+        { q: 'Who played Tony Stark / Iron Man in the MCU?', a: 'Robert Downey Jr.' },
+        { q: 'What film won Best Picture at the 2020 Oscars?', a: 'Parasite' },
+        { q: 'Who directed The Dark Knight (2008)?', a: 'Christopher Nolan' },
+        { q: 'Who directed Pulp Fiction (1994)?', a: 'Quentin Tarantino' },
+        { q: 'Who played Walter White in Breaking Bad?', a: 'Bryan Cranston' },
+        { q: 'What is the name of the coffee shop in Friends?', a: 'Central Perk' },
+        { q: 'Who voiced Woody in the Toy Story films?', a: 'Tom Hanks' },
+        { q: 'What year was the first Star Wars film released?', a: '1977' },
+        { q: 'Who played Hermione Granger in the Harry Potter films?', a: 'Emma Watson' },
+        { q: 'What film features the quote "Here\'s looking at you, kid"?', a: 'Casablanca (1942)' },
+        { q: 'How many Oscars did Titanic (1997) win?', a: '11' },
+        { q: 'Who created The Simpsons?', a: 'Matt Groening' },
+        { q: 'What Netflix show is set in Hawkins, Indiana and features the Upside Down?', a: 'Stranger Things' },
+        { q: 'Who played Katniss Everdeen in The Hunger Games?', a: 'Jennifer Lawrence' },
+        { q: 'What does MCU stand for?', a: 'Marvel Cinematic Universe' },
+        { q: 'Who plays Tyrion Lannister in Game of Thrones?', a: 'Peter Dinklage' },
+        { q: 'Who directed Avatar (2009)?', a: 'James Cameron' },
+        { q: 'Who played Jack Sparrow in Pirates of the Caribbean?', a: 'Johnny Depp' },
+        { q: 'What show has the line "You know nothing, Jon Snow"?', a: 'Game of Thrones' },
+        { q: 'Who played the Joker in The Dark Knight (2008)?', a: 'Heath Ledger' },
+        { q: 'What animated film features the song "Hakuna Matata"?', a: 'The Lion King' },
+        { q: 'Who plays Eleven in Stranger Things?', a: 'Millie Bobby Brown' },
+        { q: 'What is the most-watched series on Netflix of all time?', a: 'Squid Game' },
+        { q: 'Who played Thanos in the Avengers films?', a: 'Josh Brolin' },
+        { q: 'What country is Squid Game from?', a: 'South Korea' },
+        { q: 'Who played Neo in The Matrix (1999)?', a: 'Keanu Reeves' },
+        { q: 'What sitcom features Monica, Chandler, Joey, Ross, Rachel, and Phoebe?', a: 'Friends' },
+        { q: 'Who played Black Panther in the MCU?', a: 'Chadwick Boseman' },
+        { q: 'Who plays the lead in John Wick?', a: 'Keanu Reeves' },
+        { q: 'What is the name of Shrek\'s donkey friend?', a: 'Donkey' },
+        { q: 'Who played Forrest Gump?', a: 'Tom Hanks' },
+        { q: 'What is Pixar\'s first ever feature film?', a: 'Toy Story (1995)' },
+        { q: 'Who directed Titanic (1997)?', a: 'James Cameron' },
+        { q: 'What film features the line "I\'ll be back"?', a: 'The Terminator (1984)' },
+        { q: 'What is the name of Harry Potter\'s owl?', a: 'Hedwig' },
+        { q: 'Who directed Parasite (2019)?', a: 'Bong Joon-ho' },
+        { q: 'What show has the "Iron Throne"?', a: 'Game of Thrones' },
+        { q: 'Who plays the lead in Wednesday (2022 Netflix series)?', a: 'Jenna Ortega' },
+        { q: 'What film is the highest-grossing animated film of all time?', a: 'The Lion King (2019)' },
+        { q: 'What year was the first iPhone released — same year as the MCU\'s Iron Man?', a: '2007 / 2008 (Iron Man released 2008)' },
+        { q: 'Who played Barbie in the 2023 Barbie film?', a: 'Margot Robbie' },
+        { q: 'What show features the phrase "We are the walking dead"?', a: 'The Walking Dead' },
+        { q: 'What character does Benedict Cumberbatch play in the MCU?', a: 'Doctor Strange' },
+      ],
+      popculture: [
+        { q: 'What is the best-selling album of all time?', a: 'Thriller by Michael Jackson' },
+        { q: 'Who is known as the "Queen of Pop"?', a: 'Madonna' },
+        { q: 'Who is known as the "King of Pop"?', a: 'Michael Jackson' },
+        { q: 'Who sang "Blinding Lights" (2019)?', a: 'The Weeknd' },
+        { q: 'What does BTS stand for (in English)?', a: 'Beyond The Scene' },
+        { q: 'What year did Beyoncé release her visual album Lemonade?', a: '2016' },
+        { q: 'Who sang "Old Town Road" (2019)?', a: 'Lil Nas X' },
+        { q: 'What is the real name of "The Weeknd"?', a: 'Abel Tesfaye' },
+        { q: 'Who won the first season of American Idol (USA)?', a: 'Kelly Clarkson' },
+        { q: 'Who is known as "Champagne Papi"?', a: 'Drake' },
+        { q: 'Who sang "Hello" (2015)?', a: 'Adele' },
+        { q: 'What does GOAT stand for?', a: 'Greatest Of All Time' },
+        { q: 'What is the name of Beyoncé\'s husband?', a: 'Jay-Z' },
+        { q: 'Who is Zendaya\'s character in the show Euphoria?', a: 'Rue' },
+        { q: 'What year was Instagram launched?', a: '2010' },
+        { q: 'Who sang "Shape of You" (2017)?', a: 'Ed Sheeran' },
+        { q: 'Who is the most followed person on Instagram (as of 2024)?', a: 'Cristiano Ronaldo' },
+        { q: 'What year did Billie Eilish win her first Grammy Award?', a: '2020' },
+        { q: 'Who sang "Bad Guy" (2019)?', a: 'Billie Eilish' },
+        { q: 'What does FOMO stand for?', a: 'Fear Of Missing Out' },
+        { q: 'Who sang "Uptown Funk" with Bruno Mars?', a: 'Mark Ronson feat. Bruno Mars' },
+        { q: 'What country is the K-pop group BLACKPINK from?', a: 'South Korea' },
+        { q: 'Who directed the "Thriller" music video (1983)?', a: 'John Landis' },
+        { q: 'What band is Freddie Mercury from?', a: 'Queen' },
+        { q: 'Who sang "Despacito" feat. Daddy Yankee (2017)?', a: 'Luis Fonsi' },
+        { q: 'What does OG stand for in slang?', a: 'Original Gangster (or simply "original")' },
+        { q: 'What is Rihanna\'s makeup brand called?', a: 'Fenty Beauty' },
+        { q: 'What was BTS\'s first English-language hit single?', a: 'Dynamite (2020)' },
+        { q: 'Who sang "Rolling in the Deep" (2010)?', a: 'Adele' },
+        { q: 'What is the name of Taylor Swift\'s album re-release series?', a: 'Taylor\'s Version' },
+        { q: 'What year did TikTok launch globally?', a: '2018' },
+        { q: 'Who is Lady Gaga\'s real name?', a: 'Stefani Joanne Angelina Germanotta' },
+        { q: 'What does "lowkey" mean in modern slang?', a: 'Secretly / quietly / subtly' },
+        { q: 'Who sang "Shake It Off" (2014)?', a: 'Taylor Swift' },
+        { q: 'What is the name of Beyoncé\'s hit 2023 album about country and dance music?', a: 'Renaissance' },
+        { q: 'Which artist has won the most Grammy Awards of all time?', a: 'Beyoncé (32 Grammys)' },
+        { q: 'What is the real name of rapper Cardi B?', a: 'Belcalis Marlenis Almánzar' },
+        { q: 'Who sang "Watermelon Sugar" (2020)?', a: 'Harry Styles' },
+        { q: 'What does "slay" mean in pop culture slang?', a: 'To do something impressively well' },
+        { q: 'Who is Kim Kardashian\'s ex-husband?', a: 'Kanye West (Ye)' },
+        { q: 'What year was YouTube founded?', a: '2005' },
+        { q: 'Who sang "7 Rings" (2019)?', a: 'Ariana Grande' },
+        { q: 'What does "no cap" mean in slang?', a: 'No lie / for real / I\'m serious' },
       ],
     };
 
@@ -2644,6 +2845,8 @@
       fiji:       { color: '#00BFAE', name: 'FIJI' },
       capitals:   { color: '#7C3AED', name: 'CAPITAL CITIES' },
       general:    { color: '#E11D48', name: 'GENERAL KNOWLEDGE' },
+      movies:     { color: '#1565C0', name: 'MOVIES & TV' },
+      popculture: { color: '#C2185B', name: 'POP CULTURE' },
     };
 
     // ═══════════════════════════════════════════════
