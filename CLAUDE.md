@@ -19,6 +19,7 @@ The app opens on a **Menu screen** where the player picks a game:
 
 - **CHARADES** — the forehead tilt game (see below)
 - **IMPOSTER** — social deduction / pass-and-peek card game
+- **TRIVIA** — timed quiz game, portrait, tap to score
 
 ---
 
@@ -132,6 +133,65 @@ Weighted random — all players stay in the pool every round:
 `Menu → Imposter Setup → Imposter Deal → Imposter Discuss → (Play Again → Imposter Deal | Change Game → Menu)`
 
 All Imposter screens are portrait.
+
+---
+
+---
+
+## Trivia
+
+Timed quiz game. A question is shown with the answer hidden in a box — host reads the question aloud, team answers, host taps GOT IT or SKIP.
+
+### How it works
+
+1. GG! hub → pick TRIVIA → pick a category tile.
+2. Play screen starts immediately — 60-second countdown, portrait orientation.
+3. Question displayed at top; answer shown in a bordered box below.
+4. Two tap zones at the bottom: **SKIP** (red, left) / **GOT IT** (green, right).
+5. Green or red flash overlay on each tap ("GOT IT!" / "SKIP").
+6. When timer hits 0, auto-advance to Results screen.
+7. Quit button (✕ top-left) opens a confirmation modal — saves score so far.
+
+### Screen flow
+
+`Menu → Trivia Home (category picker) → Trivia Play → Trivia Results → (Play Again → Trivia Play | Choose Category → Trivia Home | Change Game → Menu)`
+
+All Trivia screens are **portrait**.
+
+### Categories
+
+| Key | Color | Questions | Content |
+|-----|-------|-----------|---------|
+| `rugby` | `#1A6B3C` | ~99 | Sevens, World Cup, laws, records, tours |
+| `volleyball` | `#FF7A1A` | ~102 | Rules, Olympics, players, beach, history |
+| `fiji` | `#00BFAE` | ~76 | Culture, places, language, iTaukei counting |
+| `capitals` | `#7C3AED` | ~115 | World capitals — easy to very obscure |
+| `general` | `#E11D48` | ~102 | Science, history, maths, space, literature |
+| `movies` | `#1565C0` | ~101 | Films, TV shows, directors, awards |
+| `popculture` | `#C2185B` | ~103 | Music, celebs, slang, social media |
+
+Question counts shown as badges on each tile (populated at init from `TRIVIA_PACKS`).
+
+### Data structure
+
+All questions live in `TRIVIA_PACKS` (inside the `<script>` block, ~line 2500). Each entry is:
+```js
+{ q: 'Question text?', a: 'Answer text' }
+```
+Each category array has a `// Basics` comment block and an `// Adult / harder` block. Add new entries anywhere inside the array.
+
+Category display metadata (color, label) lives in `TRIV_CAT_META` immediately below `TRIVIA_PACKS`.
+
+### Timer & scoring
+
+- `trivTimeLeft` counts down from 60 each second via `trivTicker`.
+- `trivScore` increments on GOT IT; `trivSkipped` array records skipped entries.
+- Results show score + skipped count, plus chips listing all answered/skipped entries by their answer text.
+- "Play Again" reshuffles the same category and restarts — no Get Ready screen (straight into play).
+
+### Menu tile
+
+Dark green tile (`#1A6B3C`, white text/border) — `id="menu-trivia"` in HTML. Subtag shows question count.
 
 ---
 
